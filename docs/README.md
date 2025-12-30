@@ -3,7 +3,7 @@
 Astro web application with Supabase integration.
 
 ## Manifesto
-**Musical Universe Factory is an independent creative sanctuary.**
+**Musical Universe Factory is an independent creative sanctuary and eternal archive.**
 It rejects the streaming model entirely for a sovereign digital store.
 - **Core Values:** Buy for lifetime ownership, user freedom.
 - **High Quality Assets:** Music videos, instructional videos, original performances, artwork, storytelling, books, and articles.
