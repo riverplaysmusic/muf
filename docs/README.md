@@ -8,8 +8,16 @@ It rejects the streaming model entirely for a sovereign digital store.
 - **Core Values:** Buy for lifetime ownership, user freedom.
 - **High Quality Assets:** Music videos, instructional videos, original performances, artwork, storytelling, books, and articles.
 
+## Business Model
+We are a sole-proprietor who pays all taxes. We are boring to the IRS and do not take tax advantages. We are private, soverign and invisible. We are not a company, we are an outlet of creativity. We do not enter ourselves into government systems. Our business is a single line, other income, on our personal tax form. This is Munger-style thinking to avoid unwelcomed partners, bureaucracies, external rulers, fees, regulations, privacy violations and other forms of oppression and friction. We are 100% "leave us alone." 
+
+## Paradox Approach
+We reject discoverability, search engine optimization, social media, analytics, and marketing. We believe in the impossible. Our values are organic discovery, discovery through in-person connections only, and a purist attitude to artistry, craft and the long-term fruit of creative labor. We sell but we do not need to profit. If you can't find us on your own, we don't want you here. 
+
 ## Domain model
-Tracks are units. Albums are collections of tracks. Artists are creators of tracks and albums. Domain model reflects lived experiences of the musician, recording engineer, and label owner. Focus is on permanent gold-standard archiving. On-prem service (Honeycomb) is the library and source of truth: supabase storage is a thin public cache to avoid sysadmin role. The label comes first, the software second.
+Tracks are units. Albums are collections of tracks. Artists are creators of tracks and albums. Domain model reflects lived experiences of the musician, recording engineer, and label owner. Focus is on permanent gold-standard archiving. On-prem service (Honeycomb) is the library and source of truth: supabase storage is a thin public cache to avoid sysadmin role. The label comes first, the software second. 
+
+There is no social media. There are no likes, comments, shares, user lists, forums, listener counts, reviews, ratings, or any other form of social interaction. This is a private store and nobody knows the wiser.
 
 ## Operating & technical methods
 All releases are FLAC zips. There are no alternate formats. Audio is primary, video is secondary, optional, and possibly rare. 
