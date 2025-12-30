@@ -2,6 +2,9 @@
 
 Astro web application with Supabase integration.
 
+## Schedule Delivery
+July 2027 public release. 
+
 ## Manifesto
 **Musical Universe Factory is an independent creative sanctuary and eternal archive.**
 We reject the streaming model for a sovereign digital store.
