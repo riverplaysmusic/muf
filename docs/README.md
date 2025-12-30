@@ -8,6 +8,15 @@ It rejects the streaming model entirely for a sovereign digital store.
 - **Core Values:** Buy for lifetime ownership, user freedom.
 - **High Quality Assets:** Music videos, instructional videos, original performances, artwork, storytelling, books, and articles.
 
+## Domain model
+Tracks are units. Albums are collections of tracks. Artists are creators of tracks and albums. Domain model reflects lived experiences of the musician, recording engineer, and label owner. Focus is on permanent gold-standard archiving. On-prem service (Honeycomb) is the library and source of truth: supabase storage is a thin public cache to avoid sysadmin role. The label comes first, the software second.
+
+## Operating & technical methods
+All releases are FLAC zips. There are no alternate formats. Audio is primary, video is secondary, optional, and possibly rare. 
+
+## CLI tools
+We use `magick`, `ffmpeg`, and `flac`. 
+
 ## Prerequisites
 - [Google Cloud SDK (gcloud)](https://cloud.google.com/sdk/docs/install)
 - [Node.js (LTS)](https://nodejs.org/)
@@ -35,8 +44,10 @@ npm run dev
 
 ## Intentional Constraints
 - **Single Environment:** Production-only. No local DB or staging stacks.
-- **Vibecoding:** No linting or formatting tools. Trusting the flow.
-- **Manual Deployment:** Preferred over automated CI/CD for direct control.
+- **Vibecoding:** No linting or formatting tools. Trust AI.
+- **No CI/CD:** Manual push over automated CI/CD for direct control.
+- **No Tests:** Tests are a waste of time.
+- **No tools:** No linters, no formatters, no frameworks, no terraform
 
 ## AI Agent Guidelines
 - **Philosophy:** Braindead simple, just-works, minimal footprint. 
