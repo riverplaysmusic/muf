@@ -4,23 +4,23 @@ Astro web application with Supabase integration.
 
 ## Manifesto
 **Musical Universe Factory is an independent creative sanctuary and eternal archive.**
-It rejects the streaming model entirely for a sovereign digital store.
+We reject the streaming model for a sovereign digital store.
 - **Core Values:** Buy for lifetime ownership, user freedom.
 - **High Quality Assets:** Music videos, instructional videos, original performances, artwork, storytelling, books, and articles.
 
 ## Business Model
-We are a sole-proprietor who pays all taxes. We are boring to the IRS and do not take tax advantages. We are private, soverign and invisible. We are not a company, we are an outlet of creativity. We do not enter ourselves into government systems. Our business is a single line, other income, on our personal tax form. This is Munger-style thinking to avoid unwelcomed partners, bureaucracies, external rulers, fees, regulations, privacy violations and other forms of oppression and friction. We are 100% "leave us alone." We are our own songwriter, engineer, producer, artist, distributor, retailer and archivist. 
+We are a sole-proprietor who pays all taxes. We are boring to the IRS. We do not take tax advantages. We are private, soverign and invisible. We are not a company, we are an outlet of creativity. We do not enter ourselves into government systems. Our business is a single line, other income, on our personal tax form. This is Munger-style thinking to avoid unwelcomed partners, bureaucracies, external rulers, fees, regulations, privacy violations and other forms of oppression and friction. We are 100% "leave us alone." We are our own songwriter, engineer, producer, artist, distributor, retailer and archivist. We only bring people in who would be here even if they're already billionaires. 
 
 ## Paradox Approach
-We reject discoverability, search engine optimization, social media, analytics, and marketing. We believe in the impossible. Our values are organic discovery through in-person connections only. We have a purist attitude towards artistry, craft and our long-term portfolio. We sell but we do not need profit. If you can't find us on your own, we don't want you here. 
+We reject discoverability, search engine optimization, social media, analytics, and marketing. We believe in the impossible. Our values are organic discovery through in-person connections only. We have a purist attitude towards artistry, craft and the long-term catalogue. We sell but we do not need profit. If you can't find us on your own, we don't want you here. 
 
 ## Domain model
-Tracks are units. Albums are collections of tracks. Artists are creators of tracks and albums. Domain model reflects lived experience of the musician, recording engineer, and label owner. Technology is unwanted. Focus is on permanent gold-standard archiving. On-prem server (Honeycomb) is the library and source of truth: supabase storage is a thin public cache to avoid sysadmin burden. The label comes first, the software second. 
+Tracks are units. Albums are collections of tracks. Artists are creators of tracks and albums. Domain model reflects lived experience of the musician, recording engineer, and label owner. Technology is unwanted. Focus is on permanent gold-standard archiving. On-prem server (Honeycomb) is the library and source of truth: supabase storage is a thin public cache to avoid sysadmin burden. The label comes first, the software second, or not at all. 
 
 There is no social media. There are no likes, comments, shares, user lists, forums, listener counts, reviews, ratings, or any other form of social interaction. This is a private store and nobody knows the wiser. Customers stream the files themselves. There are no subscriptions. There are no external streaming or music partners (no Spotify, no Apple Music, no YouTube, no TikTok, no Bandcamp, etc.) or any other form of external distribution. 
 
 ## Operating & technical methods
-All releases are FLAC zips. There are no alternate formats. Audio is primary, video is secondary, optional, and possibly rare. 
+All releases are FLAC zips. There are no alternate formats. Audio is primary, video is secondary, optional, and likely rare. 
 
 ## CLI tools
 We use `magick`, `ffmpeg`, and `flac`. 
@@ -52,18 +52,18 @@ npm run dev
 
 ## Intentional Constraints
 - **Single Environment:** Production-only. No local DB or staging stacks.
-- **Vibecoding:** No linting or formatting tools. Trust AI.
+- **Vibecoding:** 100% of code is written by AI agents. 
 - **No CI/CD:** Manual push over automated CI/CD for direct control.
 - **No Tests:** Tests are a waste of time.
-- **No tools:** No linters, no formatters, no frameworks, no terraform
+- **No tools:** No linters, no formatters, no frameworks, not even terraform
 
 ## AI Agent Guidelines
 - **Philosophy:** Braindead simple, just-works, minimal footprint. 
 - **Code:** Less code, zero unnecessary abstractions, visible plumbing.
-- **Trade-offs:** Sacrifice complexity for elegance. Avoid solving "hard" problems by simplifying the requirements.
-- **Longevity:** Designed to last 10 years by avoiding transient dependencies and fragile patterns.
-- **Design For AI Agents:** AI agents should be able to understand and modify the codebase with minimal difficulty. Avoid complexity. 
-- **Unification:** Avoid cleverness, all code should extend from a single pattern of truth. 
+- **Trade-offs:** Solve hard problems by not solving them, if it is complex, we don't do it.
+- **Longevity:** Designed to last 10+ years by avoiding hype-patterns, new frameworks, and external dependencies.
+- **Design For AI Agents:** AI agents should be able to understand and modify the codebase with minimal difficulty. As simple and dumb as a doorknob.
+- **Unification:** Avoid cleverness, all code should extend from a single pattern of truth. All styles and patterns should have a unity. 
 - **Final Priority:** Value brain-dead simplicity and minimalism over all else. 
 - **Clarify**: If you are unsure, ask, otherwise be bold and confident.
 
