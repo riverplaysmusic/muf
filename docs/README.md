@@ -52,6 +52,7 @@ npm run dev
 - **Thick Database:** Logic lives in SQL/RLS. Server is a thin, "insecure" passthrough.
 - **GUI:** The UI is a throwaway/pluggable consumer of the stable database core.
 - **Security:** RLS-first. Trust the database, not the middleware.
+- **Standardization**: Reject frameworks, choose core web technologies.
 
 ## Partners & Operations
 - **Philosophy:** Minimize partners. Maintain operating & sales margins.
