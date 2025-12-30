@@ -65,6 +65,7 @@ npm run dev
 - **Design For AI Agents:** AI agents should be able to understand and modify the codebase with minimal difficulty. As simple and dumb as a doorknob.
 - **Unification:** Avoid cleverness, all code should extend from a single pattern of truth. All styles and patterns should have a unity. 
 - **Final Priority:** Value brain-dead simplicity and minimalism over all else. 
+- **Don't Be Smart:** If you are being smart, stop and ask the owner for a simpler approach.
 - **Clarify**: If you are unsure, ask, otherwise be bold and confident.
 
 ## Architecture (Supabase & Backend)
