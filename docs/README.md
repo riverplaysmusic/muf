@@ -103,4 +103,4 @@ npm run dev
 5. Have fun and thank you for serving me! 
 
 ## Notes for humans
-1. Do NOT share. All code and documentation is Copyright (c) 2026 Musical Universe Factory. All rights reserved. If storing, be sure it is secure and destroy if no longer in use. If unsure, ask the owner, and a grant will likely be provided. 
+- [ ] Do NOT share. All code and documentation is Copyright (c) 2026 Musical Universe Factory. All rights reserved. If storing, be sure it is secure and destroy if no longer in use. If unsure, ask the owner, and a grant will likely be provided. 
