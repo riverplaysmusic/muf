@@ -20,15 +20,15 @@ import Layout from '@/layouts/Layout.astro';
         
         <div class="palette-grid">
           <div class="swatch pink">
-            <span class="swatch-label">Electric Pink</span>
+            <span class="swatch-label">Primary Pink</span>
             <span class="swatch-hex">oklch(65% 0.26 350)</span>
           </div>
           <div class="swatch yellow">
-            <span class="swatch-label">Neon Yellow</span>
+            <span class="swatch-label">Primary Yellow</span>
             <span class="swatch-hex">oklch(95% 0.20 105)</span>
           </div>
           <div class="swatch cyan">
-            <span class="swatch-label">Cyan Blue</span>
+            <span class="swatch-label">Primary Cyan</span>
             <span class="swatch-hex">oklch(80% 0.18 200)</span>
           </div>
         </div>
@@ -41,6 +41,25 @@ import Layout from '@/layouts/Layout.astro';
           <div class="swatch gray">
             <span class="swatch-label">Space Gray</span>
             <span class="swatch-hex">oklch(26.85% 0 0)</span>
+          </div>
+        </div>
+
+        <div class="palette-grid accents" style="margin-top: 2rem;">
+          <div class="swatch green">
+            <span class="swatch-label">Accent Green</span>
+            <span class="swatch-hex">oklch(88% 0.20 150)</span>
+          </div>
+          <div class="swatch red">
+            <span class="swatch-label">Accent Red</span>
+            <span class="swatch-hex">oklch(78% 0.20 25)</span>
+          </div>
+          <div class="swatch orange">
+            <span class="swatch-label">Accent Orange</span>
+            <span class="swatch-hex">oklch(84% 0.18 65)</span>
+          </div>
+          <div class="swatch purple">
+            <span class="swatch-label">Accent Purple</span>
+            <span class="swatch-hex">oklch(78% 0.20 290)</span>
           </div>
         </div>
       </div>
@@ -233,7 +252,7 @@ import Layout from '@/layouts/Layout.astro';
     font-size: clamp(4rem, 10vw, 8rem);
     line-height: 0.9;
     margin-bottom: 1rem;
-    background: linear-gradient(to right, var(--electric-pink), var(--neon-yellow), var(--cyan-blue));
+    background: linear-gradient(to right, var(--primary-pink), var(--primary-yellow), var(--primary-cyan));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -279,9 +298,13 @@ import Layout from '@/layouts/Layout.astro';
     opacity: 0.7;
   }
 
-  .pink { background: var(--electric-pink); color: black; }
-  .yellow { background: var(--neon-yellow); color: black; }
-  .cyan { background: var(--cyan-blue); color: black; }
+  .pink { background: var(--primary-pink); color: black; }
+  .yellow { background: var(--primary-yellow); color: black; }
+  .green { background: var(--accent-green); color: black; }
+  .red { background: var(--accent-red); color: black; }
+  .orange { background: var(--accent-orange); color: black; }
+  .purple { background: var(--accent-purple); color: black; }
+  .cyan { background: var(--primary-cyan); color: black; }
   .black { background: var(--space-black); color: white; border: 1px solid var(--space-gray); }
   .gray { background: var(--space-gray); color: white; }
 
@@ -320,7 +343,7 @@ import Layout from '@/layouts/Layout.astro';
   }
 
   .label {
-    color: var(--cyan-blue);
+    color: var(--primary-cyan);
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -335,7 +358,7 @@ import Layout from '@/layouts/Layout.astro';
   }
 
   .highlight {
-    color: var(--neon-yellow);
+    color: var(--primary-yellow);
     text-decoration: underline;
   }
 
@@ -363,31 +386,31 @@ import Layout from '@/layouts/Layout.astro';
   .anim-object {
     width: 60px;
     height: 60px;
-    background: var(--neon-yellow);
+    background: var(--primary-yellow);
     border-radius: 8px;
     transition: all 0.5s var(--ease-smooth);
   }
 
   .hover-scale:hover .anim-object {
     transform: scale(1.5) rotate(15deg);
-    background: var(--electric-pink);
-    box-shadow: 0 0 30px var(--electric-pink);
+    background: var(--primary-pink);
+    box-shadow: 0 0 30px var(--primary-pink);
   }
 
   .hover-slide:hover .anim-object {
     transform: translateX(50px);
-    background: var(--cyan-blue);
+    background: var(--primary-cyan);
     border-radius: 50%;
   }
 
   .infinite-pulse .anim-object {
     animation: pulse 2s infinite var(--ease-smooth);
-    background: var(--electric-pink);
+    background: var(--primary-pink);
   }
 
   @keyframes pulse {
     0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.8; box-shadow: 0 0 20px var(--electric-pink); }
+    50% { transform: scale(1.2); opacity: 0.8; box-shadow: 0 0 20px var(--primary-pink); }
     100% { transform: scale(1); opacity: 1; }
   }
 
@@ -412,18 +435,18 @@ import Layout from '@/layouts/Layout.astro';
   .gradient-box.vertical {
     background-image: linear-gradient(
       to bottom,
-      var(--electric-pink),
-      var(--neon-yellow),
-      var(--cyan-blue)
+      var(--primary-pink),
+      var(--primary-yellow),
+      var(--primary-cyan)
     );
   }
 
   .gradient-box.horizontal {
     background-image: linear-gradient(
       to right,
-      var(--electric-pink),
-      var(--neon-yellow),
-      var(--cyan-blue)
+      var(--primary-pink),
+      var(--primary-yellow),
+      var(--primary-cyan)
     );
   }
 
@@ -465,7 +488,7 @@ import Layout from '@/layouts/Layout.astro';
 
   .outline {
     background: transparent;
-    border: 2px solid var(--cyan-blue);
+    border: 2px solid var(--primary-cyan);
   }
 
   .btn {
@@ -479,23 +502,23 @@ import Layout from '@/layouts/Layout.astro';
   }
 
   .btn.primary {
-    background: var(--electric-pink);
+    background: var(--primary-pink);
     color: black;
   }
 
   .btn.primary:hover {
     background: white;
-    box-shadow: 0 0 20px var(--electric-pink);
+    box-shadow: 0 0 20px var(--primary-pink);
   }
 
   .btn.secondary {
     background: transparent;
-    border: 2px solid var(--neon-yellow);
-    color: var(--neon-yellow);
+    border: 2px solid var(--primary-yellow);
+    color: var(--primary-yellow);
   }
 
   .btn.secondary:hover {
-    background: var(--neon-yellow);
+    background: var(--primary-yellow);
     color: black;
   }
 
@@ -505,7 +528,7 @@ import Layout from '@/layouts/Layout.astro';
   }
 
   .link-demo:hover {
-    color: var(--neon-yellow);
+    color: var(--primary-yellow);
   }
 
   @media (max-width: 768px) {

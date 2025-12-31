@@ -2,105 +2,105 @@
 .primary-gradient {
   background: linear-gradient(
     to bottom,
-    var(--electric-pink),
-    var(--neon-yellow),
-    var(--cyan-blue)
+    var(--primary-pink),
+    var(--primary-yellow),
+    var(--primary-cyan)
   );
 }
 
 .gradient-pink-white {
-  background: linear-gradient(to right, var(--electric-pink), white);
+  background: linear-gradient(to right, var(--primary-pink), white);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-yellow-white {
-  background: linear-gradient(to right, var(--neon-yellow), white);
+  background: linear-gradient(to right, var(--primary-yellow), white);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-cyan-white {
-  background: linear-gradient(to right, var(--cyan-blue), white);
+  background: linear-gradient(to right, var(--primary-cyan), white);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-brand {
-  background: linear-gradient(to right, var(--electric-pink), var(--neon-yellow), var(--cyan-blue));
+  background: linear-gradient(to right, var(--primary-pink), var(--primary-yellow), var(--primary-cyan));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-white-pink {
-  background: linear-gradient(to right, white, var(--electric-pink));
+  background: linear-gradient(to right, white, var(--primary-pink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-white-yellow {
-  background: linear-gradient(to right, white, var(--neon-yellow));
+  background: linear-gradient(to right, white, var(--primary-yellow));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-white-cyan {
-  background: linear-gradient(to right, white, var(--cyan-blue));
+  background: linear-gradient(to right, white, var(--primary-cyan));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-brand-reverse {
-  background: linear-gradient(to right, var(--cyan-blue), var(--neon-yellow), var(--electric-pink));
+  background: linear-gradient(to right, var(--primary-cyan), var(--primary-yellow), var(--primary-pink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-pink-yellow {
-  background: linear-gradient(to right, var(--electric-pink), var(--neon-yellow));
+  background: linear-gradient(to right, var(--primary-pink), var(--primary-yellow));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-yellow-pink {
-  background: linear-gradient(to right, var(--neon-yellow), var(--electric-pink));
+  background: linear-gradient(to right, var(--primary-yellow), var(--primary-pink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-pink-cyan {
-  background: linear-gradient(to right, var(--electric-pink), var(--cyan-blue));
+  background: linear-gradient(to right, var(--primary-pink), var(--primary-cyan));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-cyan-pink {
-  background: linear-gradient(to right, var(--cyan-blue), var(--electric-pink));
+  background: linear-gradient(to right, var(--primary-cyan), var(--primary-pink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-yellow-cyan {
-  background: linear-gradient(to right, var(--neon-yellow), var(--cyan-blue));
+  background: linear-gradient(to right, var(--primary-yellow), var(--primary-cyan));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-cyan-yellow {
-  background: linear-gradient(to right, var(--cyan-blue), var(--neon-yellow));
+  background: linear-gradient(to right, var(--primary-cyan), var(--primary-yellow));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

@@ -1,8 +1,14 @@
 :root {
   /* COLORS */
-  --electric-pink:    oklch(65% 0.26 350);
-  --neon-yellow:      oklch(95% 0.20 105);
-  --cyan-blue:        oklch(80% 0.18 200);  
+  --primary-pink:     oklch(65% 0.26 350);
+  --primary-yellow:   oklch(95% 0.20 105);
+  --primary-cyan:     oklch(80% 0.18 200);  
+
+  --accent-green:     oklch(88% 0.20 150);
+  --accent-red:       oklch(78% 0.20 25);
+  --accent-orange:    oklch(84% 0.18 65);
+  --accent-purple:    oklch(78% 0.20 290);
+  
   --space-black:      oklch(0% 0 0);
   --space-gray:       oklch(26.85% 0 0);
   --starlight:        oklch(100% 0 0);

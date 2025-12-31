@@ -27,7 +27,7 @@
 }
 
 .nav-item:hover {
-  color: var(--neon-yellow);
+  color: var(--primary-yellow);
   letter-spacing: 0.15em;
   text-decoration: underline;
 }
