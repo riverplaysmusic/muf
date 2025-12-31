@@ -15,7 +15,7 @@ import Layout from '@/Layout.astro';
     <!-- COLOR PALETTE -->
     <section class="surface colors">
       <div class="content">
-        <h2 style="color: var(--starlight);">Color Palette</h2>
+        <h2 class="section-heading">Color Palette</h2>
         <p class="desc">
           A high-contrast, neon-infused 80s synthwave palette designed for deep
           space visibility.
@@ -36,7 +36,7 @@ import Layout from '@/Layout.astro';
           </div>
         </div>
 
-        <div class="palette-grid neutrals" style="margin-top: 2rem;">
+        <div class="palette-grid neutrals">
           <div class="swatch black">
             <span class="swatch-label">Space Black</span>
             <span class="swatch-hex">oklch(0% 0 0)</span>
@@ -48,7 +48,7 @@ import Layout from '@/Layout.astro';
           <div class="swatch empty"></div>
         </div>
 
-        <div class="palette-grid accents" style="margin-top: 2rem;">
+        <div class="palette-grid accents">
           <div class="swatch green">
             <span class="swatch-label">Accent Green</span>
             <span class="swatch-hex">oklch(88% 0.20 150)</span>
@@ -76,7 +76,7 @@ import Layout from '@/Layout.astro';
     <!-- TEXT GRADIENTS -->
     <section class="surface text-gradients">
       <div class="content">
-        <h2 style="color: var(--starlight);">Text Gradients</h2>
+        <h2 class="section-heading">Text Gradients</h2>
         <p class="desc">High-impact typographic treatments.</p>
 
         <div class="gradient-text-grid">
@@ -101,7 +101,7 @@ import Layout from '@/Layout.astro';
     <!-- TYPOGRAPHY -->
     <section class="surface typography">
       <div class="content">
-        <h2 style="color: var(--starlight);">Typography</h2>
+        <h2 class="section-heading">Typography</h2>
         <p class="desc">
           Powered by <a
             href="https://vercel.com/font"
@@ -140,7 +140,7 @@ import Layout from '@/Layout.astro';
     <!-- ANIMATIONS -->
     <section class="surface animations">
       <div class="content">
-        <h2 style="color: var(--starlight);">Motion & Timing</h2>
+        <h2 class="section-heading">Motion & Timing</h2>
         <p class="desc">
           Fluid transitions powered by <code>--ease-smooth</code>.
         </p>
@@ -167,7 +167,7 @@ import Layout from '@/Layout.astro';
     <!-- GRADIENTS -->
     <section class="surface gradients">
       <div class="content">
-        <h2 style="color: var(--starlight);">Gradients</h2>
+        <h2 class="section-heading">Gradients</h2>
         <p class="desc">Signature brand gradients.</p>
 
         <div class="gradient-grid">
@@ -184,7 +184,7 @@ import Layout from '@/Layout.astro';
     <!-- UI ELEMENTS -->
     <section class="surface elements">
       <div class="content">
-        <h2 style="color: var(--starlight);">Interface Elements</h2>
+        <h2 class="section-heading">Interface Elements</h2>
         <p class="desc">
           Interactive components with smooth states and high affordance.
         </p>
@@ -217,6 +217,39 @@ import Layout from '@/Layout.astro';
 </Layout>
 
 <style>
+  /* TYPOGRAPHY UTILITIES */
+  .highlight {
+    color: var(--primary-yellow);
+    font-weight: 600;
+  }
+
+  .anim-label {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--stardust);
+  }
+
+  .section-heading {
+    color: var(--starlight);
+  }
+
+  /* SECTION MODIFIERS (currently no specific styles needed, but defined for clarity) */
+  .colors,
+  .text-gradients,
+  .typography,
+  .animations,
+  .gradients,
+  .elements {
+    /* These classes are organizational markers with no additional styling */
+  }
+
+  .neutrals,
+  .accents {
+    margin-top: 2rem;
+  }
+
   /* BROCHURE LAYOUT */
   .brochure {
     display: flex;
@@ -300,7 +333,7 @@ import Layout from '@/Layout.astro';
     flex-direction: column;
     justify-content: flex-end;
     transition: transform 0.3s var(--ease-smooth);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--surface-border);
   }
 
   .swatch:hover {
@@ -321,44 +354,44 @@ import Layout from '@/Layout.astro';
 
   .pink {
     background: var(--primary-pink);
-    color: black;
+    color: var(--space-black);
   }
   .yellow {
     background: var(--primary-yellow);
-    color: black;
+    color: var(--space-black);
   }
   .green {
     background: var(--accent-green);
-    color: black;
+    color: var(--space-black);
   }
   .red {
     background: var(--accent-red);
-    color: black;
+    color: var(--space-black);
   }
   .orange {
     background: var(--accent-orange);
-    color: black;
+    color: var(--space-black);
   }
   .purple {
     background: var(--accent-purple);
-    color: black;
+    color: var(--space-black);
   }
   .blue {
     background: var(--accent-blue);
-    color: black;
+    color: var(--space-black);
   }
   .cyan {
     background: var(--primary-cyan);
-    color: black;
+    color: var(--space-black);
   }
   .black {
     background: var(--space-black);
-    color: white;
+    color: var(--starlight);
     border: 1px solid var(--space-gray);
   }
   .gray {
     background: var(--space-gray);
-    color: white;
+    color: var(--starlight);
   }
   .empty {
     border: none;
@@ -396,7 +429,7 @@ import Layout from '@/Layout.astro';
     align-items: center;
     gap: 2rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--surface-border);
   }
 
   .type-row:last-child {
@@ -422,9 +455,6 @@ import Layout from '@/Layout.astro';
   .text-purple {
     color: var(--accent-purple);
   }
-  .text-blue {
-    color: var(--accent-blue);
-  }
 
   .type-row h1,
   .type-row h2,
@@ -442,7 +472,7 @@ import Layout from '@/Layout.astro';
   }
 
   .anim-box {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--surface-bg-glass);
     border: 1px solid var(--space-gray);
     border-radius: 16px;
     height: 250px;
@@ -510,7 +540,7 @@ import Layout from '@/Layout.astro';
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--surface-border-bright);
     background-color: var(--space-gray); /* Fallback */
   }
 
@@ -533,10 +563,10 @@ import Layout from '@/Layout.astro';
   }
 
   .gradient-box .label {
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--overlay-dark);
     padding: 0.5rem 1rem;
     border-radius: 8px;
-    color: white;
+    color: var(--starlight);
     font-weight: bold;
     backdrop-filter: blur(5px);
   }
@@ -558,9 +588,9 @@ import Layout from '@/Layout.astro';
   }
 
   .glass {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--surface-bg-glass);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--surface-border);
   }
 
   .solid {
@@ -585,11 +615,11 @@ import Layout from '@/Layout.astro';
 
   .btn.primary {
     background: var(--primary-pink);
-    color: black;
+    color: var(--space-black);
   }
 
   .btn.primary:hover {
-    background: white;
+    background: var(--starlight);
     box-shadow: 0 0 20px var(--primary-pink);
   }
 
@@ -601,11 +631,11 @@ import Layout from '@/Layout.astro';
 
   .btn.secondary:hover {
     background: var(--primary-yellow);
-    color: black;
+    color: var(--space-black);
   }
 
   .link-demo {
-    color: white;
+    color: var(--starlight);
     font-size: 1.25rem;
   }
 
