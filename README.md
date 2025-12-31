@@ -39,13 +39,13 @@ We use `magick`, `ffmpeg`, and `flac`.
 ### Initial Setup (One-time)
 Creates a new GCP project, links billing, enables APIs, and deploys.
 ```bash
-BILLING_ACCOUNT_ID="your-id" ./infrastructure/setup_fresh.sh
+BILLING_ACCOUNT_ID="your-id" ./infra/setup_fresh.sh
 ```
 
 ### Regular Deployment
 Builds and deploys updates to the current project.
 ```bash
-./infrastructure/deploy.sh
+./infra/deploy.sh
 ```
 
 ## Local Development

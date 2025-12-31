@@ -1,13 +1,4 @@
 /* GRADIENTS */
-.primary-gradient {
-  background: linear-gradient(
-    to bottom,
-    var(--primary-pink),
-    var(--primary-yellow),
-    var(--primary-cyan)
-  );
-}
-
 /* Base class for all text gradients */
 .gradient-pink-white,
 .gradient-yellow-white,

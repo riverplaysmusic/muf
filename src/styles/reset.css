@@ -10,11 +10,3 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-
-/* Semantic Surfaces: Content is solid, Layout (div, main) is transparent */
-article, aside, blockquote, details, dialog, fieldset, footer, form, header, nav, pre, section, table {
-  background-color: var(--space-black);
-  padding: 2rem;
-  margin-bottom: 1rem;
-  border: 1px solid var(--space-gray);
-}

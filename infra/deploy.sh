@@ -23,7 +23,7 @@ echo "Region:          $REGION"
 echo "======================================================"
 
 # 1. Set Context
-# Ensure we are in the project root (assuming script is in infrastructure/)
+# Ensure we are in the project root (assuming script is in infra/)
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 cd "$PROJECT_ROOT"
@@ -67,9 +67,12 @@ fi
 IMAGE_URI="$REGION-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$APP_NAME:$IMAGE_TAG"
 
 echo "--- Building Container (Cloud Build) ---"
-# Retry loop for Cloud Build (handles IAM propagation delays for Storage/Build)
+# Copy .gcloudignore to root for gcloud to find it
+cp "$SCRIPT_DIR/.gcloudignore" "$PROJECT_ROOT/.gcloudignore"
+
+# Retry loop for Cloud Build
 for i in {1..5}; do
-  if gcloud builds submit --tag "$IMAGE_URI" .; then
+  if gcloud builds submit --config="$SCRIPT_DIR/docker/Dockerfile" --tag "$IMAGE_URI" .; then
     echo "Build submitted successfully."
     break
   else
@@ -77,6 +80,9 @@ for i in {1..5}; do
     sleep 60
   fi
 done
+
+# Clean up
+rm -f "$PROJECT_ROOT/.gcloudignore"
 
 # 5. Deploy to Cloud Run
 echo "--- Deploying to Cloud Run ---"

@@ -1,4 +1,5 @@
 User-agent: *
-Allow: /
+Disallow: /
 
-Sitemap: https://musicaluniversefactory.com/sitemap-index.xml
+# We reject discoverability and search engine optimization.
+# If you can't find us on your own, we don't want you here.

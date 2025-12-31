@@ -1,7 +1,15 @@
 {
   "name": "muf",
-  "type": "module",
   "version": "0.0.1",
+  "description": "Musical Universe Factory - Independent creative sanctuary and eternal archive",
+  "type": "module",
+  "private": true,
+  "license": "UNLICENSED",
+  "author": "Musical Universe Factory",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro build",
