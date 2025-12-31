@@ -1,5 +1,10 @@
 #!/bin/bash
-set -e
+set -euo pipefail
+
+# --- Load Configuration ---
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# shellcheck disable=SC1091
+source "$SCRIPT_DIR/config.sh"
 
 # --- Prerequisite Checks ---
 # Check if gcloud CLI is installed
@@ -17,13 +22,20 @@ if ! gcloud auth list --filter=status:ACTIVE --format="value(account)" &> /dev/n
 fi
 
 # --- Configuration ---
-APP_NAME="musical-universe-factory"
-REGION="us-central1"
-
 # Billing account must be provided
-if [ -z "$BILLING_ACCOUNT_ID" ]; then
+if [ -z "${BILLING_ACCOUNT_ID:-}" ]; then
   echo "ERROR: BILLING_ACCOUNT_ID environment variable is required."
-  echo "Usage: BILLING_ACCOUNT_ID=your-id ./infra/setup_fresh.sh"
+  echo ""
+  echo "Option 1 - Set in .env file (recommended):"
+  echo "  cp infra/.env.example infra/.env"
+  echo "  # Edit infra/.env and set BILLING_ACCOUNT_ID"
+  echo "  ./infra/setup_fresh.sh"
+  echo ""
+  echo "Option 2 - Pass as environment variable:"
+  echo "  BILLING_ACCOUNT_ID=your-id ./infra/setup_fresh.sh"
+  echo ""
+  echo "Find your billing account ID:"
+  echo "  gcloud billing accounts list"
   exit 1
 fi
 
@@ -60,6 +72,5 @@ export PROJECT_ID
 export APP_NAME
 export REGION
 
-# Get the directory where this script is located to call deploy.sh correctly
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# Call deploy.sh (SCRIPT_DIR already set at top of file)
 "$SCRIPT_DIR/deploy.sh"
