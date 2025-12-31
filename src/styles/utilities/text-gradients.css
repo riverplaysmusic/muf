@@ -19,17 +19,17 @@
   background-clip: text;
 }
 
-.gradient-pink-white       { background: linear-gradient(to right, var(--primary-pink), white); }
-.gradient-yellow-white     { background: linear-gradient(to right, var(--primary-yellow), white); }
-.gradient-cyan-white       { background: linear-gradient(to right, var(--primary-cyan), white); }
-.gradient-full-spectrum    { background: linear-gradient(to right, var(--primary-pink), var(--primary-yellow), var(--primary-cyan)); }
-.gradient-white-pink       { background: linear-gradient(to right, white, var(--primary-pink)); }
-.gradient-white-yellow     { background: linear-gradient(to right, white, var(--primary-yellow)); }
-.gradient-white-cyan       { background: linear-gradient(to right, white, var(--primary-cyan)); }
-.gradient-full-spectrum-r  { background: linear-gradient(to right, var(--primary-cyan), var(--primary-yellow), var(--primary-pink)); }
-.gradient-pink-yellow      { background: linear-gradient(to right, var(--primary-pink), var(--primary-yellow)); }
-.gradient-yellow-pink      { background: linear-gradient(to right, var(--primary-yellow), var(--primary-pink)); }
-.gradient-pink-cyan        { background: linear-gradient(to right, var(--primary-pink), var(--primary-cyan)); }
-.gradient-cyan-pink        { background: linear-gradient(to right, var(--primary-cyan), var(--primary-pink)); }
-.gradient-yellow-cyan      { background: linear-gradient(to right, var(--primary-yellow), var(--primary-cyan)); }
-.gradient-cyan-yellow      { background: linear-gradient(to right, var(--primary-cyan), var(--primary-yellow)); }
+.gradient-pink-white       { background-image: linear-gradient(to right, var(--primary-pink), white); }
+.gradient-yellow-white     { background-image: linear-gradient(to right, var(--primary-yellow), white); }
+.gradient-cyan-white       { background-image: linear-gradient(to right, var(--primary-cyan), white); }
+.gradient-full-spectrum    { background-image: linear-gradient(to right, var(--primary-pink), var(--primary-yellow), var(--primary-cyan)); }
+.gradient-white-pink       { background-image: linear-gradient(to right, white, var(--primary-pink)); }
+.gradient-white-yellow     { background-image: linear-gradient(to right, white, var(--primary-yellow)); }
+.gradient-white-cyan       { background-image: linear-gradient(to right, white, var(--primary-cyan)); }
+.gradient-full-spectrum-r  { background-image: linear-gradient(to right, var(--primary-cyan), var(--primary-yellow), var(--primary-pink)); }
+.gradient-pink-yellow      { background-image: linear-gradient(to right, var(--primary-pink), var(--primary-yellow)); }
+.gradient-yellow-pink      { background-image: linear-gradient(to right, var(--primary-yellow), var(--primary-pink)); }
+.gradient-pink-cyan        { background-image: linear-gradient(to right, var(--primary-pink), var(--primary-cyan)); }
+.gradient-cyan-pink        { background-image: linear-gradient(to right, var(--primary-cyan), var(--primary-pink)); }
+.gradient-yellow-cyan      { background-image: linear-gradient(to right, var(--primary-yellow), var(--primary-cyan)); }
+.gradient-cyan-yellow      { background-image: linear-gradient(to right, var(--primary-cyan), var(--primary-yellow)); }
