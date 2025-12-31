@@ -1,16 +1,36 @@
 #!/bin/bash
 set -e
 
+# --- Prerequisite Checks ---
+# Check if gcloud CLI is installed
+if ! command -v gcloud &> /dev/null; then
+  echo "ERROR: gcloud CLI is not installed."
+  echo "Install from: https://cloud.google.com/sdk/docs/install"
+  exit 1
+fi
+
+# Check if user is authenticated
+if ! gcloud auth list --filter=status:ACTIVE --format="value(account)" &> /dev/null; then
+  echo "ERROR: Not authenticated with gcloud."
+  echo "Run: gcloud auth login"
+  exit 1
+fi
+
 # --- Configuration ---
 # Allow overriding via environment variables
 APP_NAME="${APP_NAME:-musical-universe-factory}"
 REGION="${REGION:-us-central1}"
 REPO_NAME="${REPO_NAME:-muf-repo}"
 IMAGE_TAG="${IMAGE_TAG:-latest}"
-# PROJECT_ID should be set by the caller or the environment. 
+# PROJECT_ID should be set by the caller or the environment.
 # If not set, we default to the currently active gcloud project.
 if [ -z "$PROJECT_ID" ]; then
-    PROJECT_ID=$(gcloud config get-value project)
+    PROJECT_ID=$(gcloud config get-value project 2>/dev/null)
+    if [ -z "$PROJECT_ID" ]; then
+      echo "ERROR: No PROJECT_ID set and no default gcloud project configured."
+      echo "Run: gcloud config set project YOUR_PROJECT_ID"
+      exit 1
+    fi
     echo "Using current gcloud project: $PROJECT_ID"
 fi
 
@@ -67,12 +87,9 @@ fi
 IMAGE_URI="$REGION-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$APP_NAME:$IMAGE_TAG"
 
 echo "--- Building Container (Cloud Build) ---"
-# Copy .gcloudignore to root for gcloud to find it
-cp "$SCRIPT_DIR/.gcloudignore" "$PROJECT_ROOT/.gcloudignore"
-
-# Retry loop for Cloud Build
+# Retry loop for Cloud Build (uses Dockerfile and .gcloudignore in project root)
 for i in {1..5}; do
-  if gcloud builds submit --config="$SCRIPT_DIR/docker/Dockerfile" --tag "$IMAGE_URI" .; then
+  if gcloud builds submit --tag "$IMAGE_URI" .; then
     echo "Build submitted successfully."
     break
   else
@@ -80,9 +97,6 @@ for i in {1..5}; do
     sleep 60
   fi
 done
-
-# Clean up
-rm -f "$PROJECT_ROOT/.gcloudignore"
 
 # 5. Deploy to Cloud Run
 echo "--- Deploying to Cloud Run ---"

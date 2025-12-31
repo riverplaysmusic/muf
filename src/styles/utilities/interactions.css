@@ -5,7 +5,10 @@ a {
   text-decoration-color: var(--primary-yellow);
   text-underline-offset: 4px;
   text-decoration-thickness: 1px;
-  transition: color 0.3s var(--ease-smooth), letter-spacing 0.3s var(--ease-smooth), text-decoration-color 0.3s var(--ease-smooth);
+  transition:
+    color 0.3s var(--ease-smooth),
+    letter-spacing 0.3s var(--ease-smooth),
+    text-decoration-color 0.3s var(--ease-smooth);
 }
 
 a:hover {

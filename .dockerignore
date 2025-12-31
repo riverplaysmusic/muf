@@ -3,5 +3,5 @@ dist
 .git
 .gitignore
 .env
-infrastructure
+infra
 README.md

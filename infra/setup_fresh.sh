@@ -1,10 +1,31 @@
 #!/bin/bash
 set -e
 
+# --- Prerequisite Checks ---
+# Check if gcloud CLI is installed
+if ! command -v gcloud &> /dev/null; then
+  echo "ERROR: gcloud CLI is not installed."
+  echo "Install from: https://cloud.google.com/sdk/docs/install"
+  exit 1
+fi
+
+# Check if user is authenticated
+if ! gcloud auth list --filter=status:ACTIVE --format="value(account)" &> /dev/null; then
+  echo "ERROR: Not authenticated with gcloud."
+  echo "Run: gcloud auth login"
+  exit 1
+fi
+
 # --- Configuration ---
 APP_NAME="musical-universe-factory"
-BILLING_ACCOUNT_ID="${BILLING_ACCOUNT_ID:-01AB2C-9ECECA-DACA89}"
 REGION="us-central1"
+
+# Billing account must be provided
+if [ -z "$BILLING_ACCOUNT_ID" ]; then
+  echo "ERROR: BILLING_ACCOUNT_ID environment variable is required."
+  echo "Usage: BILLING_ACCOUNT_ID=your-id ./infra/setup_fresh.sh"
+  exit 1
+fi
 
 # Generate a random project ID to avoid conflicts
 RANDOM_SUFFIX=$((1000 + RANDOM % 9999))

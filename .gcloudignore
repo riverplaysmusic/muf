@@ -23,5 +23,8 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# infrastructure files (don't need to upload deployment scripts)
+infra/
+
 .git
 .gitignore
