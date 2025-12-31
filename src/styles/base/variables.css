@@ -10,11 +10,11 @@
   --accent-purple:    oklch(78% 0.20 290);
   --accent-blue:      oklch(88% 0.16 240);
 
-  --space-black:      oklch(0% 0 0);
-  --space-gray:       oklch(26.85% 0 0);
-  --starlight:        oklch(100% 0 0);
-  --moonlight:        oklch(82% 0 0);
-  --stardust:         oklch(65% 0 0);
+  --space-black:      oklch(0% 0 0);      /* Pure black - backgrounds */
+  --space-gray:       oklch(26.85% 0 0);  /* Dark gray - surfaces */
+  --space-mid-gray:   oklch(65% 0 0);     /* Medium gray - muted text, labels */
+  --space-light-gray: oklch(82% 0 0);     /* Light gray - headings */
+  --starlight:        oklch(100% 0 0);    /* Pure white - body text */
 
   /* SURFACE COLORS */
   --surface-border:   rgba(255, 255, 255, 0.1);

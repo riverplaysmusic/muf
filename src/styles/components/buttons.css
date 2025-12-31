@@ -1,0 +1,32 @@
+/* --- BUTTONS --- */
+
+.btn {
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.btn.primary {
+  background: var(--primary-pink);
+  color: var(--space-black);
+}
+
+.btn.primary:hover {
+  background: var(--starlight);
+  box-shadow: 0 0 20px var(--primary-pink);
+}
+
+.btn.secondary {
+  background: transparent;
+  border: 2px solid var(--primary-yellow);
+  color: var(--primary-yellow);
+}
+
+.btn.secondary:hover {
+  background: var(--primary-yellow);
+  color: var(--space-black);
+}

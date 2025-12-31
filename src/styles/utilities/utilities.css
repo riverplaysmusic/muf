@@ -1,0 +1,54 @@
+/* --- UTILITIES --- */
+
+/* TYPOGRAPHY UTILITIES */
+.highlight {
+  color: var(--primary-yellow);
+  font-weight: 600;
+}
+
+.anim-label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--space-mid-gray);
+}
+
+.section-heading {
+  color: var(--starlight);
+}
+
+.label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* TEXT COLOR UTILITIES */
+.text-green {
+  color: var(--accent-green);
+}
+.text-red {
+  color: var(--accent-red);
+}
+.text-orange {
+  color: var(--accent-orange);
+}
+.text-purple {
+  color: var(--accent-purple);
+}
+
+/* SECTION MODIFIERS (organizational markers with no additional styling) */
+.colors,
+.text-gradients,
+.typography,
+.animations,
+.gradients,
+.elements {
+  /* These classes are organizational markers with no additional styling */
+}
+
+.neutrals,
+.accents {
+  margin-top: 2rem;
+}

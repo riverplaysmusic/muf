@@ -1,0 +1,37 @@
+/* --- TYPOGRAPHY DEMO --- */
+
+.type-scale {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.type-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  gap: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.type-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.type-row h1,
+.type-row h2,
+.type-row h3,
+.type-row p {
+  margin: 0;
+  color: var(--starlight);
+}
+
+@media (max-width: 768px) {
+  .type-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}

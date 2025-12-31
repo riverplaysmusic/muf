@@ -1,0 +1,41 @@
+/* --- CARDS --- */
+
+.component-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  padding: 2rem;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.glass {
+  background: var(--surface-bg-glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--surface-border);
+}
+
+.solid {
+  background: var(--space-gray);
+  border: 1px solid var(--space-gray);
+}
+
+.outline {
+  background: transparent;
+  border: 2px solid var(--primary-cyan);
+}
+
+.link-demo {
+  color: var(--starlight);
+  font-size: 1.25rem;
+}
+
+.link-demo:hover {
+  color: var(--primary-yellow);
+}
