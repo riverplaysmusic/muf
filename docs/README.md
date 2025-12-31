@@ -86,7 +86,7 @@ npm run dev
 - **Mux:** Video playback.
 
 ## UI/UX Design
-- **Aesthetic:** Black background, high-contrast, psychedelic neon accents. Bold, aggressive, modern. Neubrutalism, electric, vintage 80s synthwave.
+- **Aesthetic:** Black background, high-contrast, psychedelic neon accents. Bold, aggressive, modern. Neubrutalism, electric, vintage 80s synthwave, Retro-Industrial. 
 - **Typography:** Large fonts, minimal clutter.
 - **No Components:** CSS is the abstraction. Use raw HTML and CSS. 
 - **Layout:** 

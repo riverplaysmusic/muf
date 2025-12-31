@@ -29,7 +29,7 @@
   background-clip: text;
 }
 
-.gradient-brand {
+.gradient-full-spectrum {
   background: linear-gradient(to right, var(--primary-pink), var(--primary-yellow), var(--primary-cyan));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -57,8 +57,22 @@
   background-clip: text;
 }
 
-.gradient-brand-reverse {
+.gradient-full-spectrum-r {
   background: linear-gradient(to right, var(--primary-cyan), var(--primary-yellow), var(--primary-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-full-spectrum-edges {
+  background: linear-gradient(to right, white, var(--primary-pink), var(--primary-yellow), var(--primary-cyan), white);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-full-spectrum-center {
+  background: linear-gradient(to right, var(--primary-pink), var(--primary-yellow), white, var(--primary-cyan));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
