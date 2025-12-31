@@ -11,14 +11,10 @@
   position: relative;
   z-index: 1;
 
-  /* existing vars */
   --cut-size: 30px;
   --edge-thickness: 2px;
   --accent-color: var(--primary-yellow);
   --inner-bg: var(--space-black);
-
-  /* NEW: large top-left cut */
-  --cut-size-lg: 90px;
 
   transition: --accent-color 0.15s ease-out;
 }
@@ -32,13 +28,12 @@
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 
   clip-path: polygon(
-    var(--cut-size-lg) 0%,
+    var(--cut-size) 0%,
     100% 0%,
     100% calc(100% - var(--cut-size)),
     calc(100% - var(--cut-size)) 100%,
     0% 100%,
-    0% var(--cut-size),
-    0% var(--cut-size-lg)
+    0% var(--cut-size)
   );
 }
 
@@ -51,18 +46,13 @@
   transform: translate(4px, 4px);
 
   clip-path: polygon(
-    var(--cut-size-lg) 0%,
+    var(--cut-size) 0%,
     100% 0%,
     100% calc(100% - var(--cut-size)),
     calc(100% - var(--cut-size)) 100%,
     0% 100%,
-    0% var(--cut-size),
-    0% var(--cut-size-lg)
+    0% var(--cut-size)
   );
 
   transition: background-color 0.15s ease-out;
-}
-
-.surface:hover::after {
-  background-color: var(--primary-pink);
 }

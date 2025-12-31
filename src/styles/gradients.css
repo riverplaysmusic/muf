@@ -8,114 +8,37 @@
   );
 }
 
-.gradient-pink-white {
-  background: linear-gradient(to right, var(--primary-pink), white);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-yellow-white {
-  background: linear-gradient(to right, var(--primary-yellow), white);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-cyan-white {
-  background: linear-gradient(to right, var(--primary-cyan), white);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-full-spectrum {
-  background: linear-gradient(to right, var(--primary-pink), var(--primary-yellow), var(--primary-cyan));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-white-pink {
-  background: linear-gradient(to right, white, var(--primary-pink));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-white-yellow {
-  background: linear-gradient(to right, white, var(--primary-yellow));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-white-cyan {
-  background: linear-gradient(to right, white, var(--primary-cyan));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-full-spectrum-r {
-  background: linear-gradient(to right, var(--primary-cyan), var(--primary-yellow), var(--primary-pink));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-full-spectrum-edges {
-  background: linear-gradient(to right, white, var(--primary-pink), var(--primary-yellow), var(--primary-cyan), white);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-full-spectrum-center {
-  background: linear-gradient(to right, var(--primary-pink), var(--primary-yellow), white, var(--primary-cyan));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-pink-yellow {
-  background: linear-gradient(to right, var(--primary-pink), var(--primary-yellow));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-yellow-pink {
-  background: linear-gradient(to right, var(--primary-yellow), var(--primary-pink));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-pink-cyan {
-  background: linear-gradient(to right, var(--primary-pink), var(--primary-cyan));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-cyan-pink {
-  background: linear-gradient(to right, var(--primary-cyan), var(--primary-pink));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-yellow-cyan {
-  background: linear-gradient(to right, var(--primary-yellow), var(--primary-cyan));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
+/* Base class for all text gradients */
+.gradient-pink-white,
+.gradient-yellow-white,
+.gradient-cyan-white,
+.gradient-full-spectrum,
+.gradient-white-pink,
+.gradient-white-yellow,
+.gradient-white-cyan,
+.gradient-full-spectrum-r,
+.gradient-pink-yellow,
+.gradient-yellow-pink,
+.gradient-pink-cyan,
+.gradient-cyan-pink,
+.gradient-yellow-cyan,
 .gradient-cyan-yellow {
-  background: linear-gradient(to right, var(--primary-cyan), var(--primary-yellow));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+.gradient-pink-white       { background: linear-gradient(to right, var(--primary-pink), white); }
+.gradient-yellow-white     { background: linear-gradient(to right, var(--primary-yellow), white); }
+.gradient-cyan-white       { background: linear-gradient(to right, var(--primary-cyan), white); }
+.gradient-full-spectrum    { background: linear-gradient(to right, var(--primary-pink), var(--primary-yellow), var(--primary-cyan)); }
+.gradient-white-pink       { background: linear-gradient(to right, white, var(--primary-pink)); }
+.gradient-white-yellow     { background: linear-gradient(to right, white, var(--primary-yellow)); }
+.gradient-white-cyan       { background: linear-gradient(to right, white, var(--primary-cyan)); }
+.gradient-full-spectrum-r  { background: linear-gradient(to right, var(--primary-cyan), var(--primary-yellow), var(--primary-pink)); }
+.gradient-pink-yellow      { background: linear-gradient(to right, var(--primary-pink), var(--primary-yellow)); }
+.gradient-yellow-pink      { background: linear-gradient(to right, var(--primary-yellow), var(--primary-pink)); }
+.gradient-pink-cyan        { background: linear-gradient(to right, var(--primary-pink), var(--primary-cyan)); }
+.gradient-cyan-pink        { background: linear-gradient(to right, var(--primary-cyan), var(--primary-pink)); }
+.gradient-yellow-cyan      { background: linear-gradient(to right, var(--primary-yellow), var(--primary-cyan)); }
+.gradient-cyan-yellow      { background: linear-gradient(to right, var(--primary-cyan), var(--primary-yellow)); }
