@@ -57,6 +57,10 @@ import Layout from '@/layouts/Layout.astro';
             <span class="swatch-label">Accent Orange</span>
             <span class="swatch-hex">oklch(84% 0.18 65)</span>
           </div>
+          <div class="swatch blue">
+            <span class="swatch-label">Accent Blue</span>
+            <span class="swatch-hex">oklch(88% 0.16 240)</span>
+          </div>
           <div class="swatch purple">
             <span class="swatch-label">Accent Purple</span>
             <span class="swatch-hex">oklch(78% 0.20 290)</span>
@@ -94,23 +98,23 @@ import Layout from '@/layouts/Layout.astro';
     <section class="screen typography">
       <div class="content">
         <h2 style="color: var(--starlight);">Typography</h2>
-        <p class="desc">Powered by <span class="highlight">Geist Variable</span>. Precision engineered for legibility.</p>
+        <p class="desc">Powered by <a href="https://vercel.com/font" target="_blank" rel="noopener noreferrer"><span class="highlight">Geist Variable</span></a>. Precision engineered for legibility.</p>
         
         <div class="type-scale">
           <div class="type-row">
-            <span class="label">Headline 1</span>
+            <span class="label text-green">Headline 1</span>
             <h1>The Quick Brown Fox</h1>
           </div>
           <div class="type-row">
-            <span class="label">Headline 2</span>
+            <span class="label text-red">Headline 2</span>
             <h2>Jumps Over The</h2>
           </div>
           <div class="type-row">
-            <span class="label">Headline 3</span>
+            <span class="label text-orange">Headline 3</span>
             <h3>Lazy Dog</h3>
           </div>
           <div class="type-row">
-            <span class="label">Body</span>
+            <span class="label text-purple">Body</span>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
           </div>
         </div>
@@ -267,7 +271,7 @@ import Layout from '@/layouts/Layout.astro';
   /* COLORS */
   .palette-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 2rem;
   }
 
@@ -304,6 +308,7 @@ import Layout from '@/layouts/Layout.astro';
   .red { background: var(--accent-red); color: black; }
   .orange { background: var(--accent-orange); color: black; }
   .purple { background: var(--accent-purple); color: black; }
+  .blue { background: var(--accent-blue); color: black; }
   .cyan { background: var(--primary-cyan); color: black; }
   .black { background: var(--space-black); color: white; border: 1px solid var(--space-gray); }
   .gray { background: var(--space-gray); color: white; }
@@ -343,11 +348,16 @@ import Layout from '@/layouts/Layout.astro';
   }
 
   .label {
-    color: var(--primary-cyan);
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
   }
+
+  .text-green { color: var(--accent-green); }
+  .text-red { color: var(--accent-red); }
+  .text-orange { color: var(--accent-orange); }
+  .text-purple { color: var(--accent-purple); }
+  .text-blue { color: var(--accent-blue); }
 
   .type-row h1, 
   .type-row h2, 
@@ -358,8 +368,7 @@ import Layout from '@/layouts/Layout.astro';
   }
 
   .highlight {
-    color: var(--primary-yellow);
-    text-decoration: underline;
+    /* Styles are now inherited from the global link styles */
   }
 
   /* ANIMATIONS */

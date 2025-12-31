@@ -1,12 +1,18 @@
 /* --- INTERACTIONS --- */
 a {
-  color: inherit;
-  text-decoration: none;
-  transition: all 0.3s var(--ease-smooth);
+  color: var(--accent-blue);
+  text-decoration: underline dashed;
+  text-decoration-color: var(--primary-yellow);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: color 0.3s var(--ease-smooth), letter-spacing 0.3s var(--ease-smooth), text-decoration-color 0.3s var(--ease-smooth);
 }
 
 a:hover {
-  text-decoration: underline;
+  color: var(--starlight);
+  letter-spacing: 0.05em;
+  text-decoration-style: solid;
+  text-decoration-color: var(--primary-pink);
 }
 
 img {

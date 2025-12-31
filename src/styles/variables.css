@@ -8,6 +8,7 @@
   --accent-red:       oklch(78% 0.20 25);
   --accent-orange:    oklch(84% 0.18 65);
   --accent-purple:    oklch(78% 0.20 290);
+  --accent-blue:      oklch(88% 0.16 240);
   
   --space-black:      oklch(0% 0 0);
   --space-gray:       oklch(26.85% 0 0);
