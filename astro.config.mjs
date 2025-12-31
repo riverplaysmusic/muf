@@ -14,4 +14,9 @@ export default defineConfig({
       PUBLIC_SUPABASE_ANON_KEY: envField.string({ context: 'client', access: 'public', optional: false }),
     },
   },
+  vite: {
+    server: {
+      allowedHosts: ['honeycomb'],
+    },
+  },
 });

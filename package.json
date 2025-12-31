@@ -3,14 +3,16 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --host",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.6",
     "@astrojs/node": "^9.5.1",
     "@supabase/supabase-js": "^2.89.0",
-    "astro": "^5.16.6"
+    "astro": "^5.16.6",
+    "typescript": "^5.9.3"
   }
 }
