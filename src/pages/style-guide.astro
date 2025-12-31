@@ -42,6 +42,7 @@ import Layout from '@/layouts/Layout.astro';
             <span class="swatch-label">Space Gray</span>
             <span class="swatch-hex">oklch(26.85% 0 0)</span>
           </div>
+          <div class="swatch empty"></div>
         </div>
 
         <div class="palette-grid accents" style="margin-top: 2rem;">
@@ -218,21 +219,6 @@ import Layout from '@/layouts/Layout.astro';
     }
   }
 
-  .screen {
-    min-height: auto;
-    width: 100%;
-    display: flex;
-    flex-direction: column; /* Ensure vertical stacking */
-    align-items: center;
-    justify-content: flex-start; /* Align content to the top */
-    padding: 4rem 2rem; /* Reduced top padding */
-    box-sizing: border-box;
-    position: relative;
-    background-color: var(--space-black);
-    margin-bottom: 2rem;
-    border-radius: 24px; 
-  }
-
   .content {
     max-width: 1200px;
     width: 100%;
@@ -280,7 +266,7 @@ import Layout from '@/layouts/Layout.astro';
   }
 
   .swatch {
-    height: 300px;
+    aspect-ratio: 1 / 1;
     border-radius: 16px;
     padding: 1.5rem;
     display: flex;
@@ -316,6 +302,8 @@ import Layout from '@/layouts/Layout.astro';
   .cyan { background: var(--primary-cyan); color: black; }
   .black { background: var(--space-black); color: white; border: 1px solid var(--space-gray); }
   .gray { background: var(--space-gray); color: white; }
+  .empty { border: none; background: transparent; pointer-events: none; }
+  .empty:hover { transform: none; }
 
   .gradient-text-grid {
     display: flex;
