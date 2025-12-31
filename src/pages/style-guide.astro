@@ -1,0 +1,517 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout>
+  <main class="brochure">
+    <!-- HERO SECTION -->
+    <section class="screen hero">
+      <div class="content">
+        <h1 class="glitch-text">Design System</h1>
+        <p class="subtitle">Musical Universe Factory</p>
+      </div>
+    </section>
+
+    <!-- COLOR PALETTE -->
+    <section class="screen colors">
+      <div class="content">
+        <h2 style="color: var(--starlight);">Color Palette</h2>
+        <p class="desc">A high-contrast, neon-infused palette designed for deep space visibility.</p>
+        
+        <div class="palette-grid">
+          <div class="swatch pink">
+            <span class="swatch-label">Electric Pink</span>
+            <span class="swatch-hex">oklch(65% 0.26 350)</span>
+          </div>
+          <div class="swatch yellow">
+            <span class="swatch-label">Neon Yellow</span>
+            <span class="swatch-hex">oklch(95% 0.20 105)</span>
+          </div>
+          <div class="swatch cyan">
+            <span class="swatch-label">Cyan Blue</span>
+            <span class="swatch-hex">oklch(80% 0.18 200)</span>
+          </div>
+        </div>
+        
+        <div class="palette-grid neutrals" style="margin-top: 2rem;">
+          <div class="swatch black">
+            <span class="swatch-label">Space Black</span>
+            <span class="swatch-hex">oklch(0% 0 0)</span>
+          </div>
+          <div class="swatch gray">
+            <span class="swatch-label">Space Gray</span>
+            <span class="swatch-hex">oklch(26.85% 0 0)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEXT GRADIENTS -->
+    <section class="screen text-gradients">
+      <div class="content">
+        <h2 style="color: var(--starlight);">Text Gradients</h2>
+        <p class="desc">High-impact typographic treatments.</p>
+
+        <div class="gradient-text-grid">
+          <h1 class="gradient-brand">Full Spectrum</h1>
+          <h1 class="gradient-brand-reverse">Full Spectrum R</h1>
+          <h1 class="gradient-pink-white">Pink to White</h1>
+          <h1 class="gradient-white-pink">White to Pink</h1>
+          <h1 class="gradient-yellow-white">Yellow to White</h1>
+          <h1 class="gradient-white-yellow">White to Yellow</h1>
+          <h1 class="gradient-cyan-white">Cyan to White</h1>
+          <h1 class="gradient-white-cyan">White to Cyan</h1>
+          <h1 class="gradient-pink-yellow">Pink to Yellow</h1>
+          <h1 class="gradient-yellow-pink">Yellow to Pink</h1>
+          <h1 class="gradient-pink-cyan">Pink to Cyan</h1>
+          <h1 class="gradient-cyan-pink">Cyan to Pink</h1>
+          <h1 class="gradient-yellow-cyan">Yellow to Cyan</h1>
+          <h1 class="gradient-cyan-yellow">Cyan to Yellow</h1>
+        </div>
+      </div>
+    </section>
+
+    <!-- TYPOGRAPHY -->
+    <section class="screen typography">
+      <div class="content">
+        <h2 style="color: var(--starlight);">Typography</h2>
+        <p class="desc">Powered by <span class="highlight">Geist Variable</span>. Precision engineered for legibility.</p>
+        
+        <div class="type-scale">
+          <div class="type-row">
+            <span class="label">Headline 1</span>
+            <h1>The Quick Brown Fox</h1>
+          </div>
+          <div class="type-row">
+            <span class="label">Headline 2</span>
+            <h2>Jumps Over The</h2>
+          </div>
+          <div class="type-row">
+            <span class="label">Headline 3</span>
+            <h3>Lazy Dog</h3>
+          </div>
+          <div class="type-row">
+            <span class="label">Body</span>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ANIMATIONS -->
+    <section class="screen animations">
+      <div class="content">
+        <h2 style="color: var(--starlight);">Motion & Timing</h2>
+        <p class="desc">Fluid transitions powered by <code>--ease-smooth</code>.</p>
+        
+        <div class="anim-grid">
+          <div class="anim-box hover-scale">
+            <span class="anim-label">Hover Scale</span>
+            <div class="anim-object"></div>
+          </div>
+          
+          <div class="anim-box hover-slide">
+            <span class="anim-label">Hover Slide</span>
+            <div class="anim-object"></div>
+          </div>
+
+          <div class="anim-box infinite-pulse">
+            <span class="anim-label">Infinite Pulse</span>
+            <div class="anim-object"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRADIENTS -->
+    <section class="screen gradients">
+      <div class="content">
+        <h2 style="color: var(--starlight);">Gradients</h2>
+        <p class="desc">Signature brand gradients.</p>
+
+        <div class="gradient-grid">
+          <div class="gradient-box vertical">
+            <span class="label">Top to Bottom</span>
+          </div>
+          <div class="gradient-box horizontal">
+            <span class="label">Left to Right</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- UI ELEMENTS -->
+    <section class="screen elements">
+      <div class="content">
+        <h2 style="color: var(--starlight);">Interface Elements</h2>
+        <p class="desc">Interactive components with smooth states and high affordance.</p>
+
+        <div class="component-grid">
+          <div class="card glass">
+            <h3>Glass Card</h3>
+            <p>Background blur with a subtle border. Perfect for floating content.</p>
+            <button class="btn primary">Primary Action</button>
+          </div>
+
+          <div class="card solid">
+            <h3>Solid Card</h3>
+            <p>High contrast background for primary information.</p>
+            <button class="btn secondary">Secondary Action</button>
+          </div>
+
+          <div class="card outline">
+            <h3>Outline Card</h3>
+            <p>Minimalist container for secondary details.</p>
+            <a href="#" class="link-demo">Inline Link Style</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  /* BROCHURE LAYOUT */
+  .brochure {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    overflow-x: hidden;
+    padding: 1rem; /* Small screens: very little margin */
+    box-sizing: border-box;
+  }
+
+  @media (min-width: 768px) {
+    .brochure {
+      padding: 2rem 5%; /* Medium screens: some margin */
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .brochure {
+      padding: 4rem 8rem; /* Large screens: more margin, shows background */
+    }
+  }
+
+  .screen {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    box-sizing: border-box;
+    position: relative;
+    background-color: var(--space-black);
+    margin-bottom: 2rem;
+    border-radius: 24px; /* Soften the edges to reveal background */
+  }
+
+  .content {
+    max-width: 1200px;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .desc {
+    font-size: 1.5rem;
+    color: var(--stardust);
+    max-width: 600px;
+    margin-bottom: 3rem;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 55vh;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(4rem, 10vw, 8rem);
+    line-height: 0.9;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, var(--electric-pink), var(--neon-yellow), var(--cyan-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle {
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5em;
+    color: white;
+  }
+
+  /* COLORS */
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+  }
+
+  .swatch {
+    height: 300px;
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transition: transform 0.3s var(--ease-smooth);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .swatch:hover {
+    transform: translateY(-10px) scale(1.02);
+    z-index: 2;
+  }
+
+  .swatch-label {
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 1.25rem;
+    display: block;
+  }
+
+  .swatch-hex {
+    opacity: 0.7;
+  }
+
+  .pink { background: var(--electric-pink); color: black; }
+  .yellow { background: var(--neon-yellow); color: black; }
+  .cyan { background: var(--cyan-blue); color: black; }
+  .black { background: var(--space-black); color: white; border: 1px solid var(--space-gray); }
+  .gray { background: var(--space-gray); color: white; }
+
+  .gradient-text-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .gradient-text-grid h1 {
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1.1;
+    margin: 0;
+    width: fit-content;
+  }
+
+  /* TYPOGRAPHY */
+  .type-scale {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .type-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .type-row:last-child {
+    border-bottom: none;
+  }
+
+  .label {
+    color: var(--cyan-blue);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .type-row h1, 
+  .type-row h2, 
+  .type-row h3, 
+  .type-row p {
+    margin: 0;
+    color: var(--starlight);
+  }
+
+  .highlight {
+    color: var(--neon-yellow);
+    text-decoration: underline;
+  }
+
+  /* ANIMATIONS */
+  .anim-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+  }
+
+  .anim-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--space-gray);
+    border-radius: 16px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .anim-object {
+    width: 60px;
+    height: 60px;
+    background: var(--neon-yellow);
+    border-radius: 8px;
+    transition: all 0.5s var(--ease-smooth);
+  }
+
+  .hover-scale:hover .anim-object {
+    transform: scale(1.5) rotate(15deg);
+    background: var(--electric-pink);
+    box-shadow: 0 0 30px var(--electric-pink);
+  }
+
+  .hover-slide:hover .anim-object {
+    transform: translateX(50px);
+    background: var(--cyan-blue);
+    border-radius: 50%;
+  }
+
+  .infinite-pulse .anim-object {
+    animation: pulse 2s infinite var(--ease-smooth);
+    background: var(--electric-pink);
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; box-shadow: 0 0 20px var(--electric-pink); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  /* GRADIENTS */
+  .gradient-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+  }
+
+  .gradient-box {
+    width: 100%;
+    height: 300px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,0.2);
+    background-color: var(--space-gray); /* Fallback */
+  }
+
+  .gradient-box.vertical {
+    background-image: linear-gradient(
+      to bottom,
+      var(--electric-pink),
+      var(--neon-yellow),
+      var(--cyan-blue)
+    );
+  }
+
+  .gradient-box.horizontal {
+    background-image: linear-gradient(
+      to right,
+      var(--electric-pink),
+      var(--neon-yellow),
+      var(--cyan-blue)
+    );
+  }
+
+  .gradient-box .label {
+    background: rgba(0,0,0,0.5);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    backdrop-filter: blur(5px);
+  }
+
+  /* ELEMENTS */
+  .component-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .card {
+    padding: 2rem;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .solid {
+    background: var(--space-gray);
+    border: 1px solid var(--space-gray);
+  }
+
+  .outline {
+    background: transparent;
+    border: 2px solid var(--cyan-blue);
+  }
+
+  .btn {
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-smooth);
+  }
+
+  .btn.primary {
+    background: var(--electric-pink);
+    color: black;
+  }
+
+  .btn.primary:hover {
+    background: white;
+    box-shadow: 0 0 20px var(--electric-pink);
+  }
+
+  .btn.secondary {
+    background: transparent;
+    border: 2px solid var(--neon-yellow);
+    color: var(--neon-yellow);
+  }
+
+  .btn.secondary:hover {
+    background: var(--neon-yellow);
+    color: black;
+  }
+
+  .link-demo {
+    color: white;
+    font-size: 1.25rem;
+  }
+
+  .link-demo:hover {
+    color: var(--neon-yellow);
+  }
+
+  @media (max-width: 768px) {
+    .type-row {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+</style>

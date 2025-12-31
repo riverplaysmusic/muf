@@ -1,0 +1,14 @@
+:root {
+  /* COLORS */
+  --electric-pink:    oklch(65% 0.26 350);
+  --neon-yellow:      oklch(95% 0.20 105);
+  --cyan-blue:        oklch(80% 0.18 200);  
+  --space-black:      oklch(0% 0 0);
+  --space-gray:       oklch(26.85% 0 0);
+  --starlight:        oklch(100% 0 0);
+  --moonlight:        oklch(82% 0 0);
+  --stardust:         oklch(65% 0 0);
+
+  /* ANIMATIONS */
+  --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}

@@ -1,10 +1,13 @@
 ---
 import { Image } from 'astro:assets';
-import logo from '../assets/Musical_Universe_Factory.webp';
+import logo from '@/assets/Musical_Universe_Factory.webp';
 ---
 
 <nav class="navbar">
   <a href="/" class="logo-link">
     <Image src={logo} alt="Musical Universe Factory Logo" height={80} class="nav-logo" />
   </a>
+  <ul class="nav-links">
+    <li><a href="/style-guide" class="nav-item">Style Guide</a></li>
+  </ul>
 </nav>
