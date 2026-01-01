@@ -10,11 +10,16 @@
   box-sizing: border-box;
   position: relative;
   z-index: 1;
+  transition: transform var(--transition-duration) var(--ease-smooth);
 
   --cut-size: 30px;
   --edge-thickness: 2px;
   --accent-color: var(--primary-yellow);
   --inner-bg: var(--space-black);
+}
+
+.surface:hover {
+  transform: translateY(-2px);
 }
 
 .surface::before {
