@@ -191,7 +191,7 @@ import "@/styles/style-guide.css";
         </p>
 
         <div class="component-grid stagger-in">
-          <div class="card glass">
+          <div class="glass">
             <h3>Glass Card</h3>
             <p>
               Background blur with a subtle border. Perfect for floating
@@ -200,16 +200,16 @@ import "@/styles/style-guide.css";
             <button class="btn primary">Primary Action</button>
           </div>
 
-          <div class="card solid">
+          <div class="solid">
             <h3>Solid Card</h3>
             <p>High contrast background for primary information.</p>
             <button class="btn secondary">Secondary Action</button>
           </div>
 
-          <div class="card outline">
+          <div class="outline">
             <h3>Outline Card</h3>
             <p>Minimalist container for secondary details.</p>
-            <a href="#" class="link-demo">Inline Link Style</a>
+            <a href="#">Inline Link Style</a>
           </div>
         </div>
       </div>
@@ -223,9 +223,9 @@ import "@/styles/style-guide.css";
           High-contrast inputs with bold borders and clear validation states.
         </p>
 
-        <form class="stagger-in" style="display: flex; flex-direction: column; gap: var(--space-lg); max-width: 600px;">
+        <form class="stagger-in">
           <!-- Text Input -->
-          <div class="form-group">
+          <div class="form-field">
             <label for="text-input">Text Input</label>
             <input
               type="text"
@@ -235,7 +235,7 @@ import "@/styles/style-guide.css";
           </div>
 
           <!-- Email Input -->
-          <div class="form-group">
+          <div class="form-field">
             <label for="email-input">Email</label>
             <input
               type="email"
@@ -245,7 +245,7 @@ import "@/styles/style-guide.css";
           </div>
 
           <!-- Textarea -->
-          <div class="form-group">
+          <div class="form-field">
             <label for="message-input">Message</label>
             <textarea
               id="message-input"
@@ -254,7 +254,7 @@ import "@/styles/style-guide.css";
           </div>
 
           <!-- Select Dropdown -->
-          <div class="form-group">
+          <div class="form-field">
             <label for="select-input">Select Option</label>
             <select id="select-input">
               <option value="">Choose one...</option>
@@ -265,26 +265,26 @@ import "@/styles/style-guide.css";
           </div>
 
           <!-- Checkbox -->
-          <div class="checkbox-group">
+          <div class="form-field inline">
             <input type="checkbox" id="checkbox-input" />
             <label for="checkbox-input">I agree to the terms</label>
           </div>
 
           <!-- Radio Buttons -->
-          <div class="form-group">
+          <div class="form-field">
             <label>Choose Format</label>
-            <div class="radio-group">
+            <div class="form-field inline">
               <input type="radio" id="radio-flac" name="format" checked />
               <label for="radio-flac">FLAC</label>
             </div>
-            <div class="radio-group">
+            <div class="form-field inline">
               <input type="radio" id="radio-zip" name="format" />
               <label for="radio-zip">ZIP</label>
             </div>
           </div>
 
           <!-- Error State -->
-          <div class="form-group error">
+          <div class="form-field error">
             <label for="error-input">Error State</label>
             <input
               type="email"
@@ -295,7 +295,7 @@ import "@/styles/style-guide.css";
           </div>
 
           <!-- Success State -->
-          <div class="form-group success">
+          <div class="form-field success">
             <label for="success-input">Success State</label>
             <input
               type="email"
@@ -306,7 +306,7 @@ import "@/styles/style-guide.css";
           </div>
 
           <!-- Disabled State -->
-          <div class="form-group">
+          <div class="form-field">
             <label for="disabled-input">Disabled Input</label>
             <input
               type="text"
@@ -316,7 +316,7 @@ import "@/styles/style-guide.css";
             />
           </div>
 
-          <button type="submit" class="btn primary">Submit Form</button>
+          <button type="submit" class="btn retro">Submit Form</button>
         </form>
       </div>
     </section>

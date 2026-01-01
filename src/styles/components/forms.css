@@ -1,7 +1,7 @@
 /* --- FORMS --- */
 
-/* Form Groups */
-.form-group {
+/* Form Fields */
+.form-field {
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
@@ -44,6 +44,7 @@ select:focus {
   border-color: var(--accent-green);
   box-shadow: 4px 4px 0 var(--accent-green);
   transform: translate(-2px, -2px);
+  outline: none;
 }
 
 /* Placeholder */
@@ -85,6 +86,14 @@ input[type="radio"] {
   box-shadow: 2px 2px 0 var(--primary-yellow);
 }
 
+input[type="checkbox"]:disabled,
+input[type="radio"]:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: var(--space-gray);
+  box-shadow: 2px 2px 0 var(--space-gray);
+}
+
 input[type="radio"] {
   border-radius: 50%;
 }
@@ -119,47 +128,48 @@ input[type="radio"]:checked::after {
   transform: translate(-50%, -50%);
 }
 
-/* Checkbox/Radio with Label */
-.checkbox-group,
-.radio-group {
-  display: flex;
+/* Checkbox/Radio with Label (inline variant) */
+.form-field.inline {
+  flex-direction: row;
   align-items: center;
-  gap: var(--space-sm);
-  cursor: pointer;
 }
 
-.checkbox-group label,
-.radio-group label {
+.form-field.inline label {
   cursor: pointer;
   margin: 0;
+  text-transform: none;
+  font-weight: 400;
+  letter-spacing: normal;
 }
 
 /* Error State */
-.form-group.error input,
-.form-group.error textarea,
-.form-group.error select {
+.form-field.error input,
+.form-field.error textarea,
+.form-field.error select {
   border-color: var(--accent-red);
   box-shadow: 3px 3px 0 var(--accent-red);
 }
 
-.form-group.error input:focus,
-.form-group.error textarea:focus,
-.form-group.error select:focus {
+.form-field.error input:focus,
+.form-field.error textarea:focus,
+.form-field.error select:focus {
+  border-color: var(--accent-red);
   box-shadow: 4px 4px 0 var(--accent-red);
   transform: translate(-2px, -2px);
 }
 
 /* Success State */
-.form-group.success input,
-.form-group.success textarea,
-.form-group.success select {
+.form-field.success input,
+.form-field.success textarea,
+.form-field.success select {
   border-color: var(--accent-green);
   box-shadow: 3px 3px 0 var(--accent-green);
 }
 
-.form-group.success input:focus,
-.form-group.success textarea:focus,
-.form-group.success select:focus {
+.form-field.success input:focus,
+.form-field.success textarea:focus,
+.form-field.success select:focus {
+  border-color: var(--accent-green);
   box-shadow: 4px 4px 0 var(--accent-green);
   transform: translate(-2px, -2px);
 }

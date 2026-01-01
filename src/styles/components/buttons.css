@@ -30,3 +30,18 @@
   background: var(--primary-yellow);
   color: var(--space-black);
 }
+
+.btn.retro {
+  background: var(--accent-blue);
+  border: 2px solid var(--accent-blue);
+  color: var(--space-black);
+  border-radius: 0;
+  font-size: 1.25rem;
+  box-shadow: 6px 6px 0 var(--accent-orange);
+}
+
+.btn.retro:hover,
+.btn.retro:active {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 var(--accent-orange);
+}
