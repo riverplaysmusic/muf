@@ -214,5 +214,111 @@ import "@/styles/style-guide.css";
         </div>
       </div>
     </section>
+
+    <!-- FORMS -->
+    <section class="surface forms">
+      <div class="content">
+        <h2 class="section-heading">Forms</h2>
+        <p class="desc">
+          High-contrast inputs with bold borders and clear validation states.
+        </p>
+
+        <div class="form-container stagger-in">
+          <!-- Text Input -->
+          <div class="form-group">
+            <label for="demo-text">Text Input</label>
+            <input
+              type="text"
+              id="demo-text"
+              placeholder="Enter your name"
+            />
+          </div>
+
+          <!-- Email Input -->
+          <div class="form-group">
+            <label for="demo-email">Email</label>
+            <input
+              type="email"
+              id="demo-email"
+              placeholder="your@email.com"
+            />
+          </div>
+
+          <!-- Textarea -->
+          <div class="form-group">
+            <label for="demo-textarea">Message</label>
+            <textarea
+              id="demo-textarea"
+              placeholder="Tell us something..."
+            ></textarea>
+          </div>
+
+          <!-- Select Dropdown -->
+          <div class="form-group">
+            <label for="demo-select">Select Option</label>
+            <select id="demo-select">
+              <option value="">Choose one...</option>
+              <option value="1">Option One</option>
+              <option value="2">Option Two</option>
+              <option value="3">Option Three</option>
+            </select>
+          </div>
+
+          <!-- Checkbox -->
+          <div class="checkbox-group">
+            <input type="checkbox" id="demo-checkbox" />
+            <label for="demo-checkbox">I agree to the terms</label>
+          </div>
+
+          <!-- Radio Buttons -->
+          <div class="form-group">
+            <label>Choose Format</label>
+            <div class="radio-group">
+              <input type="radio" id="demo-flac" name="format" checked />
+              <label for="demo-flac">FLAC</label>
+            </div>
+            <div class="radio-group">
+              <input type="radio" id="demo-zip" name="format" />
+              <label for="demo-zip">ZIP</label>
+            </div>
+          </div>
+
+          <!-- Error State -->
+          <div class="form-group error">
+            <label for="demo-error">Error State</label>
+            <input
+              type="email"
+              id="demo-error"
+              value="invalid-email"
+            />
+            <span class="form-message error">Invalid email format</span>
+          </div>
+
+          <!-- Success State -->
+          <div class="form-group success">
+            <label for="demo-success">Success State</label>
+            <input
+              type="email"
+              id="demo-success"
+              value="valid@email.com"
+            />
+            <span class="form-message success">Email verified</span>
+          </div>
+
+          <!-- Disabled State -->
+          <div class="form-group">
+            <label for="demo-disabled">Disabled Input</label>
+            <input
+              type="text"
+              id="demo-disabled"
+              value="Cannot edit this"
+              disabled
+            />
+          </div>
+
+          <button class="form-submit">Submit Form</button>
+        </div>
+      </div>
+    </section>
   </main>
 </Layout>

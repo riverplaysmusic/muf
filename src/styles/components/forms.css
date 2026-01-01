@@ -1,0 +1,232 @@
+/* --- FORMS --- */
+
+/* Form Container */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Form Groups */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+/* Labels */
+label {
+  color: var(--starlight);
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Base Input Styles */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+  background: var(--space-black);
+  border: 2px solid var(--accent-purple);
+  color: var(--starlight);
+  padding: var(--space-sm) var(--space-md);
+  font-size: 1.25rem;
+  font-family: inherit;
+  border-radius: 0;
+  transition: all var(--transition-duration) var(--ease-smooth);
+  outline: none;
+  position: relative;
+  box-shadow: 3px 3px 0 var(--accent-purple);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent-green);
+  box-shadow: 4px 4px 0 var(--accent-green);
+  transform: translate(-2px, -2px);
+  outline: none;
+}
+
+/* Placeholder */
+input::placeholder,
+textarea::placeholder {
+  color: var(--space-mid-gray);
+  opacity: 1;
+}
+
+/* Textarea */
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Select Dropdown */
+select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-sm) center;
+  background-size: 20px;
+  padding-right: var(--space-xl);
+}
+
+/* Checkbox and Radio */
+input[type="checkbox"],
+input[type="radio"] {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--primary-yellow);
+  background: var(--space-black);
+  cursor: pointer;
+  transition: all var(--transition-duration) var(--ease-smooth);
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: 2px 2px 0 var(--primary-yellow);
+}
+
+input[type="radio"] {
+  border-radius: 50%;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  background: var(--accent-green);
+  border-color: var(--accent-green);
+  box-shadow: 2px 2px 0 var(--accent-green);
+}
+
+input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  color: var(--space-black);
+  font-size: 18px;
+  font-weight: 900;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--space-black);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Checkbox/Radio Labels */
+.checkbox-group,
+.radio-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+}
+
+.checkbox-group label,
+.radio-group label {
+  cursor: pointer;
+  margin: 0;
+}
+
+/* Validation States */
+.form-group.error input,
+.form-group.error textarea,
+.form-group.error select {
+  border-color: var(--accent-red);
+  box-shadow: 3px 3px 0 var(--accent-red);
+}
+
+.form-group.error input:focus,
+.form-group.error textarea:focus,
+.form-group.error select:focus {
+  box-shadow: 4px 4px 0 var(--accent-red);
+  transform: translate(-2px, -2px);
+}
+
+.form-group.success input,
+.form-group.success textarea,
+.form-group.success select {
+  border-color: var(--accent-green);
+  box-shadow: 3px 3px 0 var(--accent-green);
+}
+
+.form-group.success input:focus,
+.form-group.success textarea:focus,
+.form-group.success select:focus {
+  box-shadow: 4px 4px 0 var(--accent-green);
+  transform: translate(-2px, -2px);
+}
+
+/* Error/Success Messages */
+.form-message {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-message.error {
+  color: var(--accent-red);
+}
+
+.form-message.success {
+  color: var(--accent-green);
+}
+
+/* Disabled State */
+input:disabled,
+textarea:disabled,
+select:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: var(--space-gray);
+}
+
+input:disabled:hover,
+textarea:disabled:hover,
+select:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Form Submit Button - Gumroad Style */
+.form-submit {
+  background: var(--accent-blue);
+  border: 2px solid var(--accent-blue);
+  color: var(--space-black);
+  padding: var(--space-sm) var(--space-lg);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all var(--transition-duration) var(--ease-smooth);
+  position: relative;
+  box-shadow: 6px 6px 0 var(--accent-orange);
+}
+
+.form-submit:hover {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 var(--accent-orange);
+}
+
+.form-submit:active {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 var(--accent-orange);
+}
