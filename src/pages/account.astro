@@ -1,0 +1,189 @@
+---
+import Layout from "@/components/Layout.astro";
+---
+
+<script>
+  import { supabase } from "@/lib/supabase";
+
+  const form = document.getElementById("auth-form") as HTMLFormElement;
+  const emailInput = document.getElementById("email") as HTMLInputElement;
+  const messageEl = document.getElementById("message") as HTMLElement;
+  const formContainer = document.getElementById("form-container") as HTMLElement;
+  const userContainer = document.getElementById("user-container") as HTMLElement;
+  const userEmail = document.getElementById("user-email") as HTMLElement;
+  const signOutBtn = document.getElementById("sign-out") as HTMLButtonElement;
+
+  // Check for existing session
+  async function checkSession() {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (session) {
+      showUserState(session.user.email || "");
+    } else {
+      showFormState();
+    }
+  }
+
+  // Handle magic link sign in
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    messageEl.classList.remove("error", "success");
+    messageEl.textContent = "";
+
+    const email = emailInput.value.trim();
+
+    if (!email) {
+      messageEl.textContent = "Email is required";
+      messageEl.classList.add("error");
+      return;
+    }
+
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: window.location.origin + "/account",
+      },
+    });
+
+    if (error) {
+      messageEl.textContent = error.message;
+      messageEl.classList.add("error");
+    } else {
+      messageEl.textContent = "Check your email for the login link";
+      messageEl.classList.add("success");
+      emailInput.value = "";
+    }
+  });
+
+  // Handle sign out
+  signOutBtn.addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    showFormState();
+  });
+
+  // Listen for auth state changes
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === "SIGNED_IN" && session) {
+      showUserState(session.user.email || "");
+    } else if (event === "SIGNED_OUT") {
+      showFormState();
+    }
+  });
+
+  function showFormState() {
+    formContainer.style.display = "block";
+    userContainer.style.display = "none";
+  }
+
+  function showUserState(email: string) {
+    formContainer.style.display = "none";
+    userContainer.style.display = "block";
+    userEmail.textContent = email;
+  }
+
+  // Check session on load
+  checkSession();
+</script>
+
+<style>
+  .auth-container {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .message {
+    padding: var(--space-sm);
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .message.success {
+    background: var(--accent-green);
+    color: var(--space-black);
+  }
+
+  .message.error {
+    background: var(--accent-red);
+    color: var(--space-black);
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+
+  .user-card {
+    width: 100%;
+  }
+</style>
+
+<Layout>
+  <main class="brochure">
+    <!-- HERO -->
+    <section class="surface hero">
+      <header class="content">
+        <h1 class="gradient-cyan-pink">Account</h1>
+        <p class="subtitle">Sign in to access your library and purchases</p>
+      </header>
+    </section>
+
+    <!-- AUTH FORM -->
+    <section class="surface">
+      <div class="content auth-container">
+        <!-- Sign In Form -->
+        <div id="form-container">
+          <h2 class="section-heading">Sign In</h2>
+          <p class="desc">
+            Enter your email and we'll send you a magic link to sign in. No
+            password required.
+          </p>
+
+          <form id="auth-form" class="auth-form">
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="your@email.com"
+                required
+              />
+            </div>
+
+            <div id="message" class="message"></div>
+
+            <button type="submit" class="btn retro">Send Magic Link</button>
+          </form>
+        </div>
+
+        <!-- Signed In State -->
+        <div id="user-container" style="display: none;">
+          <h2 class="section-heading">Welcome Back</h2>
+
+          <div class="user-info">
+            <div class="glass user-card">
+              <h3>Signed in as</h3>
+              <p id="user-email" class="highlight"></p>
+            </div>
+
+            <button id="sign-out" class="btn secondary">Sign Out</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
