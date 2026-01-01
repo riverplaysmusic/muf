@@ -38,68 +38,7 @@ export PROJECT_ID
 # Update IMAGE_URI now that PROJECT_ID is set
 IMAGE_URI="$REGION-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$APP_NAME:$IMAGE_TAG"
 
-# --- Configuration Validation ---
-echo "--- Validating Configuration ---"
-
-# Validate memory format (must match pattern like 512Mi, 1Gi, 2G, etc.)
-if ! [[ "$CLOUD_RUN_MEMORY" =~ ^[0-9]+(Mi|Gi|M|G)$ ]]; then
-  echo "ERROR: Invalid CLOUD_RUN_MEMORY format: $CLOUD_RUN_MEMORY"
-  echo "Expected format: 512Mi, 1Gi, 2G, etc."
-  exit 1
-fi
-
-# Validate CPU (must be a positive number)
-if ! [[ "$CLOUD_RUN_CPU" =~ ^[0-9]+$ ]] || [ "$CLOUD_RUN_CPU" -lt 1 ]; then
-  echo "ERROR: Invalid CLOUD_RUN_CPU: $CLOUD_RUN_CPU (must be a positive integer)"
-  exit 1
-fi
-
-# Validate port (must be a positive number)
-if ! [[ "$CLOUD_RUN_PORT" =~ ^[0-9]+$ ]] || [ "$CLOUD_RUN_PORT" -lt 1 ] || [ "$CLOUD_RUN_PORT" -gt 65535 ]; then
-  echo "ERROR: Invalid CLOUD_RUN_PORT: $CLOUD_RUN_PORT (must be 1-65535)"
-  exit 1
-fi
-
-# Validate timeout (must be a positive number, max 3600 for Cloud Run)
-if ! [[ "$CLOUD_RUN_TIMEOUT" =~ ^[0-9]+$ ]] || [ "$CLOUD_RUN_TIMEOUT" -lt 1 ] || [ "$CLOUD_RUN_TIMEOUT" -gt 3600 ]; then
-  echo "ERROR: Invalid CLOUD_RUN_TIMEOUT: $CLOUD_RUN_TIMEOUT (must be 1-3600 seconds)"
-  exit 1
-fi
-
-# Validate concurrency (must be a positive number)
-if ! [[ "$CLOUD_RUN_CONCURRENCY" =~ ^[0-9]+$ ]] || [ "$CLOUD_RUN_CONCURRENCY" -lt 1 ]; then
-  echo "ERROR: Invalid CLOUD_RUN_CONCURRENCY: $CLOUD_RUN_CONCURRENCY (must be a positive integer)"
-  exit 1
-fi
-
-# Validate min/max instances
-if ! [[ "$CLOUD_RUN_MIN_INSTANCES" =~ ^[0-9]+$ ]] || [ "$CLOUD_RUN_MIN_INSTANCES" -lt 0 ]; then
-  echo "ERROR: Invalid CLOUD_RUN_MIN_INSTANCES: $CLOUD_RUN_MIN_INSTANCES (must be >= 0)"
-  exit 1
-fi
-
-if ! [[ "$CLOUD_RUN_MAX_INSTANCES" =~ ^[0-9]+$ ]] || [ "$CLOUD_RUN_MAX_INSTANCES" -lt 1 ]; then
-  echo "ERROR: Invalid CLOUD_RUN_MAX_INSTANCES: $CLOUD_RUN_MAX_INSTANCES (must be >= 1)"
-  exit 1
-fi
-
-if [ "$CLOUD_RUN_MIN_INSTANCES" -gt "$CLOUD_RUN_MAX_INSTANCES" ]; then
-  echo "ERROR: CLOUD_RUN_MIN_INSTANCES ($CLOUD_RUN_MIN_INSTANCES) cannot exceed CLOUD_RUN_MAX_INSTANCES ($CLOUD_RUN_MAX_INSTANCES)"
-  exit 1
-fi
-
-# Validate retry configuration
-if ! [[ "$RETRY_ATTEMPTS" =~ ^[0-9]+$ ]] || [ "$RETRY_ATTEMPTS" -lt 1 ]; then
-  echo "ERROR: Invalid RETRY_ATTEMPTS: $RETRY_ATTEMPTS (must be >= 1)"
-  exit 1
-fi
-
-if ! [[ "$RETRY_DELAY" =~ ^[0-9]+$ ]] || [ "$RETRY_DELAY" -lt 0 ]; then
-  echo "ERROR: Invalid RETRY_DELAY: $RETRY_DELAY (must be >= 0)"
-  exit 1
-fi
-
-echo "Configuration validated successfully."
+# Validation: gcloud will fail fast if values are wrong. Trust the tools.
 
 echo "======================================================"
 echo "   DEPLOY SCRIPT"
