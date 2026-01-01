@@ -73,64 +73,19 @@ import Layout from "@/components/Layout.astro";
   });
 
   function showFormState() {
-    formContainer.style.display = "block";
-    userContainer.style.display = "none";
+    formContainer.classList.remove("hidden");
+    userContainer.classList.add("hidden");
   }
 
   function showUserState(email: string) {
-    formContainer.style.display = "none";
-    userContainer.style.display = "block";
+    formContainer.classList.add("hidden");
+    userContainer.classList.remove("hidden");
     userEmail.textContent = email;
   }
 
   // Check session on load
   checkSession();
 </script>
-
-<style>
-  .auth-container {
-    max-width: 500px;
-    margin: 0 auto;
-  }
-
-  .auth-form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
-  }
-
-  .message {
-    padding: var(--space-sm);
-    border-radius: 8px;
-    font-weight: 600;
-    text-align: center;
-    min-height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .message.success {
-    background: var(--accent-green);
-    color: var(--space-black);
-  }
-
-  .message.error {
-    background: var(--accent-red);
-    color: var(--space-black);
-  }
-
-  .user-info {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
-    align-items: center;
-  }
-
-  .user-card {
-    width: 100%;
-  }
-</style>
 
 <Layout>
   <main class="brochure">
@@ -144,7 +99,7 @@ import Layout from "@/components/Layout.astro";
 
     <!-- AUTH FORM -->
     <section class="surface">
-      <div class="content auth-container">
+      <div class="content container-sm">
         <!-- Sign In Form -->
         <div id="form-container">
           <h2 class="section-heading">Sign In</h2>
@@ -153,7 +108,7 @@ import Layout from "@/components/Layout.astro";
             password required.
           </p>
 
-          <form id="auth-form" class="auth-form">
+          <form id="auth-form" class="stack">
             <div class="form-field">
               <label for="email">Email</label>
               <input
@@ -164,18 +119,18 @@ import Layout from "@/components/Layout.astro";
               />
             </div>
 
-            <div id="message" class="message"></div>
+            <div id="message" class="form-message"></div>
 
             <button type="submit" class="btn retro">Send Magic Link</button>
           </form>
         </div>
 
         <!-- Signed In State -->
-        <div id="user-container" style="display: none;">
+        <div id="user-container" class="hidden">
           <h2 class="section-heading">Welcome Back</h2>
 
-          <div class="user-info">
-            <div class="glass user-card">
+          <div class="stack center">
+            <div class="glass">
               <h3>Signed in as</h3>
               <p id="user-email" class="highlight"></p>
             </div>

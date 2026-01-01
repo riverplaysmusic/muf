@@ -176,18 +176,24 @@ input[type="radio"]:checked::after {
 
 /* Validation Messages */
 .form-message {
-  font-size: 0.875rem;
+  padding: var(--space-sm);
+  border-radius: 8px;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  text-align: center;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .form-message.error {
-  color: var(--accent-red);
+  background: var(--accent-red);
+  color: var(--space-black);
 }
 
 .form-message.success {
-  color: var(--accent-green);
+  background: var(--accent-green);
+  color: var(--space-black);
 }
 
 /* Disabled State */

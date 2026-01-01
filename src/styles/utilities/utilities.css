@@ -1,5 +1,31 @@
 /* --- UTILITIES --- */
 
+/* LAYOUT UTILITIES */
+.container-sm {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.stack-sm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.center {
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
 /* TYPOGRAPHY UTILITIES */
 .highlight {
   color: var(--primary-yellow);

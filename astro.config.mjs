@@ -22,7 +22,7 @@ export default defineConfig({
         context: 'client',
         access: 'public',
       }),
-      PUBLIC_SUPABASE_PKEY: envField.string({
+      PUBLIC_SUPABASE_PUBLISHABLE_KEY: envField.string({
         context: 'client',
         access: 'public',
       }),
