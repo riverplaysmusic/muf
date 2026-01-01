@@ -22,6 +22,20 @@
   --surface-bg-glass: rgba(255, 255, 255, 0.05);
   --overlay-dark:     rgba(0, 0, 0, 0.5);
 
+  /* SPACING */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4rem;
+  --space-3xl: 8rem;
+
   /* ANIMATIONS */
   --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-duration: 0.3s;
+
+  /* BREAKPOINTS */
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1200px;
 }

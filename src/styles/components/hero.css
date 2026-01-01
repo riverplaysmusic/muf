@@ -27,5 +27,5 @@
   text-transform: uppercase;
   letter-spacing: 0.5em;
   color: white;
-  margin: 1rem 0 0 0; /* Only top margin for spacing from h1 */
+  margin: var(--space-sm) 0 0 0; /* Only top margin for spacing from h1 */
 }

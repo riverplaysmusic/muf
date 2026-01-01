@@ -6,9 +6,9 @@ a {
   text-underline-offset: 4px;
   text-decoration-thickness: 1px;
   transition:
-    color 0.3s var(--ease-smooth),
-    letter-spacing 0.3s var(--ease-smooth),
-    text-decoration-color 0.3s var(--ease-smooth);
+    color var(--transition-duration) var(--ease-smooth),
+    letter-spacing var(--transition-duration) var(--ease-smooth),
+    text-decoration-color var(--transition-duration) var(--ease-smooth);
 }
 
 a:hover {
@@ -19,7 +19,7 @@ a:hover {
 }
 
 img {
-  transition: transform 0.3s var(--ease-smooth), filter 0.3s var(--ease-smooth);
+  transition: transform var(--transition-duration) var(--ease-smooth), filter var(--transition-duration) var(--ease-smooth);
 }
 
 img:hover {

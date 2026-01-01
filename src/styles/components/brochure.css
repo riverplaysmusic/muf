@@ -7,19 +7,19 @@
   max-width: 1400px;
   margin: 0 auto;
   overflow-x: hidden;
-  padding: 1rem; /* Small screens: very little margin */
+  padding: var(--space-sm); /* Small screens: very little margin */
   box-sizing: border-box;
 }
 
-@media (min-width: 768px) {
+@media (min-width: var(--breakpoint-md)) {
   .brochure {
-    padding: 2rem 5%; /* Medium screens: some margin */
+    padding: var(--space-lg) 5%; /* Medium screens: some margin */
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: var(--breakpoint-lg)) {
   .brochure {
-    padding: 4rem 8rem; /* Large screens: more margin, shows background */
+    padding: var(--space-2xl) var(--space-3xl); /* Large screens: more margin, shows background */
   }
 }
 
@@ -33,5 +33,5 @@
   font-size: 1.5rem;
   color: var(--space-mid-gray);
   max-width: 600px;
-  margin-bottom: 3rem;
+  margin-bottom: var(--space-xl);
 }

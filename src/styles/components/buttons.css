@@ -1,13 +1,13 @@
 /* --- BUTTONS --- */
 
 .btn {
-  padding: 1rem 2rem;
+  padding: var(--space-sm) var(--space-lg);
   border-radius: 8px;
   font-weight: 700;
   text-transform: uppercase;
   border: none;
   cursor: pointer;
-  transition: all 0.3s var(--ease-smooth);
+  transition: all var(--transition-duration) var(--ease-smooth);
 }
 
 .btn.primary {

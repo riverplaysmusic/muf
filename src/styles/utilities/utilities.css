@@ -19,7 +19,7 @@
 }
 
 .label {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -50,5 +50,5 @@
 
 .neutrals,
 .accents {
-  margin-top: 2rem;
+  margin-top: var(--space-lg);
 }

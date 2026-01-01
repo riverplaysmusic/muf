@@ -3,15 +3,15 @@
 .component-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: var(--space-lg);
 }
 
 .card {
-  padding: 2rem;
+  padding: var(--space-lg);
   border-radius: 16px;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-md);
   align-items: flex-start;
 }
 
