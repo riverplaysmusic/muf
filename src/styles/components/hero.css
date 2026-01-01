@@ -20,12 +20,13 @@
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .subtitle {
   font-size: 2rem;
   text-transform: uppercase;
   letter-spacing: 0.5em;
-  color: white;
+  color: var(--starlight);
   margin: var(--space-sm) 0 0 0; /* Only top margin for spacing from h1 */
 }

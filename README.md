@@ -27,7 +27,7 @@ We use `magick`, `ffmpeg`, and `flac`.
 
 ## Prerequisites
 - [Google Cloud SDK (gcloud)](https://cloud.google.com/sdk/docs/install)
-- [Node.js (LTS)](https://nodejs.org/)
+- [Bun](https://bun.sh/)
 - Active GCP Billing Account ID
 - Antigravity, Gemini 3 Pro CLI or similar agent
 
@@ -47,8 +47,8 @@ Builds and deploys updates to the current project.
 
 ## Local Development
 ```bash
-npm install
-npm run dev
+bun install
+bun run dev
 ```
 
 ## Intentional Constraints
