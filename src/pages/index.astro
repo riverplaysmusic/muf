@@ -2,6 +2,82 @@
 import Layout from "@/components/Layout.astro";
 ---
 
+<script
+  is:inline
+  src="https://cdn.jsdelivr.net/npm/@mux/mux-player"></script>
+
 <Layout>
-	<main></main>
+  <main class="brochure">
+    <!-- HERO -->
+    <section class="surface hero">
+      <header class="content">
+        <h1 class="gradient-full-spectrum">Musical Universe Factory</h1>
+        <p class="subtitle">
+          Independent creative sanctuary and eternal archive. Buy for lifetime
+          ownership.
+        </p>
+      </header>
+    </section>
+
+    <!-- VIDEO PLAYER -->
+    <section class="surface">
+      <div class="content">
+        <mux-player
+          playback-id="PLY019I55aumhPRlZZHf00nLhQdnpCf01LjAimmZDuocIw"
+          metadata-video-title="Musical Universe Factory"
+          accent-color="#FF1694"
+          style="width: 100%; aspect-ratio: 16/9;"
+        ></mux-player>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="surface">
+      <div class="content">
+        <h2 class="section-heading">Sovereign Digital Store</h2>
+        <p class="desc">
+          We reject the streaming model for lifetime ownership. High-quality
+          FLAC audio, music videos, and original performances.
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-lg); margin-top: var(--space-xl);">
+          <div class="glass">
+            <h3>Buy Once, Own Forever</h3>
+            <p>
+              No subscriptions, no streaming partners. Purchase music and own it
+              for life.
+            </p>
+          </div>
+
+          <div class="solid">
+            <h3>High Quality Assets</h3>
+            <p>
+              FLAC audio, music videos, instructional content, artwork, and
+              storytelling.
+            </p>
+          </div>
+
+          <div class="outline">
+            <h3>Private & Independent</h3>
+            <p>
+              No social features, no analytics, no external distribution. Pure
+              creative sanctuary.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="surface">
+      <div class="content" style="text-align: center;">
+        <h2 class="gradient-pink-yellow">Discover the Archive</h2>
+        <p style="max-width: 600px; margin: var(--space-md) auto var(--space-xl);">
+          If you can't find us on your own, we don't want you here. Organic
+          discovery through in-person connections only.
+        </p>
+        <button class="btn retro">Explore Catalog</button>
+      </div>
+    </section>
+  </main>
 </Layout>
