@@ -59,7 +59,7 @@ npm run dev
 - **Vibecoding:** 100% of code is written by AI agents. 
 - **No CI/CD:** Manual push over automated CI/CD for direct control.
 - **No Tests:** Tests are a waste of time.
-- **No tools:** No linters, no formatters, no frameworks, no terraform
+- **Minimal tools:** No linters, no formatters, no extra frameworks, no terraform, minimum dependencies.
 
 ## AI Agent Guidelines
 - **Philosophy:** Braindead simple, just-works, minimal footprint. 
