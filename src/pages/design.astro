@@ -223,40 +223,40 @@ import "@/styles/style-guide.css";
           High-contrast inputs with bold borders and clear validation states.
         </p>
 
-        <div class="form-container stagger-in">
+        <form class="stagger-in" style="display: flex; flex-direction: column; gap: var(--space-lg); max-width: 600px;">
           <!-- Text Input -->
           <div class="form-group">
-            <label for="demo-text">Text Input</label>
+            <label for="text-input">Text Input</label>
             <input
               type="text"
-              id="demo-text"
+              id="text-input"
               placeholder="Enter your name"
             />
           </div>
 
           <!-- Email Input -->
           <div class="form-group">
-            <label for="demo-email">Email</label>
+            <label for="email-input">Email</label>
             <input
               type="email"
-              id="demo-email"
+              id="email-input"
               placeholder="your@email.com"
             />
           </div>
 
           <!-- Textarea -->
           <div class="form-group">
-            <label for="demo-textarea">Message</label>
+            <label for="message-input">Message</label>
             <textarea
-              id="demo-textarea"
+              id="message-input"
               placeholder="Tell us something..."
             ></textarea>
           </div>
 
           <!-- Select Dropdown -->
           <div class="form-group">
-            <label for="demo-select">Select Option</label>
-            <select id="demo-select">
+            <label for="select-input">Select Option</label>
+            <select id="select-input">
               <option value="">Choose one...</option>
               <option value="1">Option One</option>
               <option value="2">Option Two</option>
@@ -266,29 +266,29 @@ import "@/styles/style-guide.css";
 
           <!-- Checkbox -->
           <div class="checkbox-group">
-            <input type="checkbox" id="demo-checkbox" />
-            <label for="demo-checkbox">I agree to the terms</label>
+            <input type="checkbox" id="checkbox-input" />
+            <label for="checkbox-input">I agree to the terms</label>
           </div>
 
           <!-- Radio Buttons -->
           <div class="form-group">
             <label>Choose Format</label>
             <div class="radio-group">
-              <input type="radio" id="demo-flac" name="format" checked />
-              <label for="demo-flac">FLAC</label>
+              <input type="radio" id="radio-flac" name="format" checked />
+              <label for="radio-flac">FLAC</label>
             </div>
             <div class="radio-group">
-              <input type="radio" id="demo-zip" name="format" />
-              <label for="demo-zip">ZIP</label>
+              <input type="radio" id="radio-zip" name="format" />
+              <label for="radio-zip">ZIP</label>
             </div>
           </div>
 
           <!-- Error State -->
           <div class="form-group error">
-            <label for="demo-error">Error State</label>
+            <label for="error-input">Error State</label>
             <input
               type="email"
-              id="demo-error"
+              id="error-input"
               value="invalid-email"
             />
             <span class="form-message error">Invalid email format</span>
@@ -296,10 +296,10 @@ import "@/styles/style-guide.css";
 
           <!-- Success State -->
           <div class="form-group success">
-            <label for="demo-success">Success State</label>
+            <label for="success-input">Success State</label>
             <input
               type="email"
-              id="demo-success"
+              id="success-input"
               value="valid@email.com"
             />
             <span class="form-message success">Email verified</span>
@@ -307,17 +307,17 @@ import "@/styles/style-guide.css";
 
           <!-- Disabled State -->
           <div class="form-group">
-            <label for="demo-disabled">Disabled Input</label>
+            <label for="disabled-input">Disabled Input</label>
             <input
               type="text"
-              id="demo-disabled"
+              id="disabled-input"
               value="Cannot edit this"
               disabled
             />
           </div>
 
-          <button class="form-submit">Submit Form</button>
-        </div>
+          <button type="submit" class="btn primary">Submit Form</button>
+        </form>
       </div>
     </section>
   </main>
