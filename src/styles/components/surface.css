@@ -18,6 +18,15 @@
   --inner-bg: var(--space-black);
 }
 
+/* Mobile: Reduce padding for more breathing room */
+@media (max-width: 768px) {
+  .surface {
+    padding: var(--space-lg) var(--space-sm);
+    margin-bottom: var(--space-md);
+    --cut-size: 20px;
+  }
+}
+
 .surface:hover {
   transform: translateY(-2px);
 }

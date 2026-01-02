@@ -78,3 +78,19 @@
 .accents {
   margin-top: var(--space-lg);
 }
+
+/* Mobile: Reduce spacing and container width */
+@media (max-width: 768px) {
+  .container-sm {
+    max-width: 100%;
+    padding: 0 var(--space-sm);
+  }
+
+  .stack {
+    gap: var(--space-md);
+  }
+
+  .stack-sm {
+    gap: var(--space-xs);
+  }
+}

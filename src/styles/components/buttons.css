@@ -45,3 +45,21 @@
   transform: translate(6px, 6px);
   box-shadow: 0 0 0 var(--accent-orange);
 }
+
+/* Mobile: Smaller buttons with less padding */
+@media (max-width: 768px) {
+  .btn {
+    padding: var(--space-xs) var(--space-md);
+    font-size: 0.875rem;
+  }
+
+  .btn.retro {
+    font-size: 1rem;
+    box-shadow: 4px 4px 0 var(--accent-orange);
+  }
+
+  .btn.retro:hover,
+  .btn.retro:active {
+    transform: translate(4px, 4px);
+  }
+}

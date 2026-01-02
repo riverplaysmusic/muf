@@ -204,3 +204,41 @@ select:disabled {
   cursor: not-allowed;
   border-color: var(--space-gray);
 }
+
+/* Mobile: Smaller inputs and better spacing */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  textarea,
+  select {
+    font-size: 1rem;
+    padding: var(--space-xs) var(--space-sm);
+    box-shadow: 2px 2px 0 var(--accent-purple);
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus,
+  input[type="number"]:focus,
+  textarea:focus,
+  select:focus {
+    box-shadow: 3px 3px 0 var(--accent-green);
+    transform: translate(-1px, -1px);
+  }
+
+  label {
+    font-size: 0.875rem;
+  }
+
+  .form-field {
+    gap: var(--space-xs);
+  }
+
+  .form-message {
+    font-size: 0.875rem;
+    padding: var(--space-xs);
+    min-height: 2.5rem;
+  }
+}

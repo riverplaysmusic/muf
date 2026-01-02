@@ -33,3 +33,14 @@
   background: transparent;
   border: 2px solid var(--primary-cyan);
 }
+
+/* Mobile: Reduce card padding */
+@media (max-width: 768px) {
+  .glass,
+  .solid,
+  .outline {
+    padding: var(--space-md);
+    gap: var(--space-sm);
+    border-radius: 12px;
+  }
+}
