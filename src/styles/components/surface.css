@@ -21,7 +21,7 @@
 /* Mobile: Reduce padding for more breathing room */
 @media (max-width: 768px) {
   .surface {
-    padding: var(--space-lg) var(--space-md);
+    padding: var(--space-lg);
     margin-bottom: var(--space-md);
     --cut-size: 20px;
   }
