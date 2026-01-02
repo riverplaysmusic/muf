@@ -10,3 +10,21 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--space-light-gray);
   text-transform: uppercase;
 }
+
+/* Mobile: Better line-height for readability */
+@media (max-width: 768px) {
+  h1 {
+    font-size: clamp(1.5rem, 7vw, 2.5rem);
+    line-height: 1.3;
+    margin-bottom: var(--space-sm);
+  }
+  h2 {
+    font-size: clamp(1.25rem, 5vw, 1.75rem);
+    line-height: 1.3;
+    margin-bottom: var(--space-xs);
+  }
+  h3 {
+    font-size: clamp(1.125rem, 4vw, 1.5rem);
+    line-height: 1.4;
+  }
+}

@@ -30,3 +30,18 @@
   color: var(--starlight);
   margin: var(--space-sm) 0 0 0; /* Only top margin for spacing from h1 */
 }
+
+/* Mobile: Much smaller hero text with breathing room */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: clamp(1.75rem, 8vw, 3rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+    letter-spacing: 0.2em;
+    margin-top: var(--space-md);
+  }
+}
