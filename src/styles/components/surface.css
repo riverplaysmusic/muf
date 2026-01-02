@@ -21,9 +21,18 @@
 /* Mobile: Reduce padding for more breathing room */
 @media (max-width: 768px) {
   .surface {
-    padding: var(--space-lg) var(--space-sm);
+    padding: var(--space-lg) var(--space-md);
     margin-bottom: var(--space-md);
     --cut-size: 20px;
+  }
+}
+
+/* Large screens: Max width and center surfaces */
+@media (min-width: 1200px) {
+  .surface {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 

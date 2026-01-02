@@ -10,18 +10,49 @@ import Layout from "@/components/Layout.astro";
   const messageEl = document.getElementById("message") as HTMLElement;
   const formContainer = document.getElementById("form-container") as HTMLElement;
   const userContainer = document.getElementById("user-container") as HTMLElement;
+  const loadingContainer = document.getElementById("loading-container") as HTMLElement;
   const userEmail = document.getElementById("user-email") as HTMLElement;
   const signOutBtn = document.getElementById("sign-out") as HTMLButtonElement;
 
-  // Check for existing session
+  // Check localStorage first for instant rendering (no flicker)
+  function checkLocalStorage() {
+    // Supabase stores session in localStorage with this pattern
+    const keys = Object.keys(localStorage).filter(key => key.includes('sb-') && key.includes('-auth-token'));
+
+    if (keys.length > 0) {
+      const sessionData = localStorage.getItem(keys[0]);
+      if (sessionData) {
+        try {
+          const parsed = JSON.parse(sessionData);
+          if (parsed?.access_token) {
+            // Optimistically show logged-in state immediately
+            loadingContainer.classList.add("hidden");
+            showUserState("Loading...");
+            return true;
+          }
+        } catch (e) {
+          // Invalid JSON, fall through to show login
+        }
+      }
+    }
+
+    // No valid session in localStorage, show login form
+    loadingContainer.classList.add("hidden");
+    showFormState();
+    return false;
+  }
+
+  // Verify session with Supabase (runs in background)
   async function checkSession() {
     const {
       data: { session },
     } = await supabase.auth.getSession();
 
     if (session) {
+      // Update with real email
       showUserState(session.user.email || "");
     } else {
+      // Session expired or invalid, show login
       showFormState();
     }
   }
@@ -83,7 +114,10 @@ import Layout from "@/components/Layout.astro";
     userEmail.textContent = email;
   }
 
-  // Check session on load
+  // Check localStorage first (instant, no flicker)
+  checkLocalStorage();
+
+  // Then verify with Supabase (in background)
   checkSession();
 </script>
 
@@ -100,8 +134,13 @@ import Layout from "@/components/Layout.astro";
     <!-- AUTH FORM -->
     <section class="surface">
       <div class="content container-sm">
+        <!-- Loading State -->
+        <div id="loading-container" class="stack center">
+          <p class="desc">Checking authentication...</p>
+        </div>
+
         <!-- Sign In Form -->
-        <div id="form-container">
+        <div id="form-container" class="hidden">
           <h2 class="section-heading">Sign In</h2>
           <p class="desc">
             Enter your email and we'll send you a magic link to sign in. No
