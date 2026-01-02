@@ -1,0 +1,31 @@
+# Cloud Build configuration for MUF
+# Builds Docker image with environment variables passed as build args
+
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '--build-arg'
+      - 'PUBLIC_SUPABASE_URL=${_PUBLIC_SUPABASE_URL}'
+      - '--build-arg'
+      - 'PUBLIC_SUPABASE_PUBLISHABLE_KEY=${_PUBLIC_SUPABASE_PUBLISHABLE_KEY}'
+      - '-t'
+      - '${_IMAGE_URI}'
+      - '.'
+
+  # Push the image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '${_IMAGE_URI}'
+
+# Image will be pushed to Artifact Registry
+images:
+  - '${_IMAGE_URI}'
+
+# Substitution variables (passed from deploy.sh)
+substitutions:
+  _IMAGE_URI: 'placeholder'
+  _PUBLIC_SUPABASE_URL: 'placeholder'
+  _PUBLIC_SUPABASE_PUBLISHABLE_KEY: 'placeholder'

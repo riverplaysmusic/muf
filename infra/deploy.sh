@@ -96,12 +96,35 @@ else
   echo "Repository $REPO_NAME already exists."
 fi
 
+# 4. Load PUBLIC environment variables for build
+echo "--- Loading Environment Variables ---"
+if [ ! -f ".env" ]; then
+  echo "ERROR: .env file not found in project root."
+  echo "Copy .env.example to .env and configure it."
+  exit 1
+fi
+
+# Load PUBLIC env vars (needed at build time for Astro)
+# shellcheck disable=SC2046
+export $(grep "^PUBLIC_" .env | xargs)
+
+if [ -z "${PUBLIC_SUPABASE_URL:-}" ] || [ -z "${PUBLIC_SUPABASE_PUBLISHABLE_KEY:-}" ]; then
+  echo "ERROR: Required PUBLIC environment variables not set in .env"
+  echo "Required: PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY"
+  exit 1
+fi
+
+echo "✓ Environment variables loaded"
+
 # 4. Build & Push (Cloud Build)
 echo "--- Building Container (Cloud Build) ---"
-# Retry loop for Cloud Build (uses Dockerfile and .gcloudignore in project root)
+# Retry loop for Cloud Build (uses cloudbuild.yaml with substitutions)
 SUCCESS=false
 for i in $(seq 1 "$RETRY_ATTEMPTS"); do
-  if gcloud builds submit --tag "$IMAGE_URI" .; then
+  if gcloud builds submit \
+    --config cloudbuild.yaml \
+    --substitutions "_IMAGE_URI=$IMAGE_URI,_PUBLIC_SUPABASE_URL=$PUBLIC_SUPABASE_URL,_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$PUBLIC_SUPABASE_PUBLISHABLE_KEY" \
+    .; then
     echo "Build submitted successfully."
     SUCCESS=true
     break
