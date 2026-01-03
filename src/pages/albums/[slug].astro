@@ -455,10 +455,19 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
   /* --- FOOTER --- */
   .album-footer {
     margin-top: var(--space-2xl);
+    margin-bottom: 0;
     padding: var(--space-2xl) var(--space-lg);
     text-align: center;
     background: oklch(62.3% 0.214 259.815);
     position: relative;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+  }
+
+  body {
+    padding-bottom: 0;
+    margin-bottom: 0;
   }
 
   .album-footer p {

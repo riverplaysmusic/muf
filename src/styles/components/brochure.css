@@ -7,19 +7,22 @@
   max-width: 1400px;
   margin: 0 auto;
   overflow-x: hidden;
-  padding: var(--space-sm); /* Small screens: very little margin */
+  padding-block-start: var(--space-sm); /* Small screens: very little margin */
+  padding-inline: var(--space-sm);
   box-sizing: border-box;
 }
 
 @media (min-width: var(--breakpoint-md)) {
   .brochure {
-    padding: var(--space-lg) 5%; /* Medium screens: some margin */
+    padding-block-start: var(--space-lg); /* Medium screens: some margin */
+    padding-inline: 5%;
   }
 }
 
 @media (min-width: var(--breakpoint-lg)) {
   .brochure {
-    padding: var(--space-2xl) var(--space-3xl); /* Large screens: more margin, shows background */
+    padding-block-start: var(--space-2xl); /* Large screens: more margin, shows background */
+    padding-inline: var(--space-3xl);
   }
 }
 
