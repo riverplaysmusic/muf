@@ -115,7 +115,7 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
     const urlParams = new URLSearchParams(window.location.search);
 
     if (urlParams.get('success') === 'true') {
-      alert('Purchase successful! Your album is now available for download.');
+      alert('Payment successful! Your album is now available for download.\n\nIf the download button doesn\'t appear, please refresh the page.');
       window.history.replaceState({}, '', window.location.pathname);
       location.reload();
     }
