@@ -1,4 +1,4 @@
-/* --- HERO --- */
+/* --- HERO CARD STYLING --- */
 
 .hero {
   display: flex;
@@ -6,7 +6,82 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  width: 100%;
+  min-height: auto;
+  padding: var(--space-2xl) var(--space-lg);
+  margin-bottom: var(--space-lg);
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  transition: transform var(--transition-duration) var(--ease-smooth);
+
+  --cut-size: 30px;
+  --edge-thickness: 2px;
+  --accent-color: var(--primary-yellow);
+  --inner-bg: var(--space-black);
 }
+
+/* Mobile: Reduce padding for more breathing room */
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--space-lg);
+    margin-bottom: var(--space-md);
+    --cut-size: 20px;
+  }
+}
+
+/* Large screens: Max width and center */
+@media (min-width: 1200px) {
+  .hero {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.hero:hover {
+  transform: translateY(-2px);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--inner-bg);
+  box-shadow: inset 0 0 0 1px var(--surface-border);
+
+  clip-path: polygon(
+    var(--cut-size) 0%,
+    100% 0%,
+    100% calc(100% - var(--cut-size)),
+    calc(100% - var(--cut-size)) 100%,
+    0% 100%,
+    0% var(--cut-size)
+  );
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-color: var(--accent-color);
+  transform: translate(4px, 4px);
+
+  clip-path: polygon(
+    var(--cut-size) 0%,
+    100% 0%,
+    100% calc(100% - var(--cut-size)),
+    calc(100% - var(--cut-size)) 100%,
+    0% 100%,
+    0% var(--cut-size)
+  );
+
+  transition: background-color 0.15s ease-out;
+}
+
+/* --- HERO TEXT STYLING --- */
 
 .hero h1 {
   font-size: clamp(4rem, 10vw, 8rem);

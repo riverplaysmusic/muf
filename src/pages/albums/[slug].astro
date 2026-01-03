@@ -100,7 +100,7 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
 
   <main class="brochure">
     <!-- HERO -->
-    <section class="surface hero">
+    <section class="hero no-padding-image">
       {artworkFile && (
         <div class="hero-artwork">
           <img src={artworkFile} alt={title} />
@@ -121,23 +121,25 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
       </header>
     </section>
 
+    <!-- TRACKS -->
+    {tracks.length > 0 && (
+      <section class="card tracks-section">
+        <h2 class="section-heading">Tracks</h2>
+        <ol class="track-list">
+          {tracks.map((track) => (
+            <li>{track}</li>
+          ))}
+        </ol>
+      </section>
+    )}
+
     <!-- ALBUM BODY -->
-    <section class="surface">
-      <article class="content container-sm album-body">
+    <section class="hero">
+      <article>
         <!-- Hidden data for client script -->
         <div id="is-paid" data-value={isPaid.toString()} style="display:none;"></div>
 
-        {tracks.length > 0 && (
-          <div class="tracks-section">
-            <h2 class="section-heading">Tracks</h2>
-            <ol class="track-list">
-              {tracks.map((track) => (
-                <li>{track}</li>
-              ))}
-            </ol>
-          </div>
-        )}
-
+        <div class="album-body">
         {!isPaid ? (
           <!-- FREE CONTENT: Show immediately -->
           <div id="full-content">
@@ -181,28 +183,42 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
             </div>
           </>
         )}
+        </div>
       </article>
     </section>
   </main>
 </Layout>
 
 <style>
+  /* --- IMAGE ASPECT RATIO FIX & LAYOUT SIMPLIFICATION --- */
+
   .hero-artwork {
     width: 100%;
-    max-height: 400px;
-    overflow: hidden;
-    margin-bottom: 2rem;
+    /* REMOVED max-height and overflow to prevent cropping */
   }
 
   .hero-artwork img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto; /* Display image at its natural aspect ratio */
+    display: block;
+    /* REMOVED object-fit: cover */
+  }
+
+  /* --- PADDING & MARGIN REDUCTION --- */
+
+  /* Remove padding from the hero containing the image */
+  .hero.no-padding-image {
+    padding: 0;
+  }
+
+  /* Reduce padding for the text content within the hero */
+  .hero.no-padding-image .content {
+    padding: var(--space-lg);
   }
 
   .back-link {
     display: inline-block;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-sm); /* REDUCED */
     opacity: 0.8;
     font-size: 0.9rem;
     text-decoration: none;
@@ -226,33 +242,33 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
     background-clip: text;
     font-weight: bold;
     font-size: 1.5rem;
+    /* REMOVED margin-bottom */
   }
 
   .album-body {
     font-size: 1.1rem;
-    line-height: 1.8;
-    max-width: 65ch;
+    line-height: 1.7;
   }
 
   .tracks-section {
-    margin-bottom: 2rem;
-    padding: 1.5rem;
+    margin-bottom: var(--space-lg); /* REDUCED */
+    padding: var(--space-md); /* REDUCED */
     background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
   }
 
   .track-list {
     list-style-position: inside;
-    margin-top: 1rem;
+    margin-top: var(--space-sm); /* REDUCED */
   }
 
   .track-list li {
-    padding: 0.5rem 0;
+    padding: var(--space-xs) 0; /* REDUCED */
     opacity: 0.9;
   }
 
   .album-body p {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-md); /* REDUCED */
   }
 
   .album-body p:last-child {
@@ -265,7 +281,7 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
 
   #preview-content {
     position: relative;
-    padding-bottom: 4rem;
+    padding-bottom: 2rem; /* REDUCED */
   }
 
   .fade-overlay {
@@ -273,13 +289,13 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 200px;
+    height: 100px; /* REDUCED */
     background: linear-gradient(to bottom, transparent, #000);
     pointer-events: none;
   }
 
   .buy-card {
-    margin-top: 3rem;
+    margin-top: var(--space-xl); /* REDUCED */
     text-align: center;
     max-width: 400px;
     margin-left: auto;
@@ -287,11 +303,11 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
   }
 
   .buy-card h3 {
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-sm);
   }
 
   .buy-card .desc {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-md);
   }
 
   .hidden {
@@ -301,4 +317,12 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
   .error {
     color: #ff4444;
   }
+
+  /* --- MOBILE-SPECIFIC PADDING REDUCTIONS --- */
+  @media (max-width: 768px) {
+    .hero.no-padding-image .content {
+      padding: var(--space-md);
+    }
+  }
+
 </style>
