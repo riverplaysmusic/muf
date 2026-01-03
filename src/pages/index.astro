@@ -8,6 +8,15 @@ import Layout from "@/components/Layout.astro";
 
 <Layout>
   <main class="brochure">
+    <!-- ARTWORK -->
+    <section style="width: 100%; max-width: 800px; margin: 0 auto var(--space-lg);">
+      <img
+        src="/artwork/hero-artwork.jpg"
+        alt="Musical Universe Factory artwork"
+        style="width: 100%; height: auto; display: block; border: 4px solid var(--primary-yellow); box-shadow: 8px 8px 0 var(--accent-orange);"
+      />
+    </section>
+
     <!-- HERO -->
     <section class="surface hero">
       <header class="content">
@@ -19,17 +28,11 @@ import Layout from "@/components/Layout.astro";
       </header>
     </section>
 
-    <!-- VIDEO PLAYER -->
-    <section class="surface">
-      <div class="content">
-        <mux-player
-          playback-id="PLY019I55aumhPRlZZHf00nLhQdnpCf01LjAimmZDuocIw"
-          metadata-video-title="Musical Universe Factory"
-          accent-color="#FF1694"
-          style="width: 100%; aspect-ratio: 16/9;"
-        ></mux-player>
-      </div>
-    </section>
+    <!-- VIDEO -->
+    <mux-player
+      playback-id="PLY019I55aumhPRlZZHf00nLhQdnpCf01LjAimmZDuocIw"
+      style="width: 100%; max-width: 800px; margin: 0 auto var(--space-lg); aspect-ratio: 16/9; display: block;"
+    ></mux-player>
 
     <!-- FEATURES -->
     <section class="surface">
