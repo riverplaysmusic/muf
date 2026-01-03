@@ -140,7 +140,23 @@ if [ "$SUCCESS" = false ]; then
   exit 1
 fi
 
-# 5. Deploy to Cloud Run
+# 5. Load SECRET environment variables for Cloud Run runtime
+echo "--- Loading Secret Environment Variables ---"
+# shellcheck disable=SC2046
+export $(grep -v "^PUBLIC_" .env | grep -v "^#" | grep -v "^$" | xargs)
+
+# Validate required secret environment variables
+REQUIRED_SECRETS="SUPABASE_SERVICE_KEY STRIPE_SECRET_KEY STRIPE_WEBHOOK_SECRET"
+for secret in $REQUIRED_SECRETS; do
+  if [ -z "${!secret:-}" ]; then
+    echo "ERROR: Required secret environment variable $secret not set in .env"
+    exit 1
+  fi
+done
+
+echo "✓ Secret environment variables validated"
+
+# 6. Deploy to Cloud Run
 echo "--- Deploying to Cloud Run ---"
 
 # Build the deploy command with conditional flags
@@ -154,7 +170,8 @@ DEPLOY_CMD="gcloud run deploy $APP_NAME \
   --concurrency $CLOUD_RUN_CONCURRENCY \
   --timeout $CLOUD_RUN_TIMEOUT \
   --min-instances $CLOUD_RUN_MIN_INSTANCES \
-  --max-instances $CLOUD_RUN_MAX_INSTANCES"
+  --max-instances $CLOUD_RUN_MAX_INSTANCES \
+  --set-env-vars=\"SUPABASE_SERVICE_KEY=$SUPABASE_SERVICE_KEY,STRIPE_SECRET_KEY=$STRIPE_SECRET_KEY,STRIPE_WEBHOOK_SECRET=$STRIPE_WEBHOOK_SECRET,PUBLIC_SUPABASE_URL=$PUBLIC_SUPABASE_URL,PUBLIC_SUPABASE_PUBLISHABLE_KEY=$PUBLIC_SUPABASE_PUBLISHABLE_KEY\""
 
 # Add authentication flag
 if [ "$CLOUD_RUN_ALLOW_UNAUTHENTICATED" = "true" ]; then
