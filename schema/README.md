@@ -113,19 +113,6 @@ Free preview file for products.
 
 ---
 
-## What This Schema Does NOT Include
-
-**Intentionally excluded** per README philosophy:
-- ❌ No likes, ratings, reviews
-- ❌ No social features
-- ❌ No comments or forums
-- ❌ No user profiles (beyond auth)
-- ❌ No subscriptions or recurring billing
-- ❌ No streaming partners or external integrations
-- ❌ No analytics or tracking
-
----
-
 ## Migration Path
 
 When ready to implement:
