@@ -12,6 +12,7 @@ tracks:
     credits:
       - Bubbles - Keyboards, vocals
       - Bubbles - Lyrics & composition
+length: 12:48
 credits:
   - Bubbles - Audio engineering, mixing, mastering, artwork, liner notes
 recording_studio: Lion's Den

@@ -52,6 +52,7 @@ const title = frontmatter.match(/title:\s*(.+)/)?.[1] || "Untitled";
 const artist = frontmatter.match(/artist:\s*(.+)/)?.[1] || "";
 const date = frontmatter.match(/date:\s*(.+)/)?.[1] || "";
 const priceCents = parseInt(frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || "0");
+const length = frontmatter.match(/length:\s*(.+)/)?.[1] || "";
 const recordingStudio = frontmatter.match(/recording_studio:\s*(.+)/)?.[1] || "";
 const label = frontmatter.match(/label:\s*(.+)/)?.[1] || "";
 const website = frontmatter.match(/website:\s*(.+)/)?.[1] || "";
@@ -175,6 +176,12 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
               <div class="info-item">
                 <span class="info-label">Tracks</span>
                 <span class="info-value">{tracks.length}</span>
+              </div>
+            )}
+            {length && (
+              <div class="info-item">
+                <span class="info-label">Length</span>
+                <span class="info-value">{length}</span>
               </div>
             )}
             <div class="info-item">
@@ -606,6 +613,7 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    margin-top: 0;
     margin-bottom: var(--space-lg);
   }
 
