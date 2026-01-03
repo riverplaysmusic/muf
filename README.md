@@ -6,7 +6,7 @@ Astro web application with Supabase integration.
 **Musical Universe Factory is an independent creative sanctuary and eternal archive.**
 We reject the streaming model for a sovereign digital store.
 - **Core Values:** Buy for lifetime ownership, user freedom.
-- **High Quality Assets:** Music videos, instructional videos, original performances, artwork, storytelling, books, and articles.
+- **Everything is an Album:** A single track, multiple tracks, writings, artwork, videos, stories - all released as albums. The album is the atomic unit of creation and commerce.
 
 ## Business Model
 We are a sole-proprietor who pays all taxes. We are boring to the IRS. We do not take tax advantages. We are private, soverign and invisible. We do not enter ourselves into government systems. Our business is a single line, other income, on our personal tax form. This is Munger-style thinking to avoid unwelcomed partners, bureaucracies, legal ambiguities, external rulers, fees, regulations, privacy violations and other forms of oppression and friction. We are 100% "leave us alone." We are our own songwriter, engineer, producer, artist, distributor, retailer and archivist. We only bring people in who would choose to be here even if they're billionaires. That we're a company is an attribute, our identity is creativity. We profit only if we focus on **not** making money.
@@ -23,12 +23,21 @@ We block **all** public search engine traffic, including Google Search. We block
 - No sitemap generation 
 
 ## Domain model
-Tracks are units. Albums are collections of tracks. Artists are creators of tracks and albums. Domain model reflects lived experience of the musician, recording engineer, and label owner. Technology is unwanted. Our focus is permanent gold-standard archiving. On-prem server (Honeycomb) is the library and source of truth: supabase storage is a thin public cache to avoid sysadmin burdens. The label comes first, the software second, or not at all. 
+Albums are the universal container. Everything is an album: a single track is an album, ten tracks with liner notes is an album, a writing with artwork is an album, a video is an album. The album is the product. The album is what people buy. Artists create albums. Domain model reflects lived experience of the musician, recording engineer, and label owner. Technology is unwanted. Our focus is permanent gold-standard archiving. On-prem server (Honeycomb) is the library and source of truth: supabase storage is a thin public cache to avoid sysadmin burdens. The label comes first, the software second, or not at all. 
 
 There is no social media. There are no likes, comments, shares, user lists, forums, listener counts, reviews, ratings, or any other form of social interaction. This is a private store and nobody knows the wiser. Customers stream the files themselves. There are no subscriptions. There are no external streaming or music partners (no Spotify, no Apple Music, no YouTube, no TikTok, no Bandcamp, etc.) or any other form of external distribution. 
 
-## Operating & technical methods
-All releases are FLAC zips. There are no alternate formats. Audio is primary, video is secondary, optional, and likely rare. 
+## Album Structure
+Every release is an album stored as a folder in `public/albums/`. An album contains:
+- `album.txt` - Metadata (YAML frontmatter: title, artist, date, price, track listing) + description
+- `artwork.jpg` - Album art (widescreen preferred, high resolution)
+- `release.zip` - FLAC archive for audio albums
+- Optional: associated writings (`.txt` files), videos, additional artwork
+
+A folder is an album. Simple filesystem as CMS. Each album is a product with lifetime ownership. Albums live in `public/` so images are served as static assets.
+
+## Artwork & Visual Assets
+No standards. No Spotify compliance. No square album art legacy. Each release has its own dimensions based on the art. Prefer widescreen cinematic formats (16:9, 21:9) at high resolution (minimum 2560px long edge) for archival quality. Digital-only, no physical distribution, no inventory. Designed for desktop screens. We hate mobile.
 
 ## CLI tools
 We use `magick`, `ffmpeg`, and `flac`. 

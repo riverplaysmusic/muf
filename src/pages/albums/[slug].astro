@@ -1,0 +1,304 @@
+---
+import Layout from "@/components/Layout.astro";
+import { readdir, readFile, stat } from "node:fs/promises";
+import { join } from "node:path";
+
+export async function getStaticPaths() {
+  const albumsDir = join(process.cwd(), "public", "albums");
+  const items = await readdir(albumsDir);
+
+  const paths = [];
+
+  for (const item of items) {
+    const itemPath = join(albumsDir, item);
+    const itemStat = await stat(itemPath);
+
+    if (itemStat.isDirectory()) {
+      // Check if album.txt exists
+      try {
+        await readFile(join(itemPath, "album.txt"), "utf-8");
+        paths.push({ params: { slug: item } });
+      } catch {
+        // Skip folders without album.txt
+      }
+    }
+  }
+
+  return paths;
+}
+
+const { slug } = Astro.params;
+
+// Read album folder
+const albumsDir = join(process.cwd(), "public", "albums");
+const albumPath = join(albumsDir, slug);
+const albumFilePath = join(albumPath, "album.txt");
+let artworkFile: string | null = null;
+
+// Look for artwork
+const folderFiles = await readdir(albumPath);
+const artwork = folderFiles.find((f) =>
+  /^artwork\.(jpg|jpeg|png|svg|webp)$/i.test(f)
+);
+if (artwork) {
+  artworkFile = `/albums/${slug}/${artwork}`;
+}
+
+// Read and parse album.txt
+const content = await readFile(albumFilePath, "utf-8");
+const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+const frontmatter = frontmatterMatch?.[1] || "";
+const title = frontmatter.match(/title:\s*(.+)/)?.[1] || "Untitled";
+const artist = frontmatter.match(/artist:\s*(.+)/)?.[1] || "";
+const date = frontmatter.match(/date:\s*(.+)/)?.[1] || "";
+const priceCents = parseInt(frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || "0");
+
+// Parse track listing from YAML
+const tracksMatch = frontmatter.match(/tracks:\s*\n([\s\S]*?)(?=\n\w+:|$)/);
+let tracks: string[] = [];
+if (tracksMatch) {
+  tracks = tracksMatch[1]
+    .split("\n")
+    .map((line) => line.replace(/^\s*-\s*/, "").trim())
+    .filter((line) => line.length > 0);
+}
+
+const body = content.replace(/^---\n[\s\S]*?\n---\n/, "").trim();
+const paragraphs = body.split("\n\n");
+
+// Determine if content is paid
+const isPaid = priceCents > 0;
+const price = (priceCents / 100).toFixed(2);
+
+// For now, show full content if free, preview if paid
+const isPreviewMode = isPaid;
+const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
+---
+
+<Layout>
+  <script>
+    import { supabase } from "@/lib/supabase";
+
+    const isPaid = document.getElementById("is-paid")?.dataset.value === "true";
+    const fullContent = document.getElementById("full-content");
+    const previewContent = document.getElementById("preview-content");
+    const buySection = document.getElementById("buy-section");
+    const loadingMsg = document.getElementById("loading-msg");
+
+    async function checkOwnership() {
+      if (!isPaid) return; // Free content, nothing to check
+
+      // For now, just show preview + buy button for paid content
+      // Stripe integration will handle actual purchase flow
+      loadingMsg?.classList.add("hidden");
+      previewContent?.classList.remove("hidden");
+      buySection?.classList.remove("hidden");
+    }
+
+    checkOwnership();
+  </script>
+
+  <main class="brochure">
+    <!-- HERO -->
+    <section class="surface hero">
+      {artworkFile && (
+        <div class="hero-artwork">
+          <img src={artworkFile} alt={title} />
+        </div>
+      )}
+      <header class="content">
+        <a href="/albums" class="back-link">← Back to Albums</a>
+        <h1 class="gradient-cyan-pink">{title}</h1>
+        {artist && <p class="subtitle artist-name">{artist}</p>}
+        {date && (
+          <time class="subtitle">{new Date(date).toLocaleDateString()}</time>
+        )}
+        {isPaid && (
+          <p class="subtitle price-tag">
+            ${price}
+          </p>
+        )}
+      </header>
+    </section>
+
+    <!-- ALBUM BODY -->
+    <section class="surface">
+      <article class="content container-sm album-body">
+        <!-- Hidden data for client script -->
+        <div id="is-paid" data-value={isPaid.toString()} style="display:none;"></div>
+
+        {tracks.length > 0 && (
+          <div class="tracks-section">
+            <h2 class="section-heading">Tracks</h2>
+            <ol class="track-list">
+              {tracks.map((track) => (
+                <li>{track}</li>
+              ))}
+            </ol>
+          </div>
+        )}
+
+        {!isPaid ? (
+          <!-- FREE CONTENT: Show immediately -->
+          <div id="full-content">
+            {paragraphs.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+        ) : (
+          <>
+            <!-- LOADING STATE -->
+            <div id="loading-msg" class="stack center">
+              <p class="desc">Checking access...</p>
+            </div>
+
+            <!-- PREVIEW CONTENT (shown if not owned) -->
+            <div id="preview-content" class="hidden">
+              {previewParagraphs.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+              <div class="fade-overlay"></div>
+            </div>
+
+            <!-- FULL CONTENT (shown if owned) -->
+            <div id="full-content" class="hidden">
+              {paragraphs.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+
+            <!-- BUY SECTION -->
+            <div id="buy-section" class="hidden">
+              <div class="glass buy-card">
+                <h3>Own This Album</h3>
+                <p class="desc">
+                  Purchase for lifetime access. ${price} one-time payment.
+                </p>
+                <button class="btn retro" onclick="alert('Stripe checkout coming soon')">
+                  Buy Now - ${price}
+                </button>
+              </div>
+            </div>
+          </>
+        )}
+      </article>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .hero-artwork {
+    width: 100%;
+    max-height: 400px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .hero-artwork img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+    letter-spacing: 0.1em;
+  }
+
+  .artist-name {
+    opacity: 0.9;
+    font-size: 1.2rem;
+  }
+
+  .price-tag {
+    background: linear-gradient(135deg, #00ffff, #ff00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
+  .album-body {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    max-width: 65ch;
+  }
+
+  .tracks-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+  }
+
+  .track-list {
+    list-style-position: inside;
+    margin-top: 1rem;
+  }
+
+  .track-list li {
+    padding: 0.5rem 0;
+    opacity: 0.9;
+  }
+
+  .album-body p {
+    margin-bottom: 1.5rem;
+  }
+
+  .album-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  time.subtitle {
+    opacity: 0.7;
+  }
+
+  #preview-content {
+    position: relative;
+    padding-bottom: 4rem;
+  }
+
+  .fade-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to bottom, transparent, #000);
+    pointer-events: none;
+  }
+
+  .buy-card {
+    margin-top: 3rem;
+    text-align: center;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .buy-card h3 {
+    margin-bottom: 1rem;
+  }
+
+  .buy-card .desc {
+    margin-bottom: 1.5rem;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .error {
+    color: #ff4444;
+  }
+</style>

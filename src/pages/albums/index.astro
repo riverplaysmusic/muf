@@ -1,0 +1,250 @@
+---
+import Layout from "@/components/Layout.astro";
+import { readdir, readFile, stat } from "node:fs/promises";
+import { join } from "node:path";
+
+const albumsDir = join(process.cwd(), "public", "albums");
+const items = await readdir(albumsDir);
+
+// Parse album folders
+const albums = await Promise.all(
+  items.map(async (item) => {
+    const itemPath = join(albumsDir, item);
+    const itemStat = await stat(itemPath);
+
+    if (!itemStat.isDirectory() || item === "template.txt") {
+      return null;
+    }
+
+    // Album folder structure
+    const slug = item;
+    const albumPath = join(itemPath, "album.txt");
+    let artworkFile: string | null = null;
+
+    // Look for artwork file
+    const folderFiles = await readdir(itemPath);
+    const artwork = folderFiles.find((f) =>
+      /^artwork\.(jpg|jpeg|png|svg|webp)$/i.test(f),
+    );
+    if (artwork) {
+      artworkFile = `/albums/${slug}/${artwork}`;
+    }
+
+    // Read and parse album.txt
+    try {
+      const content = await readFile(albumPath, "utf-8");
+      const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+      if (!frontmatterMatch) return null;
+
+      const frontmatter = frontmatterMatch[1];
+      const title = frontmatter.match(/title:\s*(.+)/)?.[1] || "Untitled";
+      const artist = frontmatter.match(/artist:\s*(.+)/)?.[1] || "";
+      const date = frontmatter.match(/date:\s*(.+)/)?.[1] || "";
+      const priceCents = parseInt(
+        frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || "0",
+      );
+
+      const body = content.replace(/^---\n[\s\S]*?\n---\n/, "").trim();
+      const preview = body.split("\n\n")[0];
+
+      return { slug, title, artist, date, preview, priceCents, artworkFile };
+    } catch {
+      return null;
+    }
+  }),
+);
+
+// Filter out null entries and sort by date (newest first)
+const validAlbums = albums
+  .filter((a) => a !== null)
+  .sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+---
+
+<Layout>
+  <main class="brochure">
+    <!-- HERO -->
+    <section class="surface hero">
+      <header class="content">
+        <h1 class="gradient-cyan-pink">Albums</h1>
+        <p class="subtitle">Indie records from the Lion's Den</p>
+      </header>
+    </section>
+
+    <!-- ALBUMS GRID -->
+    <section class="albums-container">
+      <div class="content">
+        {
+          validAlbums.length === 0 ? (
+            <p class="desc center">No albums yet. Check back soon.</p>
+          ) : (
+            <div class="albums-grid">
+              {validAlbums.map((album) => (
+            <article class="album-card">
+              <a href={`/albums/${album.slug}`} class="album-link">
+                {album.artworkFile && (
+                  <div class="artwork-hero">
+                    <img src={album.artworkFile} alt={album.title} />
+                  </div>
+                )}
+                <div class="album-info">
+                  <h2 class="section-heading">{album.title}</h2>
+                  {album.artist && <p class="artist">{album.artist}</p>}
+                  {album.date && (
+                    <time class="date">
+                      {new Date(album.date).toLocaleDateString()}
+                    </time>
+                  )}
+                  {album.priceCents > 0 && (
+                    <span class="price">
+                      ${(album.priceCents / 100).toFixed(2)}
+                    </span>
+                  )}
+                  <p class="desc">{album.preview}</p>
+                </div>
+              </a>
+            </article>
+              ))}
+            </div>
+          )
+        }
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .albums-container {
+    width: 100%;
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-sm);
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: var(--space-lg);
+    box-sizing: border-box;
+  }
+
+  /* Mobile: Reduce padding for more breathing room */
+  @media (max-width: 768px) {
+    .albums-container {
+      padding-top: var(--space-sm);
+      padding-bottom: var(--space-xs);
+      padding-left: 0;
+      padding-right: 0;
+      margin-bottom: var(--space-md);
+    }
+  }
+
+  /* Large screens: Max width and center surfaces */
+  @media (min-width: 1200px) {
+    .albums-container {
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .albums-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .albums-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .albums-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .album-card {
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .album-link {
+    text-decoration: none;
+    display: block;
+  }
+
+  .artwork-hero {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  .artwork-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: all 300ms ease;
+  }
+
+  .album-link:hover .artwork-hero img {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+  }
+
+  .album-info {
+    padding: 1.5rem;
+  }
+
+  .album-link:hover h2 {
+    text-decoration: underline;
+    letter-spacing: 0.1em;
+  }
+
+  .artist {
+    opacity: 0.8;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .date {
+    display: inline-block;
+    opacity: 0.7;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    margin-right: 1rem;
+  }
+
+  .price {
+    display: inline-block;
+    background: linear-gradient(135deg, #00ffff, #ff00ff);
+    color: #000;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+  article {
+    transition: all 300ms ease;
+  }
+
+  article:hover {
+    transform: scale(1.01);
+  }
+
+  @media (max-width: 640px) {
+    .artwork-hero {
+      height: 200px;
+    }
+
+    .album-info {
+      padding: 1rem;
+    }
+  }
+</style>

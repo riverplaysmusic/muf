@@ -1,0 +1,11 @@
+---
+title: Moon Goddess
+artist: Musical Universe Factory
+date: 2026-01-02
+price_cents: 500
+tracks:
+  - 01. Moon Goddess
+  - 02. Solitude from God
+---
+
+Joey celebrates the reopening of MUF by following the cycles of the moon. 
