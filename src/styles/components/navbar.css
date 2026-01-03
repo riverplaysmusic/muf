@@ -1,9 +1,12 @@
 .navbar {
+  background-color: #000;
+  width: 100%;
   padding: var(--space-sm) var(--space-lg);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-md);
+  box-sizing: border-box;
 }
 
 .nav-links {
