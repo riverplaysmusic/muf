@@ -10,11 +10,11 @@ export default defineConfig({
   }),
   env: {
     schema: {
-      RESEND_API_KEY: envField.string({
+      SUPABASE_CONNECTION_STRING: envField.string({
         context: 'server',
         access: 'secret',
       }),
-      SUPABASE_CONNECTION_STRING: envField.string({
+      SUPABASE_SERVICE_KEY: envField.string({
         context: 'server',
         access: 'secret',
       }),
@@ -25,6 +25,14 @@ export default defineConfig({
       PUBLIC_SUPABASE_PUBLISHABLE_KEY: envField.string({
         context: 'client',
         access: 'public',
+      }),
+      STRIPE_SECRET_KEY: envField.string({
+        context: 'server',
+        access: 'secret',
+      }),
+      STRIPE_WEBHOOK_SECRET: envField.string({
+        context: 'server',
+        access: 'secret',
       }),
     },
   },

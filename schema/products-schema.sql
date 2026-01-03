@@ -40,7 +40,9 @@ CREATE TABLE product_files (
   format           text NOT NULL,  -- 'flac' | 'pdf' | 'epub' | 'mp4'
   file_url         text NOT NULL,  -- Supabase Storage URL
   file_size_bytes  bigint,
-  created_at       timestamptz DEFAULT now()
+  created_at       timestamptz DEFAULT now(),
+
+  UNIQUE(product_id, format)  -- One file per product per format
 );
 
 CREATE INDEX idx_product_files_product ON product_files(product_id);
@@ -95,3 +97,16 @@ CREATE POLICY "Own purchases" ON purchases
 -- Users can insert their own purchases (via Stripe webhook or checkout flow)
 CREATE POLICY "Create own purchase" ON purchases
   FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+-- ============================================================
+-- SCHEMA UPDATES - Add slug and Stripe integration fields
+-- ============================================================
+
+-- Add slug to products for filesystem mapping
+ALTER TABLE products ADD COLUMN IF NOT EXISTS slug text UNIQUE;
+CREATE INDEX IF NOT EXISTS idx_products_slug ON products(slug);
+
+-- Add Stripe metadata to purchases for idempotency and tracking
+ALTER TABLE purchases ADD COLUMN IF NOT EXISTS stripe_session_id text UNIQUE;
+ALTER TABLE purchases ADD COLUMN IF NOT EXISTS stripe_payment_intent_id text;
+CREATE INDEX IF NOT EXISTS idx_purchases_stripe_session ON purchases(stripe_session_id);
