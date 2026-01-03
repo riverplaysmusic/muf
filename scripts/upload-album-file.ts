@@ -51,8 +51,8 @@ async function uploadAlbumFile() {
   console.log(`File size: ${fileSizeMB} MB (${fileSizeKB} KB)`)
   console.log('')
 
-  // Storage path: albums/{slug}/release.zip
-  const storagePath = `${slug}/release.zip`
+  // Storage path: albums/{slug}.zip
+  const storagePath = `${slug}.zip`
 
   console.log(`Uploading to: albums/${storagePath}`)
 

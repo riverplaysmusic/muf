@@ -15,7 +15,7 @@ ON CONFLICT (id) DO NOTHING;
 -- ============================================================
 
 -- Allow authenticated users to download albums they've purchased
--- Files are stored at: albums/{slug}/release.zip
+-- Files are stored at: albums/{slug}.zip
 -- Access is granted via purchase record in database
 CREATE POLICY "Download purchased albums"
 ON storage.objects FOR SELECT
@@ -26,7 +26,7 @@ USING (
     SELECT 1 FROM products p
     JOIN purchases pur ON pur.product_id = p.id
     WHERE pur.user_id = auth.uid()
-      AND storage.foldername(name)[1] = p.slug
+      AND name = p.slug || '.zip'
   )
 );
 

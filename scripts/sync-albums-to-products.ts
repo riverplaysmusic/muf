@@ -118,13 +118,13 @@ async function syncAlbums() {
       }
 
       // Create product_files record for FLAC download
-      // Path convention: albums/{slug}/release.zip
+      // Path convention: albums/{slug}.zip
       const { error: fileError } = await supabase
         .from('product_files')
         .upsert({
           product_id: product.id,
           format: 'flac',
-          file_url: `${slug}/release.zip`,
+          file_url: `${slug}.zip`,
         }, {
           onConflict: 'product_id,format',
           ignoreDuplicates: false,
