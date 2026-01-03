@@ -1,6 +1,7 @@
 # MUF
 
 Astro web application with Supabase integration.
+https://musicaluniversefactory.com
 
 ## Manifesto
 **Musical Universe Factory is an independent creative sanctuary and eternal archive.**

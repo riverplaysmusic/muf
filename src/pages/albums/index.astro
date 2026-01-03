@@ -90,7 +90,6 @@ const validAlbums = albums
                 )}
                 <div class="album-info">
                   <h2 class="section-heading">{album.title}</h2>
-                  {album.artist && <p class="artist">{album.artist}</p>}
                   {album.date && (
                     <time class="date">
                       {new Date(album.date).toLocaleDateString()}
