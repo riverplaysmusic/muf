@@ -24,8 +24,8 @@
 /* Mobile: Reduce padding for more breathing room */
 @media (max-width: 768px) {
   .hero {
-    padding: var(--space-lg);
-    margin-bottom: var(--space-md);
+    padding: var(--space-md);
+    margin-bottom: var(--space-lg);
     --cut-size: 20px;
   }
 }
