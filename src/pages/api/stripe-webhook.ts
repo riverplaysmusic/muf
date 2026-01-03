@@ -22,8 +22,8 @@ export const POST: APIRoute = async ({ request }) => {
   let event: Stripe.Event
 
   try {
-    // Verify webhook signature
-    event = stripe.webhooks.constructEvent(
+    // Verify webhook signature (async version required in Cloud Run)
+    event = await stripe.webhooks.constructEventAsync(
       payload,
       signature,
       STRIPE_WEBHOOK_SECRET
