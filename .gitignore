@@ -23,3 +23,6 @@ infra/.env
 
 # jetbrains setting folder
 .idea/
+
+# album zip files (stored in Supabase Storage, not git)
+public/albums/**/*.zip
