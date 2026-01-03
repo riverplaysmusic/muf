@@ -3,36 +3,25 @@
 .card {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
   min-height: auto;
-  padding: var(--space-2xl) var(--space-lg);
-  margin-bottom: var(--space-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
   box-sizing: border-box;
   position: relative;
   z-index: 1;
-  transition: transform var(--transition-duration) var(--ease-smooth);
+  transition: all 0.3s ease-out;
 
-  --edge-thickness: 4px;
-  --accent-color: var(--primary-cyan);
   --inner-bg: var(--space-black);
 }
 
 /* Mobile: Reduce padding for more breathing room */
 @media (max-width: 768px) {
   .card {
-    padding: var(--space-lg);
-    margin-bottom: var(--space-md);
-  }
-}
-
-/* Large screens: Max width and center cards */
-@media (min-width: 1200px) {
-  .card {
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
+    padding: var(--space-md);
+    margin-bottom: var(--space-sm);
   }
 }
 
@@ -40,30 +29,60 @@
   transform: translateY(-4px);
 }
 
+/* Card background with gradient border */
 .card::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  z-index: -1;
+  background: linear-gradient(
+    135deg,
+    var(--primary-cyan) 0%,
+    var(--primary-pink) 50%,
+    var(--primary-yellow) 100%
+  );
+  border-radius: 0;
+  opacity: 1;
+}
+
+/* Inner card background */
+.card::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   background-color: var(--inner-bg);
-  box-shadow:
-    inset 0 0 0 3px var(--accent-color),
-    0 0 30px rgba(0, 255, 255, 0.3);
   border-radius: 0;
 }
 
-.card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  background: linear-gradient(135deg, var(--primary-cyan), var(--primary-pink));
-  transform: translate(12px, 12px);
-  border-radius: 0;
-  transition: all 0.3s ease-out;
+/* Alternate card colors */
+.card:nth-child(odd)::before {
+  background: linear-gradient(
+    225deg,
+    var(--primary-pink) 0%,
+    var(--primary-yellow) 50%,
+    var(--primary-cyan) 100%
+  );
 }
 
-.card:hover::after {
-  transform: translate(16px, 16px);
-  filter: brightness(1.3);
+.card:nth-child(3n)::before {
+  background: linear-gradient(
+    315deg,
+    var(--primary-yellow) 0%,
+    var(--primary-cyan) 50%,
+    var(--primary-pink) 100%
+  );
+}
+
+.card:hover::before {
+  animation: gradient-flow 3s ease infinite;
+}
+
+@keyframes gradient-flow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }

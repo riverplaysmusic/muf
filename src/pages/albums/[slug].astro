@@ -121,107 +121,146 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
       </header>
     </section>
 
-    <!-- TRACKS -->
-    {tracks.length > 0 && (
-      <section class="card tracks-section">
-        <h2 class="section-heading">Tracks</h2>
-        <ol class="track-list">
-          {tracks.map((track) => (
-            <li>{track}</li>
-          ))}
-        </ol>
-      </section>
-    )}
+    <!-- CONTENT GRID -->
+    <div class="content-grid">
+      <!-- LEFT COLUMN: TRACKS & INFO -->
+      <div class="left-column">
+        <!-- ALBUM INFO -->
+        <section class="card album-info-card">
+          <div class="info-grid">
+            {artist && (
+              <div class="info-item">
+                <span class="info-label">Artist</span>
+                <span class="info-value">{artist}</span>
+              </div>
+            )}
+            {date && (
+              <div class="info-item">
+                <span class="info-label">Released</span>
+                <span class="info-value">{new Date(date).getFullYear()}</span>
+              </div>
+            )}
+            {tracks.length > 0 && (
+              <div class="info-item">
+                <span class="info-label">Tracks</span>
+                <span class="info-value">{tracks.length}</span>
+              </div>
+            )}
+            <div class="info-item">
+              <span class="info-label">Format</span>
+              <span class="info-value">FLAC</span>
+            </div>
+          </div>
+        </section>
 
-    <!-- ALBUM BODY -->
-    <section class="hero">
-      <article>
+        <!-- TRACKS -->
+        {tracks.length > 0 && (
+          <section class="card tracks-card">
+            <h2 class="card-title">Track Listing</h2>
+            <ol class="track-list">
+              {tracks.map((track, index) => (
+                <li class="track-item">
+                  <span class="track-number">{String(index + 1).padStart(2, '0')}</span>
+                  <span class="track-name">{track}</span>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
+      </div>
+
+      <!-- RIGHT COLUMN: DESCRIPTION -->
+      <div class="right-column">
         <!-- Hidden data for client script -->
         <div id="is-paid" data-value={isPaid.toString()} style="display:none;"></div>
 
-        <div class="album-body">
-        {!isPaid ? (
-          <!-- FREE CONTENT: Show immediately -->
-          <div id="full-content">
-            {paragraphs.map((paragraph) => (
-              <p>{paragraph}</p>
-            ))}
-          </div>
-        ) : (
-          <>
-            <!-- LOADING STATE -->
-            <div id="loading-msg" class="stack center">
-              <p class="desc">Checking access...</p>
-            </div>
+        <section class="card description-section">
+          <h2 class="card-title">About This Album</h2>
 
-            <!-- PREVIEW CONTENT (shown if not owned) -->
-            <div id="preview-content" class="hidden">
-              {previewParagraphs.map((paragraph) => (
-                <p>{paragraph}</p>
-              ))}
-              <div class="fade-overlay"></div>
-            </div>
-
-            <!-- FULL CONTENT (shown if owned) -->
-            <div id="full-content" class="hidden">
+          {!isPaid ? (
+            <!-- FREE CONTENT: Show immediately -->
+            <div id="full-content" class="album-description">
               {paragraphs.map((paragraph) => (
                 <p>{paragraph}</p>
               ))}
             </div>
-
-            <!-- BUY SECTION -->
-            <div id="buy-section" class="hidden">
-              <div class="glass buy-card">
-                <h3>Own This Album</h3>
-                <p class="desc">
-                  Purchase for lifetime access. ${price} one-time payment.
-                </p>
-                <button class="btn retro" onclick="alert('Stripe checkout coming soon')">
-                  Buy Now - ${price}
-                </button>
+          ) : (
+            <>
+              <!-- LOADING STATE -->
+              <div id="loading-msg" class="stack center">
+                <p class="desc">Checking access...</p>
               </div>
-            </div>
-          </>
+
+              <!-- PREVIEW CONTENT (shown if not owned) -->
+              <div id="preview-content" class="hidden">
+                <div class="album-description">
+                  {previewParagraphs.map((paragraph) => (
+                    <p>{paragraph}</p>
+                  ))}
+                </div>
+                <div class="fade-overlay"></div>
+              </div>
+
+              <!-- FULL CONTENT (shown if owned) -->
+              <div id="full-content" class="hidden album-description">
+                {paragraphs.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+              </div>
+            </>
+          )}
+        </section>
+
+        <!-- BUY SECTION -->
+        {isPaid && (
+          <section id="buy-section" class="card buy-section hidden">
+            <h3 class="card-title gradient-cyan-pink">Own This Album</h3>
+            <p class="buy-desc">
+              Purchase for lifetime access to high-quality FLAC files.
+            </p>
+            <p class="buy-price">${price}</p>
+            <button class="btn retro" onclick="alert('Stripe checkout coming soon')">
+              Purchase Now
+            </button>
+          </section>
         )}
-        </div>
-      </article>
-    </section>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="album-footer">
+      <p>COPYRIGHT 2026 MUSICAL UNIVERSE FACTORY</p>
+    </footer>
   </main>
 </Layout>
 
 <style>
-  /* --- IMAGE ASPECT RATIO FIX & LAYOUT SIMPLIFICATION --- */
-
+  /* --- HERO --- */
   .hero-artwork {
     width: 100%;
-    /* REMOVED max-height and overflow to prevent cropping */
   }
 
   .hero-artwork img {
     width: 100%;
-    height: auto; /* Display image at its natural aspect ratio */
+    height: auto;
     display: block;
-    /* REMOVED object-fit: cover */
   }
 
-  /* --- PADDING & MARGIN REDUCTION --- */
-
-  /* Remove padding from the hero containing the image */
   .hero.no-padding-image {
     padding: 0;
   }
 
-  /* Reduce padding for the text content within the hero */
   .hero.no-padding-image .content {
     padding: var(--space-lg);
   }
 
   .back-link {
     display: inline-block;
-    margin-bottom: var(--space-sm); /* REDUCED */
+    margin-bottom: var(--space-sm);
     opacity: 0.8;
     font-size: 0.9rem;
     text-decoration: none;
+    transition: all 0.2s ease;
   }
 
   .back-link:hover {
@@ -242,46 +281,140 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
     background-clip: text;
     font-weight: bold;
     font-size: 1.5rem;
-    /* REMOVED margin-bottom */
-  }
-
-  .album-body {
-    font-size: 1.1rem;
-    line-height: 1.7;
-  }
-
-  .tracks-section {
-    margin-bottom: var(--space-lg); /* REDUCED */
-    padding: var(--space-md); /* REDUCED */
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-  }
-
-  .track-list {
-    list-style-position: inside;
-    margin-top: var(--space-sm); /* REDUCED */
-  }
-
-  .track-list li {
-    padding: var(--space-xs) 0; /* REDUCED */
-    opacity: 0.9;
-  }
-
-  .album-body p {
-    margin-bottom: var(--space-md); /* REDUCED */
-  }
-
-  .album-body p:last-child {
-    margin-bottom: 0;
   }
 
   time.subtitle {
     opacity: 0.7;
   }
 
+  /* --- CONTENT GRID --- */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+  }
+
+  @media (min-width: 1024px) {
+    .content-grid {
+      grid-template-columns: 380px 1fr;
+      gap: var(--space-lg);
+    }
+  }
+
+  .left-column,
+  .right-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  /* --- CARD TITLES --- */
+  .card-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* --- ALBUM INFO CARD --- */
+  .album-info-card {
+    padding: var(--space-lg);
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .info-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    font-weight: 600;
+  }
+
+  .info-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--primary-cyan);
+  }
+
+  /* --- TRACKS CARD --- */
+  .tracks-card {
+    padding: var(--space-lg);
+  }
+
+  .track-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .track-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(0, 255, 255, 0.05);
+    border-left: 3px solid var(--primary-cyan);
+    transition: all 0.2s ease;
+  }
+
+  .track-item:hover {
+    background: rgba(0, 255, 255, 0.1);
+    transform: translateX(4px);
+  }
+
+  .track-number {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--primary-cyan);
+    min-width: 2.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .track-name {
+    font-size: 1rem;
+    flex: 1;
+  }
+
+  /* --- DESCRIPTION SECTION --- */
+  .description-section {
+    padding: var(--space-lg);
+  }
+
+  .album-description {
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .album-description p {
+    margin-bottom: var(--space-md);
+  }
+
+  .album-description p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* --- PREVIEW & BUY --- */
   #preview-content {
     position: relative;
-    padding-bottom: 2rem; /* REDUCED */
+    padding-bottom: 2rem;
   }
 
   .fade-overlay {
@@ -289,27 +422,55 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 100px; /* REDUCED */
-    background: linear-gradient(to bottom, transparent, #000);
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--space-black));
     pointer-events: none;
   }
 
-  .buy-card {
-    margin-top: var(--space-xl); /* REDUCED */
+  .buy-section {
     text-align: center;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
   }
 
-  .buy-card h3 {
-    margin-bottom: var(--space-sm);
-  }
-
-  .buy-card .desc {
+  .buy-desc {
+    font-size: 1rem;
+    opacity: 0.9;
     margin-bottom: var(--space-md);
   }
 
+  .buy-price {
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary-cyan), var(--primary-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--space-lg);
+  }
+
+  .buy-section .btn {
+    font-size: 1.1rem;
+    padding: var(--space-sm) var(--space-lg);
+  }
+
+  /* --- FOOTER --- */
+  .album-footer {
+    margin-top: var(--space-2xl);
+    padding: var(--space-2xl) var(--space-lg);
+    text-align: center;
+    background: oklch(62.3% 0.214 259.815);
+    position: relative;
+  }
+
+  .album-footer p {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    color: var(--space-black);
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  /* --- UTILITIES --- */
   .hidden {
     display: none;
   }
@@ -318,11 +479,47 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
     color: #ff4444;
   }
 
-  /* --- MOBILE-SPECIFIC PADDING REDUCTIONS --- */
+  /* --- MOBILE --- */
   @media (max-width: 768px) {
     .hero.no-padding-image .content {
       padding: var(--space-md);
     }
-  }
 
+    .content-grid {
+      padding: 0 var(--space-md);
+      gap: var(--space-lg);
+    }
+
+    .album-info-card,
+    .tracks-card,
+    .description-section {
+      padding: var(--space-lg);
+    }
+
+    .card-title {
+      font-size: 1.4rem;
+    }
+
+    .info-grid {
+      gap: var(--space-md);
+    }
+
+    .track-number {
+      font-size: 1.2rem;
+      min-width: 2.5rem;
+    }
+
+    .track-name {
+      font-size: 1rem;
+    }
+
+    .buy-price {
+      font-size: 2rem;
+    }
+
+    .album-footer p {
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+    }
+  }
 </style>
