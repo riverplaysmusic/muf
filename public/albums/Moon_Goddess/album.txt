@@ -4,8 +4,21 @@ artist: Musical Universe Factory
 date: 2026-01-02
 price_cents: 500
 tracks:
-  - 01. Moon Goddess (10:33)
-  - 02. Solitude from God (2:15)
+  - name: 01. Moon Goddess (10:33)
+    credits:
+      - Bubbles - Electric Steel Resonator
+      - Bubbles - Composition
+  - name: 02. Solitude from God (2:15)
+    credits:
+      - Bubbles - Keyboards, vocals
+      - Bubbles - Lyrics & composition
+credits:
+  - Bubbles - Audio engineering, mixing, mastering, artwork, liner notes
+recording_studio: Lion's Den
+label: Musical Universe Factory 
+website: https://musicaluniversefactory.com
+copyright: 2026 © Musical Universe Factory
+thanks: Pamela, mom, cats, Charlie
 ---
 
-Bubbles plays his electric steel resonator on this night, the full moon. This ten minute unplanned improvisation calls out for assistance from the Moon Goddess. Accidentally tuned to an open minor chord, Bubbles' steel cone showcases his understanding of tonality and dissonance gained after a long study on keyboards, now applied to frets. We are greeted by a Moon Goddess herself, Luna the cat, and Bubble's affectionally tells her she's "driving him nuts." The record closes with a spontaneous lyric & word composition, 2 minutes and 15 seconds created in 2 minutes and 15 second's time. Bubbles sings that his isolation is from God and he "never changes." A rough recording in typical MUF fashion: raw audio from the Lion's Den with zero polishing. 
+Bubbles plays his electric steel resonator on this night, the full moon. This ten minute unplanned improvisation calls out for assistance from the Moon Goddess. Accidentally tuned to an open minor chord, Bubbles' steel cone showcases his understanding of tonality and dissonance gained after a long study on keyboards, now applied to frets. We are greeted by a Moon Goddess herself, Luna the cat, and Bubbles affectionally tells her she's "driving him nuts." The record closes with a spontaneous lyric & word composition, 2 minutes and 15 seconds created in 2 minutes and 15 second's time. Bubbles sings that his isolation is from God and he "never changes." A rough recording in typical MUF fashion: raw audio from the Lion's Den with zero polishing.

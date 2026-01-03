@@ -52,12 +52,43 @@ const title = frontmatter.match(/title:\s*(.+)/)?.[1] || "Untitled";
 const artist = frontmatter.match(/artist:\s*(.+)/)?.[1] || "";
 const date = frontmatter.match(/date:\s*(.+)/)?.[1] || "";
 const priceCents = parseInt(frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || "0");
+const recordingStudio = frontmatter.match(/recording_studio:\s*(.+)/)?.[1] || "";
+const label = frontmatter.match(/label:\s*(.+)/)?.[1] || "";
+const website = frontmatter.match(/website:\s*(.+)/)?.[1] || "";
+const copyright = frontmatter.match(/copyright:\s*(.+)/)?.[1] || "";
+const thanks = frontmatter.match(/thanks:\s*(.+)/)?.[1] || "";
 
-// Parse track listing from YAML
+// Parse tracks with credits
+interface Track {
+  name: string;
+  credits?: string[];
+}
+const tracks: Track[] = [];
 const tracksMatch = frontmatter.match(/tracks:\s*\n([\s\S]*?)(?=\n\w+:|$)/);
-let tracks: string[] = [];
 if (tracksMatch) {
-  tracks = tracksMatch[1]
+  const trackLines = tracksMatch[1].split("\n");
+  let currentTrack: Track | null = null;
+
+  for (const line of trackLines) {
+    const nameMatch = line.match(/^\s*-\s*name:\s*(.+)/);
+    const creditMatch = line.match(/^\s*-\s*(.+)/);
+
+    if (nameMatch) {
+      if (currentTrack) tracks.push(currentTrack);
+      currentTrack = { name: nameMatch[1].trim() };
+    } else if (creditMatch && currentTrack && line.includes("    -")) {
+      if (!currentTrack.credits) currentTrack.credits = [];
+      currentTrack.credits.push(creditMatch[1].trim());
+    }
+  }
+  if (currentTrack) tracks.push(currentTrack);
+}
+
+// Parse album-wide credits
+const albumCreditsMatch = frontmatter.match(/^credits:\s*\n([\s\S]*?)(?=\n\w+:|$)/m);
+let albumCredits: string[] = [];
+if (albumCreditsMatch) {
+  albumCredits = albumCreditsMatch[1]
     .split("\n")
     .map((line) => line.replace(/^\s*-\s*/, "").trim())
     .filter((line) => line.length > 0);
@@ -161,10 +192,57 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
               {tracks.map((track, index) => (
                 <li class="track-item">
                   <span class="track-number">{String(index + 1).padStart(2, '0')}</span>
-                  <span class="track-name">{track}</span>
+                  <span class="track-name">{track.name}</span>
                 </li>
               ))}
             </ol>
+          </section>
+        )}
+
+        <!-- CREDITS -->
+        {(tracks.some(t => t.credits?.length) || albumCredits.length > 0 || label || recordingStudio || website || thanks || copyright) && (
+          <section class="card credits-card">
+            <h2 class="card-title">Credits</h2>
+
+            {tracks.map((track) => (
+              track.credits && track.credits.length > 0 && (
+                <div class="track-credits">
+                  <h3 class="track-credits-title">{track.name}</h3>
+                  <ul class="credit-items">
+                    {track.credits.map((credit) => (
+                      <li class="credit-item">{credit}</li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            ))}
+
+            {albumCredits.length > 0 && (
+              <div class="album-credits">
+                <ul class="credit-items">
+                  {albumCredits.map((credit) => (
+                    <li class="credit-item">{credit}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {(label || recordingStudio || website || thanks || copyright) && (
+              <div class="album-meta">
+                {label && <p class="meta-item"><span class="meta-label">Label:</span> {label}</p>}
+                {recordingStudio && <p class="meta-item"><span class="meta-label">Recording Studio:</span> {recordingStudio}</p>}
+                {website && (
+                  <p class="meta-item">
+                    <span class="meta-label">Website:</span>{' '}
+                    <a href={website} target="_blank" rel="noopener noreferrer" class="meta-link">
+                      {website.replace(/^https?:\/\//, '')}
+                    </a>
+                  </p>
+                )}
+                {thanks && <p class="meta-item"><span class="meta-label">Thanks:</span> {thanks}</p>}
+                {copyright && <p class="meta-item copyright">{copyright}</p>}
+              </div>
+            )}
           </section>
         )}
       </div>
@@ -348,7 +426,7 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
   .info-value {
     font-size: 1.15rem;
     font-weight: 700;
-    color: var(--primary-cyan);
+    color: white;
   }
 
   /* --- TRACKS CARD --- */
@@ -391,6 +469,90 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
   .track-name {
     font-size: 1rem;
     flex: 1;
+  }
+
+  /* --- CREDITS CARD --- */
+  .credits-card {
+    padding: var(--space-lg);
+  }
+
+  .track-credits {
+    margin-bottom: var(--space-lg);
+  }
+
+  .track-credits:last-of-type {
+    margin-bottom: var(--space-md);
+  }
+
+  .track-credits-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.7;
+    margin-bottom: var(--space-sm);
+  }
+
+  .credit-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .credit-item {
+    font-size: 0.95rem;
+    padding: var(--space-xs) var(--space-sm);
+    background: rgba(255, 0, 255, 0.05);
+    border-left: 2px solid var(--primary-pink);
+  }
+
+  .album-credits {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .album-meta {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .meta-item {
+    font-size: 0.95rem;
+    margin-bottom: var(--space-xs);
+  }
+
+  .meta-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .meta-label {
+    font-weight: 700;
+    opacity: 0.7;
+  }
+
+  .meta-link {
+    color: white;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .meta-link:hover {
+    text-decoration: underline;
+    letter-spacing: 0.05em;
+  }
+
+  .copyright {
+    margin-top: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.85rem;
+    opacity: 0.6;
+    text-align: center;
   }
 
   /* --- DESCRIPTION SECTION --- */
@@ -501,6 +663,7 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
 
     .album-info-card,
     .tracks-card,
+    .credits-card,
     .description-section {
       padding: var(--space-lg);
     }
@@ -520,6 +683,14 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
 
     .track-name {
       font-size: 1rem;
+    }
+
+    .track-credits-title {
+      font-size: 0.8rem;
+    }
+
+    .credit-item {
+      font-size: 0.9rem;
     }
 
     .buy-price {
