@@ -57,7 +57,6 @@ const recordingStudio = frontmatter.match(/recording_studio:\s*(.+)/)?.[1] || ""
 const label = frontmatter.match(/label:\s*(.+)/)?.[1] || "";
 const website = frontmatter.match(/website:\s*(.+)/)?.[1] || "";
 const copyright = frontmatter.match(/copyright:\s*(.+)/)?.[1] || "";
-const thanks = frontmatter.match(/thanks:\s*(.+)/)?.[1] || "";
 
 // Parse tracks with credits
 interface Track {
@@ -354,7 +353,7 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
         )}
 
         <!-- CREDITS -->
-        {(tracks.some(t => t.credits?.length) || albumCredits.length > 0 || label || recordingStudio || website || thanks || copyright) && (
+        {(tracks.some(t => t.credits?.length) || albumCredits.length > 0 || label || recordingStudio || website || copyright) && (
           <section class="card credits-card">
             <h2 class="card-title">Credits</h2>
 
@@ -381,7 +380,7 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
               </div>
             )}
 
-            {(label || recordingStudio || website || thanks || copyright) && (
+            {(label || recordingStudio || website || copyright) && (
               <div class="album-meta">
                 {label && <p class="meta-item"><span class="meta-label">Label:</span> {label}</p>}
                 {recordingStudio && <p class="meta-item"><span class="meta-label">Recording Studio:</span> {recordingStudio}</p>}
@@ -393,7 +392,6 @@ const previewParagraphs = isPreviewMode ? [paragraphs[0]] : paragraphs;
                     </a>
                   </p>
                 )}
-                {thanks && <p class="meta-item"><span class="meta-label">Thanks:</span> {thanks}</p>}
                 {copyright && <p class="meta-item copyright">{copyright}</p>}
               </div>
             )}
