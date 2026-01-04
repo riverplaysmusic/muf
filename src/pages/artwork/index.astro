@@ -1,0 +1,239 @@
+---
+import Layout from "@/components/Layout.astro";
+import { readdir, readFile, stat } from "node:fs/promises";
+import { join } from "node:path";
+
+const artworkDir = join(process.cwd(), "public", "artwork");
+const items = await readdir(artworkDir);
+
+// Parse artwork folders
+const artworks = await Promise.all(
+  items.map(async (item) => {
+    const itemPath = join(artworkDir, item);
+    const itemStat = await stat(itemPath);
+
+    if (!itemStat.isDirectory() || item === "TEMPLATE.txt") {
+      return null;
+    }
+
+    const slug = item;
+    const artworkPath = join(itemPath, "item.txt");
+    let previewFile: string | null = null;
+
+    // Look for preview image
+    const folderFiles = await readdir(itemPath);
+    const preview = folderFiles.find((f) =>
+      /^preview\.(jpg|jpeg|png|svg|webp)$/i.test(f),
+    );
+    if (preview) {
+      previewFile = `/artwork/${slug}/${preview}`;
+    }
+
+    // Read and parse item.txt
+    try {
+      const content = await readFile(artworkPath, "utf-8");
+      const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+      if (!frontmatterMatch) return null;
+
+      const frontmatter = frontmatterMatch[1];
+      const title = frontmatter.match(/title:\s*(.+)/)?.[1] || "Untitled";
+      const artist = frontmatter.match(/artist:\s*(.+)/)?.[1] || "";
+      const date = frontmatter.match(/date:\s*(.+)/)?.[1] || "";
+      const priceCents = parseInt(
+        frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || "0",
+      );
+
+      const body = content.replace(/^---\n[\s\S]*?\n---\n/, "").trim();
+      const preview = body.split("\n\n")[0];
+
+      return { slug, title, artist, date, preview, priceCents, previewFile };
+    } catch {
+      return null;
+    }
+  }),
+);
+
+// Filter out null entries and sort by date (newest first)
+const validArtwork = artworks
+  .filter((a) => a !== null)
+  .sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+---
+
+<Layout>
+  <main class="brochure">
+    <!-- HERO -->
+    <section class="hero">
+      <header class="content">
+        <h1 class="gradient-pink-yellow">Artwork</h1>
+        <p class="subtitle">Digital art packs for collectors</p>
+      </header>
+    </section>
+
+    <!-- ARTWORK GRID -->
+    <section class="artwork-container">
+      <div class="content">
+        {
+          validArtwork.length === 0 ? (
+            <p class="desc center">No artwork packs yet. Check back soon.</p>
+          ) : (
+            <div class="artwork-grid">
+              {validArtwork.map((item) => (
+            <article class="artwork-card">
+              <a href={`/artwork/${item.slug}`} class="artwork-link">
+                {item.previewFile && (
+                  <div class="preview-hero">
+                    <img src={item.previewFile} alt={item.title} />
+                  </div>
+                )}
+                <div class="artwork-info">
+                  <h2 class="section-heading">{item.title}</h2>
+                  {item.date && (
+                    <time class="date">
+                      {new Date(item.date).toLocaleDateString()}
+                    </time>
+                  )}
+                  {item.priceCents > 0 && (
+                    <span class="price">
+                      ${(item.priceCents / 100).toFixed(2)}
+                    </span>
+                  )}
+                </div>
+              </a>
+            </article>
+              ))}
+            </div>
+          )
+        }
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .artwork-container {
+    width: 100%;
+    padding-top: var(--space-md);
+    padding-bottom: var(--space-xs);
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: var(--space-md);
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 768px) {
+    .artwork-container {
+      padding-top: var(--space-xs);
+      padding-bottom: 0;
+      padding-left: 0;
+      padding-right: 0;
+      margin-bottom: var(--space-sm);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .artwork-container {
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .artwork-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .artwork-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .artwork-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .artwork-card {
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .artwork-link {
+    text-decoration: none;
+    display: block;
+  }
+
+  .preview-hero {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  .preview-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: all 300ms ease;
+  }
+
+  .artwork-link:hover .preview-hero img {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+  }
+
+  .artwork-info {
+    padding: 1.5rem;
+  }
+
+  .artwork-link:hover h2 {
+    text-decoration: underline;
+    letter-spacing: 0.1em;
+  }
+
+  .date {
+    display: inline-block;
+    opacity: 0.7;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    margin-right: 1rem;
+  }
+
+  .price {
+    display: inline-block;
+    background: linear-gradient(135deg, #00ffff, #ff00ff);
+    color: #000;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+  article {
+    transition: all 300ms ease;
+  }
+
+  article:hover {
+    transform: scale(1.01);
+  }
+
+  @media (max-width: 640px) {
+    .preview-hero {
+      height: 200px;
+    }
+
+    .artwork-info {
+      padding: 1rem;
+    }
+  }
+</style>

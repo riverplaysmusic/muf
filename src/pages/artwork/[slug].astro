@@ -1,0 +1,335 @@
+---
+import Layout from "@/components/Layout.astro";
+import { readdir, readFile, stat } from "node:fs/promises";
+import { join } from "node:path";
+
+export async function getStaticPaths() {
+  const artworkDir = join(process.cwd(), "public", "artwork");
+  const items = await readdir(artworkDir);
+
+  const paths = [];
+
+  for (const item of items) {
+    const itemPath = join(artworkDir, item);
+    const itemStat = await stat(itemPath);
+
+    if (itemStat.isDirectory()) {
+      try {
+        await readFile(join(itemPath, "item.txt"), "utf-8");
+        paths.push({ params: { slug: item } });
+      } catch {
+        // Skip folders without item.txt
+      }
+    }
+  }
+
+  return paths;
+}
+
+const { slug } = Astro.params;
+
+// Read artwork folder
+const artworkDir = join(process.cwd(), "public", "artwork");
+const artworkPath = join(artworkDir, slug);
+const itemFilePath = join(artworkPath, "item.txt");
+let previewFile: string | null = null;
+
+// Look for preview image
+const folderFiles = await readdir(artworkPath);
+const preview = folderFiles.find((f) =>
+  /^preview\.(jpg|jpeg|png|svg|webp)$/i.test(f)
+);
+if (preview) {
+  previewFile = `/artwork/${slug}/${preview}`;
+}
+
+// Read and parse item.txt
+const content = await readFile(itemFilePath, "utf-8");
+const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+const frontmatter = frontmatterMatch?.[1] || "";
+const title = frontmatter.match(/title:\s*(.+)/)?.[1] || "Untitled";
+const artist = frontmatter.match(/artist:\s*(.+)/)?.[1] || "";
+const date = frontmatter.match(/date:\s*(.+)/)?.[1] || "";
+const priceCents = parseInt(frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || "0");
+const format = frontmatter.match(/format:\s*(.+)/)?.[1] || "";
+const fileSize = frontmatter.match(/file_size:\s*(.+)/)?.[1] || "";
+const contents = frontmatter.match(/contents:\s*(.+)/)?.[1] || "";
+const dimensions = frontmatter.match(/dimensions:\s*(.+)/)?.[1] || "";
+const copyright = frontmatter.match(/copyright:\s*(.+)/)?.[1] || "";
+
+const body = content.replace(/^---\n[\s\S]*?\n---\n/, "").trim();
+const paragraphs = body.split("\n\n");
+
+const isPaid = priceCents > 0;
+const price = (priceCents / 100).toFixed(2);
+---
+
+<Layout>
+  <script>
+    import { supabase } from "@/lib/supabase";
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.get('success') === 'true') {
+      alert('Payment successful! Your artwork pack is now available for download.\n\nIf the download button doesn\'t appear, please refresh the page.');
+      window.history.replaceState({}, '', window.location.pathname);
+      location.reload();
+    }
+
+    if (urlParams.get('canceled') === 'true') {
+      alert('Purchase canceled. You can complete your purchase anytime.');
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+
+    const isPaid = document.getElementById("is-paid")?.dataset.value === "true";
+    const slug = document.getElementById("artwork-slug")?.dataset.value;
+    const buySection = document.getElementById("buy-section");
+    const downloadSection = document.getElementById("download-section");
+    const loadingMsg = document.getElementById("loading-msg");
+    const purchaseBtn = document.getElementById("purchase-btn");
+
+    async function checkOwnership() {
+      if (!isPaid) return;
+
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session) {
+        loadingMsg?.classList.add("hidden");
+        buySection?.classList.remove("hidden");
+        return;
+      }
+
+      const { data: product } = await supabase
+        .from('products')
+        .select('id')
+        .eq('slug', slug)
+        .single();
+
+      if (!product) {
+        console.error('Product not found');
+        return;
+      }
+
+      const { data: purchase } = await supabase
+        .from('purchases')
+        .select('id')
+        .eq('user_id', session.user.id)
+        .eq('product_id', product.id)
+        .single();
+
+      loadingMsg?.classList.add("hidden");
+
+      if (purchase) {
+        downloadSection?.classList.remove("hidden");
+      } else {
+        buySection?.classList.remove("hidden");
+      }
+    }
+
+    purchaseBtn?.addEventListener("click", async () => {
+      if (!purchaseBtn) return;
+      purchaseBtn.disabled = true;
+      purchaseBtn.textContent = "Loading...";
+
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+
+        if (!session) {
+          window.location.href = '/account';
+          return;
+        }
+
+        const response = await fetch('/api/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ productSlug: slug }),
+        });
+
+        const data = await response.json();
+
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          alert('Failed to create checkout session');
+          purchaseBtn.disabled = false;
+          purchaseBtn.textContent = `Buy for $${document.getElementById("price")?.dataset.value || '0.00'}`;
+        }
+      } catch (error) {
+        alert('An error occurred. Please try again.');
+        purchaseBtn.disabled = false;
+        purchaseBtn.textContent = `Buy for $${document.getElementById("price")?.dataset.value || '0.00'}`;
+      }
+    });
+
+    if (isPaid) {
+      checkOwnership();
+    }
+  </script>
+
+  <main class="brochure">
+    <span id="is-paid" data-value={isPaid.toString()} class="hidden"></span>
+    <span id="artwork-slug" data-value={slug} class="hidden"></span>
+    <span id="price" data-value={price} class="hidden"></span>
+
+    <!-- HERO WITH IMAGE -->
+    <section class="hero no-padding-image">
+      <div class="content">
+        <a href="/artwork" class="back-link">← Back to Artwork</a>
+
+        {previewFile && (
+          <img src={previewFile} alt={title} class="hero-artwork" />
+        )}
+
+        <h1 class="gradient-full-spectrum">{title}</h1>
+        {artist && <p class="artist-name">{artist}</p>}
+        {date && (
+          <time class="date">
+            {new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+        )}
+      </div>
+    </section>
+
+    <!-- INFO SECTION -->
+    <section class="hero">
+      <div class="content container-sm">
+        <div class="card">
+          <h3 class="card-title">Details</h3>
+          <div class="info-grid">
+            {format && <div class="info-item"><strong>Format:</strong> {format}</div>}
+            {fileSize && <div class="info-item"><strong>File Size:</strong> {fileSize}</div>}
+            {contents && <div class="info-item"><strong>Contents:</strong> {contents}</div>}
+            {dimensions && <div class="info-item"><strong>Dimensions:</strong> {dimensions}</div>}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESCRIPTION -->
+    <section class="hero">
+      <div class="content container-sm">
+        <div class="card">
+          <h3 class="card-title">About</h3>
+          {paragraphs.map((p) => <p>{p}</p>)}
+          {copyright && <p class="copyright">{copyright}</p>}
+        </div>
+      </div>
+    </section>
+
+    <!-- PURCHASE/DOWNLOAD SECTION -->
+    {isPaid && (
+      <>
+        <div id="loading-msg" class="hero">
+          <div class="content container-sm center">
+            <p class="desc">Checking ownership...</p>
+          </div>
+        </div>
+
+        <section id="buy-section" class="hero hidden">
+          <div class="content container-sm center">
+            <button id="purchase-btn" class="btn retro">
+              Buy for ${price}
+            </button>
+          </div>
+        </section>
+
+        <section id="download-section" class="hero hidden">
+          <div class="content container-sm center">
+            <a href={`https://xxxxx.supabase.co/storage/v1/object/public/artwork/${slug}.zip`} class="btn retro" download>
+              Download Pack
+            </a>
+          </div>
+        </section>
+      </>
+    )}
+
+    {!isPaid && (
+      <section class="hero">
+        <div class="content container-sm center">
+          <a href={`https://xxxxx.supabase.co/storage/v1/object/public/artwork/${slug}.zip`} class="btn retro" download>
+            Download Pack (Free)
+          </a>
+        </div>
+      </section>
+    )}
+  </main>
+</Layout>
+
+<style>
+  .hero.no-padding-image {
+    padding: 0;
+  }
+
+  .hero.no-padding-image .content {
+    padding: var(--space-md);
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: var(--space-xs);
+    opacity: 0.8;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .back-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+    letter-spacing: 0.1em;
+  }
+
+  .artist-name {
+    opacity: 0.9;
+    font-size: 1.2rem;
+  }
+
+  .date {
+    display: block;
+    opacity: 0.7;
+  }
+
+  .hero-artwork {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    display: block;
+    margin: 0 auto var(--space-md);
+  }
+
+  .container-sm {
+    max-width: 700px;
+  }
+
+  .info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .info-item {
+    font-size: 1rem;
+  }
+
+  .info-item strong {
+    color: var(--primary-cyan);
+  }
+
+  .card-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .copyright {
+    margin-top: var(--space-md);
+    opacity: 0.6;
+    font-size: 0.9rem;
+  }
+
+  .center {
+    text-align: center;
+  }
+</style>

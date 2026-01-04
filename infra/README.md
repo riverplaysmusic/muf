@@ -25,6 +25,37 @@ Builds and deploys to current project:
 ./infra/deploy.sh
 ```
 
+## DNS Configuration
+
+### Supabase Custom Domain
+
+Configure `api.musicaluniversefactory.com` as a custom domain for Supabase to improve email deliverability and provide a branded API endpoint.
+
+**DNS Record (Configure in your DNS provider):**
+```
+Type: CNAME
+Name: api
+Value: aydvoswbhwniqrsgzwbm.supabase.co
+TTL: 300 (as low as possible)
+Proxy: OFF (if using Cloudflare, disable proxy)
+```
+
+**What This Handles:**
+- All Supabase API requests (REST, GraphQL)
+- Authentication services (magic links, OAuth, sessions)
+- Storage bucket access
+- Realtime subscriptions
+- Edge Functions
+
+**Supabase Configuration:**
+1. Go to Supabase Dashboard → Project Settings → API
+2. Under "Custom Domain", enter: `api.musicaluniversefactory.com`
+3. Wait for DNS verification and SSL certificate issuance
+4. Update `PUBLIC_SUPABASE_URL` to `https://api.musicaluniversefactory.com`
+5. Redeploy application with updated environment variable
+
+**Important:** After activation, the original `*.supabase.co` URL will no longer work for auth services.
+
 ## Configuration
 
 Override defaults by creating `infra/.env`:
