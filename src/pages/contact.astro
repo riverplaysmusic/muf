@@ -1,0 +1,160 @@
+---
+import Layout from "@/components/Layout.astro";
+---
+
+<Layout>
+  <main class="brochure">
+    <!-- HERO -->
+    <section class="hero">
+      <header class="content">
+        <h1 class="gradient-full-spectrum">Contact</h1>
+        <p class="subtitle">
+          Refund requests and bug reports only
+        </p>
+      </header>
+    </section>
+
+    <!-- NOTICE -->
+    <section class="hero">
+      <div class="content container-sm">
+        <div class="contact-notice-wrapper">
+          <img
+            src="/photos/Talkie_Bubbles_web.png"
+            alt="Speech bubbles illustration"
+            class="notice-image"
+          />
+          <div class="outline">
+            <h3 class="text-red">Important Notice</h3>
+            <p>
+              No business offers, no feedback on music (negative or positive), no
+              press, no family members, no people from the past, no sexy pictures.
+              No exceptions, this means 🫵 Only store refund requests and bug reports. We will be upset if
+              you ignore this notice, and it will be a bad time for everybody.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT FORM -->
+    <section class="hero">
+      <div class="content container-sm">
+        <form id="contact-form" class="stack">
+          <div class="form-field">
+            <label for="name">Name (Optional)</label>
+            <input type="text" id="name" name="name" />
+          </div>
+
+          <div class="form-field">
+            <label for="email">Email (Optional)</label>
+            <input type="email" id="email" name="email" />
+          </div>
+
+          <div class="form-field">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="8"
+              required
+              placeholder="Describe your refund request or bug report..."
+            ></textarea>
+          </div>
+
+          <div id="form-status" class="form-message hidden"></div>
+
+          <button type="submit" class="btn retro">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .contact-notice-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    width: 100%;
+  }
+
+  .notice-image {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    display: block;
+  }
+
+  .outline h3 {
+    margin: 0;
+  }
+
+  .outline p {
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .notice-image {
+      max-width: 150px;
+    }
+
+    .contact-notice-wrapper {
+      gap: var(--space-sm);
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const statusDiv = document.getElementById("form-status") as HTMLDivElement;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const submitBtn = form.querySelector(
+      'button[type="submit"]',
+    ) as HTMLButtonElement;
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending...";
+
+    statusDiv.className = "form-message hidden";
+    statusDiv.textContent = "";
+
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      message: formData.get("message") as string,
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        statusDiv.className = "form-message success";
+        statusDiv.textContent =
+          "Message sent successfully! We'll review it soon.";
+        form.reset();
+      } else {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to send message");
+      }
+    } catch (error) {
+      statusDiv.className = "form-message error";
+      statusDiv.textContent =
+        error instanceof Error
+          ? error.message
+          : "Failed to send message. Please try again.";
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Send Message";
+    }
+  });
+</script>

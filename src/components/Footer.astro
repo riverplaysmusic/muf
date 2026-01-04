@@ -1,13 +1,14 @@
 <footer class="global-footer">
   <p>&copy; 2026 MUSICAL UNIVERSE FACTORY. ALL RIGHTS RESERVED.</p>
+  <a href="/contact" class="contact-link">CONTACT</a>
 </footer>
 
 <style>
   .global-footer {
     width: 100%;
-    margin-top: var(--space-2xl);
+    margin-top: var(--space-lg);
     margin-bottom: 0;
-    padding: var(--space-2xl) var(--space-lg);
+    padding: var(--space-lg) var(--space-md);
     text-align: center;
     background: oklch(62.3% 0.214 259.815);
   }
@@ -20,9 +21,24 @@
     margin: 0;
   }
 
+  .contact-link {
+    display: block;
+    margin-top: var(--space-xs);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--space-black);
+    text-decoration: none;
+    transition: color var(--transition-duration) var(--ease-smooth);
+  }
+
+  .contact-link:hover {
+    color: var(--primary-yellow);
+  }
+
   @media (max-width: 640px) {
     .global-footer {
-      padding: var(--space-lg) var(--space-md);
+      padding: var(--space-md) var(--space-sm);
     }
 
     .global-footer p {

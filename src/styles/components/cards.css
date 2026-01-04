@@ -1,11 +1,11 @@
 /* --- CARDS --- */
 
 .glass {
-  padding: var(--space-lg);
-  border-radius: 16px;
+  padding: var(--space-md);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   align-items: flex-start;
   background: var(--surface-bg-glass);
   backdrop-filter: blur(10px);
@@ -13,22 +13,22 @@
 }
 
 .solid {
-  padding: var(--space-lg);
-  border-radius: 16px;
+  padding: var(--space-md);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   align-items: flex-start;
   background: var(--space-gray);
   border: 1px solid var(--space-gray);
 }
 
 .outline {
-  padding: var(--space-lg);
-  border-radius: 16px;
+  padding: var(--space-md) var(--space-md) var(--space-sm);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   align-items: flex-start;
   background: transparent;
   border: 2px solid var(--primary-cyan);
@@ -37,10 +37,15 @@
 /* Mobile: Reduce card padding */
 @media (max-width: 768px) {
   .glass,
-  .solid,
+  .solid {
+    padding: var(--space-sm);
+    gap: var(--space-xs);
+    border-radius: 8px;
+  }
+
   .outline {
-    padding: var(--space-md);
-    gap: var(--space-sm);
-    border-radius: 12px;
+    padding: var(--space-sm) var(--space-sm) var(--space-xs);
+    gap: var(--space-xs);
+    border-radius: 8px;
   }
 }

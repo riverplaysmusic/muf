@@ -176,11 +176,11 @@ input[type="radio"]:checked::after {
 
 /* Validation Messages */
 .form-message {
-  padding: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
   border-radius: 8px;
   font-weight: 600;
   text-align: center;
-  min-height: 3rem;
+  min-height: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -239,6 +239,6 @@ select:disabled {
   .form-message {
     font-size: 0.875rem;
     padding: var(--space-xs);
-    min-height: 2.5rem;
+    min-height: 2rem;
   }
 }

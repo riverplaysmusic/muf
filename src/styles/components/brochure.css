@@ -7,22 +7,22 @@
   max-width: 1400px;
   margin: 0 auto;
   overflow-x: hidden;
-  padding-block-start: var(--space-sm); /* Small screens: very little margin */
-  padding-inline: var(--space-sm);
+  padding-block-start: var(--space-xs); /* Small screens: minimal margin */
+  padding-inline: var(--space-xs);
   box-sizing: border-box;
 }
 
 @media (min-width: var(--breakpoint-md)) {
   .brochure {
-    padding-block-start: var(--space-lg); /* Medium screens: some margin */
-    padding-inline: 5%;
+    padding-block-start: var(--space-md); /* Medium screens: moderate margin */
+    padding-inline: var(--space-lg);
   }
 }
 
 @media (min-width: var(--breakpoint-lg)) {
   .brochure {
-    padding-block-start: var(--space-2xl); /* Large screens: more margin, shows background */
-    padding-inline: var(--space-3xl);
+    padding-block-start: var(--space-lg); /* Large screens: reasonable margin */
+    padding-inline: var(--space-xl);
   }
 }
 
@@ -36,13 +36,13 @@
   font-size: 1.5rem;
   color: var(--space-mid-gray);
   max-width: 600px;
-  margin-bottom: var(--space-xl);
+  margin-bottom: var(--space-lg);
 }
 
 /* Mobile: Smaller description text */
 @media (max-width: 768px) {
   .desc {
     font-size: 1rem;
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-sm);
   }
 }

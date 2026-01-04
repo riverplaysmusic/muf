@@ -8,8 +8,8 @@
   text-align: center;
   width: 100%;
   min-height: auto;
-  padding: var(--space-2xl) var(--space-lg);
-  margin-bottom: var(--space-lg);
+  padding: var(--space-lg) var(--space-md);
+  margin-bottom: var(--space-md);
   box-sizing: border-box;
   position: relative;
   z-index: 1;
@@ -32,8 +32,8 @@
 /* Mobile: Reduce padding for more breathing room */
 @media (max-width: 768px) {
   .hero {
-    padding: var(--space-md);
-    margin-bottom: var(--space-lg);
+    padding: var(--space-sm);
+    margin-bottom: var(--space-sm);
     --cut-size: 20px;
   }
 }
@@ -94,7 +94,7 @@
   text-transform: uppercase;
   letter-spacing: 0.5em;
   color: var(--starlight);
-  margin: var(--space-sm) 0 0 0; /* Only top margin for spacing from h1 */
+  margin: var(--space-xs) 0 0 0; /* Only top margin for spacing from h1 */
 }
 
 /* Mobile: Much smaller hero text with breathing room */
@@ -108,6 +108,6 @@
   .subtitle {
     font-size: 0.875rem;
     letter-spacing: 0.2em;
-    margin-top: var(--space-md);
+    margin-top: var(--space-xs);
   }
 }

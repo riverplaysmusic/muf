@@ -88,7 +88,7 @@ import Layout from "@/components/Layout.astro";
   .artwork-section {
     width: 100%;
     max-width: 800px;
-    margin: 0 auto var(--space-lg);
+    margin: 0 auto var(--space-md);
   }
 
   .artwork-image {
@@ -102,7 +102,7 @@ import Layout from "@/components/Layout.astro";
   .video-player {
     width: 100%;
     max-width: 800px;
-    margin: 0 auto var(--space-lg);
+    margin: 0 auto var(--space-md);
     aspect-ratio: 16/9;
     display: block;
   }
@@ -110,8 +110,8 @@ import Layout from "@/components/Layout.astro";
   .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--space-lg);
-    margin-top: var(--space-xl);
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
   }
 
   .cta-content {
@@ -120,22 +120,22 @@ import Layout from "@/components/Layout.astro";
 
   .cta-paragraph {
     max-width: 600px;
-    margin: var(--space-md) auto var(--space-xl);
+    margin: var(--space-sm) auto var(--space-lg);
   }
 
   @media (max-width: 768px) {
     .artwork-section {
-      margin-bottom: var(--space-md);
+      margin-bottom: var(--space-sm);
     }
     .video-player {
-      margin-bottom: var(--space-md);
+      margin-bottom: var(--space-sm);
     }
     .features-grid {
-      gap: var(--space-md);
-      margin-top: var(--space-lg);
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
     }
     .cta-paragraph {
-      margin-bottom: var(--space-lg);
+      margin-bottom: var(--space-md);
     }
   }
 </style>
