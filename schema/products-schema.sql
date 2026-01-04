@@ -86,17 +86,17 @@ CREATE POLICY "Purchased files only" ON product_files
     EXISTS (
       SELECT 1 FROM purchases
       WHERE purchases.product_id = product_files.product_id
-        AND purchases.user_id = auth.uid()
+        AND purchases.user_id = (select auth.uid())
     )
   );
 
 -- Users can view their own purchases
 CREATE POLICY "Own purchases" ON purchases
-  FOR SELECT USING (auth.uid() = user_id);
+  FOR SELECT USING ((select auth.uid()) = user_id);
 
 -- Users can insert their own purchases (via Stripe webhook or checkout flow)
 CREATE POLICY "Create own purchase" ON purchases
-  FOR INSERT WITH CHECK (auth.uid() = user_id);
+  FOR INSERT WITH CHECK ((select auth.uid()) = user_id);
 
 -- ============================================================
 -- SCHEMA UPDATES - Add slug and Stripe integration fields
