@@ -1,0 +1,281 @@
+---
+import Layout from "@/components/Layout.astro";
+import { readdir, readFile, stat } from "node:fs/promises";
+import { join } from "node:path";
+
+const writingsDir = join(process.cwd(), "public", "writings");
+const items = await readdir(writingsDir);
+
+// Parse writing folders
+const writings = await Promise.all(
+  items.map(async (item) => {
+    const itemPath = join(writingsDir, item);
+    const itemStat = await stat(itemPath);
+
+    if (!itemStat.isDirectory() || item === "template.txt") {
+      return null;
+    }
+
+    // Writing folder structure
+    const slug = item;
+    const writingPath = join(itemPath, "writing.txt");
+
+    // Read and parse writing.txt
+    try {
+      const content = await readFile(writingPath, "utf-8");
+      const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+      if (!frontmatterMatch) return null;
+
+      const frontmatter = frontmatterMatch[1];
+      const title = frontmatter.match(/title:\s*(.+)/)?.[1] || "Untitled";
+      const author =
+        frontmatter.match(/author:\s*(.+)/)?.[1] || "Musical Universe Factory";
+      const date = frontmatter.match(/date:\s*(.+)/)?.[1] || "";
+      const category = frontmatter.match(/category:\s*(.+)/)?.[1] || "writing";
+      const priceCents = parseInt(
+        frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || "0",
+      );
+      const excerpt = frontmatter.match(/excerpt:\s*(.+)/)?.[1] || "";
+
+      // Parse tags
+      const tagsMatch = frontmatter.match(/tags:\s*\n([\s\S]*?)(?=\n\w+:|$)/);
+      let tags: string[] = [];
+      if (tagsMatch) {
+        tags = tagsMatch[1]
+          .split("\n")
+          .map((line) => line.replace(/^\s*-\s*/, "").trim())
+          .filter((tag) => tag.length > 0);
+      }
+
+      return { slug, title, author, date, category, excerpt, priceCents, tags };
+    } catch {
+      return null;
+    }
+  }),
+);
+
+// Filter out null entries and sort by date (newest first)
+const validWritings = writings
+  .filter((w) => w !== null)
+  .sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+---
+
+<Layout>
+  <main class="brochure">
+    <!-- HERO -->
+    <section class="hero">
+      <header class="content">
+        <h1 class="gradient-pink-yellow">Writings</h1>
+        <p class="subtitle">Essays, poems, and thoughts on life</p>
+      </header>
+    </section>
+
+    <!-- WRITINGS GRID -->
+    <section class="writings-container">
+      <div class="content">
+        {
+          validWritings.length === 0 ? (
+            <p class="desc center">No writings yet. Check back soon.</p>
+          ) : (
+            <div class="writings-grid">
+              {validWritings.map((writing) => (
+                <article class="writing-card">
+                  <a href={`/writings/${writing.slug}`} class="writing-link">
+                    <div class="writing-info">
+                      <span class="category">{writing.category}</span>
+                      <h2 class="writing-title">{writing.title}</h2>
+                      {writing.author && (
+                        <p class="author">by {writing.author}</p>
+                      )}
+                      {writing.date && (
+                        <time class="date">
+                          {new Date(writing.date).toLocaleDateString()}
+                        </time>
+                      )}
+                      {writing.excerpt && (
+                        <p class="excerpt">{writing.excerpt}</p>
+                      )}
+                      {writing.tags && writing.tags.length > 0 && (
+                        <div class="tags">
+                          {writing.tags.map((tag) => (
+                            <span class="tag">{tag}</span>
+                          ))}
+                        </div>
+                      )}
+                      {writing.priceCents > 0 && (
+                        <span class="price">
+                          ${(writing.priceCents / 100).toFixed(2)}
+                        </span>
+                      )}
+                    </div>
+                  </a>
+                </article>
+              ))}
+            </div>
+          )
+        }
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .writings-container {
+    width: 100%;
+    padding-top: var(--space-md);
+    padding-bottom: var(--space-xs);
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: var(--space-md);
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 768px) {
+    .writings-container {
+      padding-top: var(--space-xs);
+      padding-bottom: 0;
+      margin-bottom: var(--space-sm);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .writings-container {
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .writings-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .writings-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .writing-card {
+    background: var(--space-black);
+    border: 1px solid var(--surface-border);
+    transition: all var(--transition-duration) var(--ease-smooth);
+    position: relative;
+  }
+
+  .writing-card:hover {
+    border-color: var(--surface-border-bright);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .writing-link {
+    text-decoration: none;
+    display: block;
+    height: 100%;
+  }
+
+  .writing-info {
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .category {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--primary-cyan);
+    font-weight: 700;
+  }
+
+  .writing-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--starlight);
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .writing-link:hover .writing-title {
+    background: linear-gradient(
+      to right,
+      var(--primary-pink),
+      var(--primary-yellow)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .author {
+    font-size: 0.9rem;
+    color: var(--space-light-gray);
+    margin: 0;
+    font-style: italic;
+  }
+
+  .date {
+    font-size: 0.85rem;
+    color: var(--space-mid-gray);
+    display: block;
+  }
+
+  .excerpt {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--space-light-gray);
+    margin: var(--space-xs) 0 0 0;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-top: var(--space-xs);
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--surface-border);
+    border-radius: 4px;
+    text-transform: lowercase;
+    letter-spacing: 0.05em;
+  }
+
+  .price {
+    display: inline-block;
+    background: linear-gradient(
+      135deg,
+      var(--primary-cyan),
+      var(--primary-pink)
+    );
+    color: var(--space-black);
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-top: var(--space-xs);
+    align-self: flex-start;
+  }
+
+  @media (max-width: 640px) {
+    .writing-info {
+      padding: var(--space-md);
+    }
+
+    .writing-title {
+      font-size: 1.25rem;
+    }
+  }
+</style>

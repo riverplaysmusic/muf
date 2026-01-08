@@ -1,0 +1,271 @@
+---
+import Layout from "@/components/Layout.astro";
+import { readdir, readFile, stat } from "node:fs/promises";
+import { join } from "node:path";
+
+export async function getStaticPaths() {
+  const writingsDir = join(process.cwd(), "public", "writings");
+  const items = await readdir(writingsDir);
+
+  const paths = [];
+
+  for (const item of items) {
+    const itemPath = join(writingsDir, item);
+    const itemStat = await stat(itemPath);
+
+    if (itemStat.isDirectory()) {
+      // Check if writing.txt exists
+      try {
+        await readFile(join(itemPath, "writing.txt"), "utf-8");
+        paths.push({ params: { slug: item } });
+      } catch {
+        // Skip folders without writing.txt
+      }
+    }
+  }
+
+  return paths;
+}
+
+const { slug } = Astro.params;
+
+// Read writing folder
+const writingsDir = join(process.cwd(), "public", "writings");
+const writingPath = join(writingsDir, slug);
+const writingFilePath = join(writingPath, "writing.txt");
+
+// Read and parse writing.txt
+const content = await readFile(writingFilePath, "utf-8");
+const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+const frontmatter = frontmatterMatch?.[1] || "";
+const title = frontmatter.match(/title:\s*(.+)/)?.[1] || "Untitled";
+const author = frontmatter.match(/author:\s*(.+)/)?.[1] || "Musical Universe Factory";
+const date = frontmatter.match(/date:\s*(.+)/)?.[1] || "";
+const category = frontmatter.match(/category:\s*(.+)/)?.[1] || "writing";
+const priceCents = parseInt(frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || "0");
+
+// Parse tags
+const tagsMatch = frontmatter.match(/tags:\s*\n([\s\S]*?)(?=\n\w+:|$)/);
+let tags: string[] = [];
+if (tagsMatch) {
+  tags = tagsMatch[1]
+    .split("\n")
+    .map((line) => line.replace(/^\s*-\s*/, "").trim())
+    .filter((tag) => tag.length > 0);
+}
+
+const body = content.replace(/^---\n[\s\S]*?\n---\n/, "").trim();
+const paragraphs = body.split("\n\n");
+
+// Determine if content is paid
+const isPaid = priceCents > 0;
+const price = (priceCents / 100).toFixed(2);
+---
+
+<Layout>
+  <main class="brochure">
+    <!-- HERO -->
+    <section class="hero">
+      <header class="content">
+        <a href="/writings" class="back-link">← Back to Writings</a>
+        <h1 class="gradient-pink-yellow">{title}</h1>
+        {author && <p class="subtitle author-name">by {author}</p>}
+        {date && (
+          <time class="subtitle">{new Date(date).toLocaleDateString()}</time>
+        )}
+        {tags && tags.length > 0 && (
+          <div class="tags-header">
+            <span class="category-badge">{category}</span>
+            {tags.filter(tag => tag.toLowerCase() === 'essay').map((tag) => (
+              <span class="tag tag-essay">{tag}</span>
+            ))}
+            {tags.filter(tag => tag.toLowerCase() !== 'essay').map((tag) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+        )}
+        {isPaid && (
+          <p class="subtitle price-tag">
+            ${price}
+          </p>
+        )}
+      </header>
+    </section>
+
+    <!-- CONTENT -->
+    <section class="writing-content-section">
+      <div class="content">
+        <article class="writing-body">
+          {paragraphs.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </article>
+
+        {isPaid && (
+          <div class="purchase-section">
+            <div class="card">
+              <h3 class="card-title gradient-cyan-pink">Support This Work</h3>
+              <p class="purchase-desc">
+                This writing is available for ${price}. Your support helps maintain our creative independence.
+              </p>
+              <button class="btn retro">Purchase Access</button>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  /* --- HERO --- */
+  .back-link {
+    display: inline-block;
+    margin-bottom: var(--space-xs);
+    opacity: 0.8;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .back-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+    letter-spacing: 0.1em;
+  }
+
+  .category-badge {
+    display: inline-block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--primary-cyan);
+    font-weight: 700;
+    background: rgba(102, 217, 239, 0.1);
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--primary-cyan);
+  }
+
+  .author-name {
+    opacity: 0.9;
+    font-size: 1.4rem;
+    font-style: italic;
+  }
+
+  .price-tag {
+    background: linear-gradient(135deg, var(--primary-cyan), var(--primary-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
+  time.subtitle {
+    opacity: 0.7;
+    font-size: 1rem;
+  }
+
+  .tags-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-top: var(--space-sm);
+    align-items: flex-end;
+  }
+
+  .tags-header .tag {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--surface-border);
+    text-transform: lowercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+  }
+
+  .tags-header .tag-essay {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    background: rgba(102, 217, 239, 0.15);
+    border: 1px solid var(--primary-cyan);
+    color: var(--primary-cyan);
+    font-weight: 600;
+    display: inline-block;
+  }
+
+  /* --- CONTENT --- */
+  .writing-content-section {
+    width: 100%;
+    padding: var(--space-lg) var(--space-md);
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 768px) {
+    .writing-content-section {
+      padding: var(--space-md) var(--space-md);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .writing-content-section {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+  }
+
+  .writing-body {
+    background: var(--space-black);
+    border: 1px solid var(--surface-border);
+    padding: var(--space-2xl);
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--starlight);
+  }
+
+  .writing-body p {
+    margin-bottom: var(--space-lg);
+  }
+
+  .writing-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    .writing-body {
+      padding: var(--space-xl);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+  }
+
+  /* --- PURCHASE SECTION --- */
+  .purchase-section {
+    margin-top: var(--space-lg);
+  }
+
+  .purchase-section .card {
+    padding: var(--space-xl);
+    text-align: center;
+  }
+
+  .card-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .purchase-desc {
+    font-size: 1.05rem;
+    opacity: 0.9;
+    margin-bottom: var(--space-lg);
+    line-height: 1.6;
+  }
+
+  .btn {
+    font-size: 1.1rem;
+    padding: var(--space-sm) var(--space-xl);
+  }
+</style>
