@@ -1,141 +1,400 @@
 ---
-import Layout from "@/components/Layout.astro";
+import "@fontsource-variable/geist";
+import "@/styles/base/variables.css";
+import "@/styles/base/reset.css";
+import "@/styles/base/typography.css";
+import "@/styles/base/animations.css";
+import "@/styles/components/buttons.css";
+import "@/styles/utilities/text-gradients.css";
 ---
 
-<script
-  is:inline
-  src="https://cdn.jsdelivr.net/npm/@mux/mux-player"></script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, nocache" />
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta name="ChatGPT" content="noindex, nofollow" />
+    <meta name="GPTBot" content="noindex, nofollow" />
+    <meta name="CCBot" content="noindex, nofollow" />
+    <meta name="anthropic-ai" content="noindex, nofollow" />
+    <meta name="Claude-Web" content="noindex, nofollow" />
+    <meta name="Google-Extended" content="noindex, nofollow" />
+    <meta name="description" content="Musical Universe Factory - Independent creative sanctuary and eternal archive for high-quality music, videos, and artwork." />
+    <meta property="og:title" content="Musical Universe Factory" />
+    <meta property="og:description" content="Independent creative sanctuary and eternal archive. Buy for lifetime ownership." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/favicon/icon-512.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Musical Universe Factory" />
+    <title>MUF</title>
+  </head>
+  <body>
+    <div class="splash-wrapper">
+      <!-- Video Background -->
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        class="splash-video"
+      >
+        <source src="/video/all-rivers.mp4" type="video/mp4" />
+      </video>
 
-<Layout>
-  <main class="brochure">
-    <!-- ARTWORK -->
-    <section class="artwork-section">
-      <img
-        src="/artwork/hero-artwork.jpg"
-        alt="Musical Universe Factory artwork"
-        class="artwork-image"
-      />
-    </section>
+      <!-- Gradient Overlays for artistic effect -->
+      <div class="gradient-overlay gradient-overlay-1"></div>
+      <div class="gradient-overlay gradient-overlay-2"></div>
+      <div class="vignette"></div>
 
-    <!-- HERO -->
-    <section class="hero">
-      <header class="content">
-        <h1 class="gradient-full-spectrum">Musical Universe Factory</h1>
-        <p class="subtitle">
-          Independent creative sanctuary and eternal archive. Buy for lifetime
-          ownership.
-        </p>
-      </header>
-    </section>
+      <!-- Content -->
+      <div class="splash-content">
+        <div class="logo-container">
+          <img
+            src="/logo.webp"
+            alt="Musical Universe Factory"
+            class="splash-logo"
+          />
+        </div>
 
-    <!-- VIDEO -->
-    <mux-player
-      playback-id="PLY019I55aumhPRlZZHf00nLhQdnpCf01LjAimmZDuocIw"
-      class="video-player"
-    ></mux-player>
-
-    <!-- FEATURES -->
-    <section class="hero">
-      <div class="content">
-        <h2 class="section-heading">Sovereign Digital Store</h2>
-        <p class="desc">
-          We reject the streaming model for lifetime ownership. High-quality
-          FLAC audio, music videos, and original performances.
-        </p>
-
-        <div class="features-grid">
-          <div class="glass">
-            <h3>Buy Once, Own Forever</h3>
-            <p>
-              No subscriptions, no streaming partners. Purchase music and own it
-              for life.
-            </p>
-          </div>
-
-          <div class="solid">
-            <h3>High Quality Assets</h3>
-            <p>
-              FLAC audio, music videos, instructional content, artwork, and
-              storytelling.
-            </p>
-          </div>
-
-          <div class="outline">
-            <h3>Private & Independent</h3>
-            <p>
-              No social features, no analytics, no external distribution. Pure
-              creative sanctuary.
-            </p>
-          </div>
+        <div class="cta-container">
+          <a href="/unity" class="enter-btn">
+            <span class="enter-text">Enter The Universe</span>
+            <span class="arrow">→</span>
+          </a>
         </div>
       </div>
-    </section>
 
-    <!-- CTA -->
-    <section class="hero">
-      <div class="content cta-content">
-        <h2 class="gradient-pink-yellow">Discover the Archive</h2>
-        <p class="cta-paragraph">
-          If you can't find us on your own, we don't want you here. Organic
-          discovery through in-person connections only.
-        </p>
-        <a href="/albums" class="btn retro">Explore Catalog</a>
-      </div>
-    </section>
-  </main>
-</Layout>
-<style>
-  .artwork-section {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto var(--space-md);
-  }
+      <!-- Animated particles/elements -->
+      <div class="particle particle-1"></div>
+      <div class="particle particle-2"></div>
+      <div class="particle particle-3"></div>
+    </div>
 
-  .artwork-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    border: 4px solid var(--primary-yellow);
-    box-shadow: 8px 8px 0 var(--accent-orange);
-  }
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-  .video-player {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto var(--space-md);
-    aspect-ratio: 16/9;
-    display: block;
-  }
+      body {
+        overflow: hidden;
+      }
 
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--space-md);
-    margin-top: var(--space-lg);
-  }
+      .splash-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: #000;
+      }
 
-  .cta-content {
-    text-align: center;
-  }
+      .splash-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+        opacity: 0.7;
+        filter: saturate(1.3) contrast(1.1);
+      }
 
-  .cta-paragraph {
-    max-width: 600px;
-    margin: var(--space-sm) auto var(--space-lg);
-  }
+      /* Artistic gradient overlays */
+      .gradient-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        mix-blend-mode: overlay;
+        opacity: 0.4;
+      }
 
-  @media (max-width: 768px) {
-    .artwork-section {
-      margin-bottom: var(--space-sm);
-    }
-    .video-player {
-      margin-bottom: var(--space-sm);
-    }
-    .features-grid {
-      gap: var(--space-sm);
-      margin-top: var(--space-md);
-    }
-    .cta-paragraph {
-      margin-bottom: var(--space-md);
-    }
-  }
-</style>
+      .gradient-overlay-1 {
+        background: radial-gradient(
+          circle at 20% 50%,
+          rgba(255, 71, 209, 0.3) 0%,
+          transparent 50%
+        ),
+        radial-gradient(
+          circle at 80% 50%,
+          rgba(255, 199, 0, 0.3) 0%,
+          transparent 50%
+        );
+        animation: pulse1 8s ease-in-out infinite;
+      }
+
+      .gradient-overlay-2 {
+        background: radial-gradient(
+          circle at 50% 30%,
+          rgba(0, 255, 255, 0.2) 0%,
+          transparent 60%
+        ),
+        radial-gradient(
+          circle at 50% 70%,
+          rgba(255, 107, 0, 0.2) 0%,
+          transparent 60%
+        );
+        animation: pulse2 10s ease-in-out infinite;
+      }
+
+      .vignette {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          ellipse at center,
+          transparent 0%,
+          rgba(0, 0, 0, 0.8) 100%
+        );
+        pointer-events: none;
+      }
+
+      .splash-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4rem;
+        z-index: 10;
+        padding: 2rem;
+      }
+
+      .logo-container {
+        animation: fadeInScale 2s ease-out;
+      }
+
+      .splash-logo {
+        width: 100%;
+        max-width: 700px;
+        height: auto;
+        filter: drop-shadow(0 0 40px rgba(255, 71, 209, 0.5))
+                drop-shadow(0 0 80px rgba(255, 199, 0, 0.3));
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .cta-container {
+        animation: fadeInUp 2s ease-out 0.5s both;
+      }
+
+      .enter-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.5rem 3rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-decoration: none;
+        color: #000;
+        background: linear-gradient(135deg, #ff47d1, #ffc700, #ff6b00);
+        background-size: 200% 200%;
+        border: none;
+        border-radius: 50px;
+        box-shadow: 0 8px 32px rgba(255, 71, 209, 0.4),
+                    0 0 60px rgba(255, 199, 0, 0.2);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        animation: gradientShift 4s ease infinite;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .enter-btn::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+      }
+
+      .enter-btn:hover::before {
+        width: 300px;
+        height: 300px;
+      }
+
+      .enter-btn:hover {
+        transform: translateY(-4px) scale(1.05);
+        box-shadow: 0 12px 48px rgba(255, 71, 209, 0.6),
+                    0 0 80px rgba(255, 199, 0, 0.4);
+      }
+
+      .enter-text,
+      .arrow {
+        position: relative;
+        z-index: 1;
+      }
+
+      .arrow {
+        font-size: 2rem;
+        transition: transform 0.3s ease;
+      }
+
+      .enter-btn:hover .arrow {
+        transform: translateX(8px);
+      }
+
+      /* Animated particles */
+      .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 50%;
+        pointer-events: none;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      }
+
+      .particle-1 {
+        top: 20%;
+        left: 15%;
+        animation: float-particle 8s ease-in-out infinite;
+      }
+
+      .particle-2 {
+        top: 60%;
+        right: 20%;
+        animation: float-particle 10s ease-in-out infinite 2s;
+      }
+
+      .particle-3 {
+        bottom: 25%;
+        left: 25%;
+        animation: float-particle 12s ease-in-out infinite 4s;
+      }
+
+      /* Animations */
+      @keyframes fadeInScale {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      @keyframes pulse1 {
+        0%, 100% {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 0.6;
+        }
+      }
+
+      @keyframes pulse2 {
+        0%, 100% {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      @keyframes gradientShift {
+        0%, 100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      @keyframes float-particle {
+        0%, 100% {
+          transform: translate(0, 0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        50% {
+          transform: translate(100px, -100px);
+        }
+      }
+
+      /* Mobile responsive */
+      @media (max-width: 768px) {
+        .splash-content {
+          gap: 3rem;
+          padding: 1.5rem;
+        }
+
+        .splash-logo {
+          max-width: 85%;
+        }
+
+        .enter-btn {
+          padding: 1.25rem 2.5rem;
+          font-size: 1.25rem;
+        }
+
+        .arrow {
+          font-size: 1.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .splash-content {
+          gap: 2rem;
+        }
+
+        .enter-btn {
+          padding: 1rem 2rem;
+          font-size: 1.1rem;
+          gap: 0.75rem;
+        }
+      }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,141 @@
+---
+import Layout from "@/components/Layout.astro";
+---
+
+<script
+  is:inline
+  src="https://cdn.jsdelivr.net/npm/@mux/mux-player"></script>
+
+<Layout>
+  <main class="brochure">
+    <!-- ARTWORK -->
+    <section class="artwork-section">
+      <img
+        src="/artwork/hero-artwork.jpg"
+        alt="Musical Universe Factory artwork"
+        class="artwork-image"
+      />
+    </section>
+
+    <!-- HERO -->
+    <section class="hero">
+      <header class="content">
+        <h1 class="gradient-full-spectrum">Musical Universe Factory</h1>
+        <p class="subtitle">
+          Independent creative sanctuary and eternal archive. Buy for lifetime
+          ownership.
+        </p>
+      </header>
+    </section>
+
+    <!-- VIDEO -->
+    <mux-player
+      playback-id="PLY019I55aumhPRlZZHf00nLhQdnpCf01LjAimmZDuocIw"
+      class="video-player"
+    ></mux-player>
+
+    <!-- FEATURES -->
+    <section class="hero">
+      <div class="content">
+        <h2 class="section-heading">Sovereign Digital Store</h2>
+        <p class="desc">
+          We reject the streaming model for lifetime ownership. High-quality
+          FLAC audio, music videos, and original performances.
+        </p>
+
+        <div class="features-grid">
+          <div class="glass">
+            <h3>Buy Once, Own Forever</h3>
+            <p>
+              No subscriptions, no streaming partners. Purchase music and own it
+              for life.
+            </p>
+          </div>
+
+          <div class="solid">
+            <h3>High Quality Assets</h3>
+            <p>
+              FLAC audio, music videos, instructional content, artwork, and
+              storytelling.
+            </p>
+          </div>
+
+          <div class="outline">
+            <h3>Private & Independent</h3>
+            <p>
+              No social features, no analytics, no external distribution. Pure
+              creative sanctuary.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="hero">
+      <div class="content cta-content">
+        <h2 class="gradient-pink-yellow">Discover the Archive</h2>
+        <p class="cta-paragraph">
+          If you can't find us on your own, we don't want you here. Organic
+          discovery through in-person connections only.
+        </p>
+        <a href="/albums" class="btn retro">Explore Catalog</a>
+      </div>
+    </section>
+  </main>
+</Layout>
+<style>
+  .artwork-section {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto var(--space-md);
+  }
+
+  .artwork-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 4px solid var(--primary-yellow);
+    box-shadow: 8px 8px 0 var(--accent-orange);
+  }
+
+  .video-player {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto var(--space-md);
+    aspect-ratio: 16/9;
+    display: block;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+  }
+
+  .cta-content {
+    text-align: center;
+  }
+
+  .cta-paragraph {
+    max-width: 600px;
+    margin: var(--space-sm) auto var(--space-lg);
+  }
+
+  @media (max-width: 768px) {
+    .artwork-section {
+      margin-bottom: var(--space-sm);
+    }
+    .video-player {
+      margin-bottom: var(--space-sm);
+    }
+    .features-grid {
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+    .cta-paragraph {
+      margin-bottom: var(--space-md);
+    }
+  }
+</style>
