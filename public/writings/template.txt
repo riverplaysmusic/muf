@@ -1,6 +1,6 @@
 ---
 title: Maps of Life
-author: Joseph Malicke
+author: Bubbles
 date: 2026-01-07
 category: essay
 price_cents: 0
@@ -11,7 +11,7 @@ excerpt: Maps of Life is a collection of life observations on maps and how they 
 ---
 
 Maps of Life
-by Joseph Malicke
+by Bubbles
 
 1. If you know the place, you don't need a map. But don't be so quick to take pity on map-people. Don't say, "Those poor souls looking at the map, don't they know... ?" You either have a map from birth (are you responsible for it?) or you were a map user too until you knew the place. 
 2. If you enter a new place, it may or may not have a map. You can't expect a map, sorry.  

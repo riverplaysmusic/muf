@@ -1,6 +1,6 @@
 ---
 title: Maps of Life
-author: Joseph Malicke
+author: Bubbles
 date: 2026-01-07
 category: essay
 price_cents: 0
