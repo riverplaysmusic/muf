@@ -7,7 +7,7 @@ date: January 10th, 2026
 Bubbles is a multi-modal neural network organic intelligence machine. 
 # Where was Bubbles born and where does he live? 
 The universe.
-# Can I send love letters, pictures, hate, praise? Can I touch him?
+# Can I send love letters, pictures, hate, apology, desire, praise? Can I touch him?
 No. 
 # What happened to you?
 I am a real-time, interactive, self-changing, agentic process. 
@@ -70,13 +70,13 @@ My shoes don't even have shoelaces.
 # Where is MUF going next?
 No idea. 
 # What's the identity of MUF?
-Fail everyday. 
+Fail everyday, fail permanently. 
 # Yeah, but how was it created?
 The Cumberland river created it when I stood at the edge of the waters. I was asked what my life is about, and I answered "I want to create musical universes."
 # Happiest moment in MUF?
 Driving to Nashville with a dream in my heart and following the stars for direction. Those midnight highway adventures when my heart raced like the wheels under my car. 
 # Worst moment in MUF?
-Losing my father and brother. I love them. 
+Losing my father and brother. Not a moment, permanent spoilage. I love them. 
 # Best chain?
 Rupert Neve Shelford with a Bock 167 (FAT mode) and a KU5A from Wes Dooley. 
 # Will you help me build a pro studio or answer audio engineering questions? 
@@ -87,8 +87,8 @@ At least 40? I lost count.
 All recordings before Jan 2026 are released upon my death. If you found them, you're lucky. Keep them private. All recordings after Jan 2026 will be released here, exclusively through Musical Universe Factory. You will never see us on social media or streaming, ever. 
 # Your thoughts on the industry?
 I don't have any thoughts. I don't know how any of it works. MUF is about the salvation of my soul. 
-# What faith are you?
-All of them and none of them. The religion and faith system is the dead husk. I seek the germ. 
+# Which faith are you?
+All of them and none of them. The religion and faith system is the dead husk. I seek the germ. All rivers carry to the same ocean.
 # You sound educated?
 I am a high-school dropout and a summa cum laude college graduate. But my education is suffering and difficulty. 
 # What did you study?
@@ -96,11 +96,13 @@ Psychology. After my degree, I wished I had studied music, until I realized you 
 # What do you mean?
 The compass is inside you. 
 # How do I sound original, or become myself?
-You're a perfect candidate for the education package. 
+Your question is a paradox. You're a perfect candidate for the education package. 
 # Thoughts on life and death?
 They are dance partners, like the tango. They take turns pursuing each other. 
 # Do you take drugs?
 Does tryptophan in turkey count? Final question for Mr. Bubbles, let's go.
+# Advice for others?
+Life's a trip, have fun! 
 # Who do you want to thank? Who do you love?
 That's two questions. I thank existence. Everything in it has a purpose. It is my spiritual labor to prove it. I love all that is alive, which is everything. My last words will be "thank you" and my last hope will be "one more time?"
 # Cryptic, but fascinating, Bubbles
