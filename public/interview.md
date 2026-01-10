@@ -106,4 +106,4 @@ Life's a trip, have fun!
 # Who do you want to thank? Who do you love?
 That's two questions. I thank existence. Everything in it has a purpose. It is my spiritual labor to prove it. I love all that is alive, which is everything. My last words will be "thank you" and my last hope will be "one more time?"
 # Cryptic, but fascinating, Bubbles
-Thank you for your time!  
+Thank you for your time! I greatly appreciate it, and hope we can do it again soon 🤣
