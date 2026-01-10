@@ -5,23 +5,25 @@
   flex-direction: column;
   width: 100%;
   max-width: 1400px;
-  margin: 0 auto;
+  margin: var(--space-md) auto; /* Add vertical gap between navbar and footer */
   overflow-x: hidden;
-  padding-block-start: var(--space-xs); /* Small screens: minimal margin */
+  padding-block: var(--space-xs); /* Small screens: equal top/bottom padding */
   padding-inline: var(--space-xs);
   box-sizing: border-box;
 }
 
 @media (min-width: var(--breakpoint-md)) {
   .brochure {
-    padding-block-start: var(--space-md); /* Medium screens: moderate margin */
+    margin: var(--space-lg) auto; /* Increase vertical gap on medium screens */
+    padding-block: var(--space-md); /* Medium screens: equal top/bottom padding */
     padding-inline: var(--space-lg);
   }
 }
 
 @media (min-width: var(--breakpoint-lg)) {
   .brochure {
-    padding-block-start: var(--space-lg); /* Large screens: reasonable margin */
+    margin: var(--space-xl) auto; /* Increase vertical gap on large screens */
+    padding-block: var(--space-lg); /* Large screens: equal top/bottom padding */
     padding-inline: var(--space-xl);
   }
 }
