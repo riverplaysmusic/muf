@@ -253,7 +253,7 @@ allItems.sort((a, b) => {
   }
 
   .filter-tab {
-    background: transparent;
+    background: var(--space-black);
     border: 2px solid var(--surface-border);
     color: var(--starlight);
     padding: var(--space-xs) var(--space-md);
@@ -266,13 +266,13 @@ allItems.sort((a, b) => {
   }
 
   .filter-tab:hover {
-    border-color: var(--primary-cyan);
-    color: var(--primary-cyan);
+    border-color: var(--surface-border-bright);
+    color: var(--starlight);
   }
 
   .filter-tab.active {
-    background: var(--primary-cyan);
-    border-color: var(--primary-cyan);
+    background: var(--primary-yellow);
+    border-color: var(--primary-yellow);
     color: var(--space-black);
   }
 
@@ -390,7 +390,11 @@ allItems.sort((a, b) => {
   .empty-state {
     text-align: center;
     padding: var(--space-2xl);
-    color: var(--space-mid-gray);
+    color: var(--starlight);
     font-size: 1.1rem;
+    background: var(--space-black);
+    border: 2px solid var(--surface-border);
+    max-width: 600px;
+    margin: 0 auto;
   }
 </style>

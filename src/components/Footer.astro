@@ -1,21 +1,32 @@
 <footer class="global-footer">
+  <div class="footer-divider"></div>
   <div class="footer-content">
-    <p class="footer-copyright">&copy; 2026 MUSICAL UNIVERSE FACTORY. ALL RIGHTS RESERVED.</p>
-    <nav class="footer-links">
-      <a href="/contact" class="footer-link">CONTACT</a>
-      <a href="/privacy" class="footer-link">PRIVACY</a>
-      <a href="/terms" class="footer-link">TERMS</a>
-    </nav>
+    <div class="footer-section">
+      <span class="footer-copyright">© 2026 Musical Universe Factory</span>
+    </div>
+    <div class="footer-section">
+      <nav class="footer-links">
+        <a href="/contact" class="footer-link">Contact</a>
+        <span class="footer-dot">·</span>
+        <a href="/privacy" class="footer-link">Privacy</a>
+        <span class="footer-dot">·</span>
+        <a href="/terms" class="footer-link">Terms</a>
+      </nav>
+    </div>
   </div>
 </footer>
 
 <style>
   .global-footer {
     width: 100%;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: var(--space-2xl) var(--space-md);
-    background: oklch(62.3% 0.214 259.815);
+    background: var(--space-black);
+    padding: 0;
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .footer-divider {
+    display: none;
   }
 
   .footer-content {
@@ -24,60 +35,58 @@
     align-items: center;
     max-width: 1400px;
     margin: 0 auto;
+    padding: var(--space-lg) var(--space-md);
     gap: var(--space-md);
   }
 
+  .footer-section {
+    display: flex;
+    align-items: center;
+  }
+
   .footer-copyright {
-    font-size: 0.9rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--space-black);
-    margin: 0;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 400;
+    letter-spacing: 0.02em;
   }
 
   .footer-links {
     display: flex;
-    gap: var(--space-md);
+    gap: var(--space-xs);
     align-items: center;
   }
 
+  .footer-dot {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.2);
+    user-select: none;
+  }
+
   .footer-link {
-    font-size: 0.9rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--space-black);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
     text-decoration: none;
-    transition: color var(--transition-duration) var(--ease-smooth);
+    font-weight: 400;
+    transition: color 0.2s ease;
+    letter-spacing: 0.02em;
   }
 
   .footer-link:hover {
-    color: var(--primary-yellow);
+    color: rgba(255, 255, 255, 0.9);
   }
 
   @media (max-width: 768px) {
     .footer-content {
       flex-direction: column;
       text-align: center;
-      gap: var(--space-sm);
+      gap: var(--space-xs);
+      padding: var(--space-md);
     }
 
-    .footer-copyright {
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-    }
-
-    .footer-links {
-      gap: var(--space-sm);
-    }
-
-    .footer-link {
-      font-size: 0.8rem;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .global-footer {
-      padding: var(--space-md) var(--space-sm);
+    .footer-section {
+      width: 100%;
+      justify-content: center;
     }
   }
 </style>
