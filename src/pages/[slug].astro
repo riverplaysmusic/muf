@@ -775,22 +775,20 @@ const date = album?.date || writing?.date || artwork?.date || video?.date;
   /* --- VIDEO SECTION --- */
   .video-section {
     width: 100%;
-    padding: 0;
+    padding: var(--space-lg) var(--space-md);
     margin: 0;
+    box-sizing: border-box;
   }
 
   .video-player {
     width: 100%;
     max-width: 1200px;
-    margin: var(--space-lg) auto;
-    padding: 0 var(--space-md);
+    margin: 0 auto;
     display: block;
     line-height: 0;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 8px 32px rgba(102, 217, 239, 0.2), 0 8px 32px rgba(255, 199, 0, 0.1);
-    box-sizing: border-box;
-    aspect-ratio: 16 / 9;
   }
 
   .video-player::part(video) {
@@ -798,9 +796,11 @@ const date = album?.date || writing?.date || artwork?.date || video?.date;
   }
 
   @media (max-width: 768px) {
+    .video-section {
+      padding: var(--space-md) var(--space-sm);
+    }
+
     .video-player {
-      margin: var(--space-md) auto;
-      padding: 0 var(--space-sm);
       border-radius: 8px;
     }
   }
