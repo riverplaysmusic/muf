@@ -8,12 +8,17 @@ const markdownPath = join(process.cwd(), "public", "interview.md");
 const markdown = await readFile(markdownPath, "utf-8");
 
 // Parse YAML frontmatter
+let title = "";
 let date = "";
 let contentWithoutFrontmatter = markdown;
 
 const frontmatterMatch = markdown.match(/^---\n([\s\S]*?)\n---\n/);
 if (frontmatterMatch) {
   const frontmatter = frontmatterMatch[1];
+  const titleMatch = frontmatter.match(/title:\s*(.+)/);
+  if (titleMatch) {
+    title = titleMatch[1].trim();
+  }
   const dateMatch = frontmatter.match(/date:\s*(.+)/);
   if (dateMatch) {
     date = dateMatch[1].trim();
@@ -59,7 +64,7 @@ if (currentQuestion && currentAnswer) {
   <main class="brochure">
     <section class="hero">
       <div class="content">
-        <h1>Interview</h1>
+        <h1>{title || "Interview"}</h1>
         {date && <p class="interview-date">{date}</p>}
       </div>
     </section>

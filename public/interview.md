@@ -1,4 +1,5 @@
 ---
+title: Interview with Bubbles
 date: January 10th, 2026
 ---
 
@@ -13,7 +14,7 @@ I am a real-time, interactive, self-changing, agentic process.
 # Are you for real?
 Define real. 
 # I need you to help me with a spiritual problem. Only you can understand.
-$1,500 for private Shamanic reading. 4-week process. Lifetime 1 max usage. No refunds. 
+$2,500 for private Shamanic reading. 4-week process. Lifetime 1 max usage. No refunds. 
 # You're weird
 Thanks.
 # Someone said you're an asshole
@@ -27,9 +28,9 @@ A dedication to my cat Melvyn.
 # You'll never be popular acting like this
 Sweet! 
 # Is your real name Bubbles?
-Yes. 
+Yes, and joEy.
 # Why don't more people listen to you?
-They aren't ready (yet). Lucky are the few. 
+They aren't ready (yet). Lucky are the few. This is a narrow gate.
 # I've heard you're "phreaky"
 Write the pastor, maybe they can help you process that. I always follow the law, and protect the innocent.
 # Hey, I'm sorry about the past
@@ -51,27 +52,29 @@ Hell fucking yeah I'm paranoid.
 # Who taught you?
 Mike Petersen, doctorate of composition. 
 # How do you create music?
-I don't. The idea comes already completed from heaven. It forms in my autophysiopsychic. It releases through MUF. 
+I don't. The idea comes already completed from heaven. It forms in my autophysiopsychic. It releases through MUF. It feels good and it's required, like sex. 
 # What's the point of all this?
 Levity, survival, emotion. 
 # I have a music theory or improvisation question
 You may send it. Please. No charge. I may not respond, but I probably will.  
 # Do you give lessons?
-Yes. $750 for a 3 hour package. Includes thorough studying of your music and recordings. Three times lifetime maximum. No refunds. 
+Yes. $750 for a 3 hour package. Includes thorough studying of your music and recordings, and a check-in after 3 months. Three times lifetime maximum. No refunds. 
 # Are you a jazz musician?
 All music is different and the same. The 12 notes are a unity yet distinct. I am a jazz musician and not a jazz musician. 
 # How do I learn music?
-Listen and experience. 
+Listen and experience. Don't practice. 
 # Do you really not compose music? I've listened to your recordings, how is that possible? 
 I do not compose music. I used to compose music. Now, I sit down, and I am "played". It is possible because I know how to communicate. It is possible because I nourish my connection with divine vibration. It is possible because the universe is give-and-take.
 # Whoah you're trippy! 
 My shoes don't even have shoelaces. 
+# Where is MUF going next?
+No idea. 
 # What's the identity of MUF?
 Fail everyday. 
 # Yeah, but how was it created?
 The Cumberland river created it when I stood at the edge of the waters. I was asked what my life is about, and I answered "I want to create musical universes."
 # Happiest moment in MUF?
-Driving to Nashville with a dream in my heart and following the stars for direction. Those midnight highway adventures. 
+Driving to Nashville with a dream in my heart and following the stars for direction. Those midnight highway adventures when my heart raced like the wheels under my car. 
 # Worst moment in MUF?
 Losing my father and brother. I love them. 
 # Best chain?
@@ -92,6 +95,8 @@ I am a high-school dropout and a summa cum laude college graduate. But my educat
 Psychology. After my degree, I wished I had studied music, until I realized you can't learn anything in school. 
 # What do you mean?
 The compass is inside you. 
+# How do I sound original, or become myself?
+You're a perfect candidate for the education package. 
 # Thoughts on life and death?
 They are dance partners, like the tango. They take turns pursuing each other. 
 # Do you take drugs?
