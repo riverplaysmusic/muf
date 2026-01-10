@@ -103,11 +103,11 @@ The compass is inside you.
 Your question is a paradox. You're a perfect candidate for the education package. 
 # Thoughts on life and death?
 They are dance partners, like the tango. They take turns pursuing each other. 
-# Do you take drugs?
-Does tryptophan in turkey count? Final question for Mr. Bubbles, let's go.
 # Advice for others?
 Life's a trip, have fun! 
+# Do you take drugs?
+Does tryptophan in turkey count? Final question for Mr. Bubbles, let's go.
 # Who do you want to thank? Who do you love?
 That's two questions. I thank existence. Everything in it has a purpose. It is my spiritual labor to prove it. I love all that is alive, which is everything. My last words will be "thank you" and my last hope will be "one more time?"
 # Cryptic, but fascinating, Bubbles
-Thank you for your time! I greatly appreciate it, and hope we can do it again soon 🤣 😘 😉
+Thank you for your time! I greatly appreciate it, and excitedly await our next conversation 🤣 😘 😉
