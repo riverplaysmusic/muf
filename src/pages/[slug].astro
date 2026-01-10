@@ -2,6 +2,9 @@
 import Layout from "@/components/Layout.astro";
 import { readdir, readFile, stat } from "node:fs/promises";
 import { join } from "node:path";
+import { extractFrontmatter, extractBody, getField, getIntField } from "@/lib/content-parser";
+import { FILE_PATTERNS, CONTENT_FILES } from "@/lib/constants";
+import type { Album, Writing, Artwork, Track } from "@/lib/types";
 
 export async function getStaticPaths() {
   const slugsDir = join(process.cwd(), "public", "slugs");
@@ -20,7 +23,7 @@ export async function getStaticPaths() {
       // Check if this directory has any content files
       const files = await readdir(itemPath);
       const hasContent = files.some(f =>
-        f === 'album.txt' || f === 'writing.txt' || f === 'item.txt' || f === 'course.txt'
+        f === CONTENT_FILES.album || f === CONTENT_FILES.writing || f === CONTENT_FILES.item || f === CONTENT_FILES.course
       );
 
       if (hasContent) {
@@ -41,36 +44,35 @@ const slugDir = join(process.cwd(), "public", "slugs", slug);
 const files = await readdir(slugDir);
 
 // Check what content types exist
-const hasAlbum = files.includes('album.txt');
-const hasWriting = files.includes('writing.txt');
-const hasArtwork = files.includes('item.txt');
-const hasEducation = files.includes('course.txt');
+const hasAlbum = files.includes(CONTENT_FILES.album);
+const hasWriting = files.includes(CONTENT_FILES.writing);
+const hasArtwork = files.includes(CONTENT_FILES.item);
+const hasEducation = files.includes(CONTENT_FILES.course);
 
 // Parse album if exists
-let album: any = null;
+let album: Album | null = null;
 if (hasAlbum) {
-  const content = await readFile(join(slugDir, 'album.txt'), 'utf-8');
-  const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
-  if (frontmatterMatch) {
-    const frontmatter = frontmatterMatch[1];
+  const content = await readFile(join(slugDir, CONTENT_FILES.album), 'utf-8');
+  const frontmatter = extractFrontmatter(content);
+  if (frontmatter) {
     album = {
-      title: frontmatter.match(/title:\s*(.+)/)?.[1] || 'Untitled',
-      date: frontmatter.match(/date:\s*(.+)/)?.[1] || '',
-      priceCents: parseInt(frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || '0'),
-      length: frontmatter.match(/length:\s*(.+)/)?.[1] || '',
-      recordingStudio: frontmatter.match(/recording_studio:\s*(.+)/)?.[1] || '',
-      label: frontmatter.match(/label:\s*(.+)/)?.[1] || '',
-      website: frontmatter.match(/website:\s*(.+)/)?.[1] || '',
-      copyright: frontmatter.match(/copyright:\s*(.+)/)?.[1] || '',
-      body: content.replace(/^---\n[\s\S]*?\n---\n/, '').trim(),
+      title: getField(frontmatter, 'title', 'Untitled'),
+      date: getField(frontmatter, 'date'),
+      priceCents: getIntField(frontmatter, 'price_cents'),
+      length: getField(frontmatter, 'length'),
+      recordingStudio: getField(frontmatter, 'recording_studio'),
+      label: getField(frontmatter, 'label'),
+      website: getField(frontmatter, 'website'),
+      copyright: getField(frontmatter, 'copyright'),
+      body: extractBody(content),
     };
 
     // Parse tracks
     const tracksMatch = frontmatter.match(/tracks:\s*\n([\s\S]*?)(?=\n\w+:|$)/);
-    const tracks: any[] = [];
+    const tracks: Track[] = [];
     if (tracksMatch) {
       const trackLines = tracksMatch[1].split('\n');
-      let currentTrack: any = null;
+      let currentTrack: Partial<Track> | null = null;
 
       for (const line of trackLines) {
         const nameMatch = line.match(/^\s*-\s*name:\s*(.+)/);
@@ -100,53 +102,51 @@ if (hasAlbum) {
     album.credits = albumCredits;
 
     // Look for artwork
-    const artwork = files.find((f) => /^artwork\.(jpg|jpeg|png|svg|webp)$/i.test(f));
+    const artwork = files.find((f) => FILE_PATTERNS.artwork.test(f));
     album.artwork = artwork ? `/slugs/${slug}/${artwork}` : null;
   }
 }
 
 // Parse writing if exists
-let writing: any = null;
+let writing: Writing | null = null;
 if (hasWriting) {
-  const content = await readFile(join(slugDir, 'writing.txt'), 'utf-8');
-  const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
-  if (frontmatterMatch) {
-    const frontmatter = frontmatterMatch[1];
+  const content = await readFile(join(slugDir, CONTENT_FILES.writing), 'utf-8');
+  const frontmatter = extractFrontmatter(content);
+  if (frontmatter) {
     writing = {
-      title: frontmatter.match(/title:\s*(.+)/)?.[1] || 'Untitled',
-      author: frontmatter.match(/author:\s*(.+)/)?.[1] || 'Musical Universe Factory',
-      date: frontmatter.match(/date:\s*(.+)/)?.[1] || '',
-      priceCents: parseInt(frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || '0'),
-      body: content.replace(/^---\n[\s\S]*?\n---\n/, '').trim(),
+      title: getField(frontmatter, 'title', 'Untitled'),
+      author: getField(frontmatter, 'author', 'Musical Universe Factory'),
+      date: getField(frontmatter, 'date'),
+      priceCents: getIntField(frontmatter, 'price_cents'),
+      body: extractBody(content),
     };
 
     // Look for artwork
-    const artwork = files.find((f) => /^artwork\.(jpg|jpeg|png|svg|webp)$/i.test(f));
+    const artwork = files.find((f) => FILE_PATTERNS.artwork.test(f));
     writing.artwork = artwork ? `/slugs/${slug}/${artwork}` : null;
   }
 }
 
 // Parse artwork if exists
-let artwork: any = null;
+let artwork: Artwork | null = null;
 if (hasArtwork) {
-  const content = await readFile(join(slugDir, 'item.txt'), 'utf-8');
-  const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
-  if (frontmatterMatch) {
-    const frontmatter = frontmatterMatch[1];
+  const content = await readFile(join(slugDir, CONTENT_FILES.item), 'utf-8');
+  const frontmatter = extractFrontmatter(content);
+  if (frontmatter) {
     artwork = {
-      title: frontmatter.match(/title:\s*(.+)/)?.[1] || 'Untitled',
-      date: frontmatter.match(/date:\s*(.+)/)?.[1] || '',
-      priceCents: parseInt(frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || '0'),
-      format: frontmatter.match(/format:\s*(.+)/)?.[1] || '',
-      fileSize: frontmatter.match(/file_size:\s*(.+)/)?.[1] || '',
-      contents: frontmatter.match(/contents:\s*(.+)/)?.[1] || '',
-      dimensions: frontmatter.match(/dimensions:\s*(.+)/)?.[1] || '',
-      copyright: frontmatter.match(/copyright:\s*(.+)/)?.[1] || '',
-      body: content.replace(/^---\n[\s\S]*?\n---\n/, '').trim(),
+      title: getField(frontmatter, 'title', 'Untitled'),
+      date: getField(frontmatter, 'date'),
+      priceCents: getIntField(frontmatter, 'price_cents'),
+      format: getField(frontmatter, 'format'),
+      fileSize: getField(frontmatter, 'file_size'),
+      contents: getField(frontmatter, 'contents'),
+      dimensions: getField(frontmatter, 'dimensions'),
+      copyright: getField(frontmatter, 'copyright'),
+      body: extractBody(content),
     };
 
     // Look for preview image
-    const preview = files.find((f) => /^preview\.(jpg|jpeg|png|svg|webp)$/i.test(f));
+    const preview = files.find((f) => FILE_PATTERNS.preview.test(f));
     artwork.preview = preview ? `/slugs/${slug}/${preview}` : null;
   }
 }
@@ -228,7 +228,7 @@ const date = album?.date || writing?.date || artwork?.date;
             <section class="card tracks-card">
               <h2 class="card-title">Track Listing</h2>
               <ol class="track-list">
-                {album.tracks.map((track: any, index: number) => (
+                {album.tracks.map((track: Track, index: number) => (
                   <li class="track-item">
                     <span class="track-number">{String(index + 1).padStart(2, '0')}</span>
                     <span class="track-name">{track.name}</span>
@@ -239,11 +239,11 @@ const date = album?.date || writing?.date || artwork?.date;
           )}
 
           <!-- CREDITS -->
-          {(album.tracks.some((t: any) => t.credits?.length) || album.credits.length > 0 || album.label || album.recordingStudio || album.website || album.copyright) && (
+          {(album.tracks.some((t: Track) => t.credits?.length) || album.credits.length > 0 || album.label || album.recordingStudio || album.website || album.copyright) && (
             <section class="card credits-card">
               <h2 class="card-title">Credits</h2>
 
-              {album.tracks.map((track: any) => (
+              {album.tracks.map((track: Track) => (
                 track.credits && track.credits.length > 0 && (
                   <div class="track-credits">
                     <h3 class="track-credits-title">{track.name}</h3>

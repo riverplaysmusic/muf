@@ -64,16 +64,6 @@
   color: var(--accent-purple);
 }
 
-/* SECTION MODIFIERS (organizational markers with no additional styling) */
-.colors,
-.text-gradients,
-.typography,
-.animations,
-.gradients,
-.elements {
-  /* These classes are organizational markers with no additional styling */
-}
-
 .neutrals,
 .accents {
   margin-top: var(--space-lg);

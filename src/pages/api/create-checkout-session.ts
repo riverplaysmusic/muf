@@ -10,7 +10,7 @@ import { createClient } from '@supabase/supabase-js'
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY } from 'astro:env/client'
 
 const stripe = new Stripe(STRIPE_SECRET_KEY, {
-  apiVersion: '2025-12-15.clover',
+  apiVersion: '2025-01-27.acacia',
 })
 
 export const POST: APIRoute = async ({ request, url }) => {

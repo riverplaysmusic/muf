@@ -1,13 +1,14 @@
 ---
 import Layout from "@/components/Layout.astro";
-import { readdir, readFile, stat } from "node:fs/promises";
+import { readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
+import { parseSlugContent, type ContentItem } from "@/lib/content-parser";
 
 // Scan all directories in public/slugs for content
 const slugsDir = join(process.cwd(), "public", "slugs");
 const items = await readdir(slugsDir);
 
-const allItems: any[] = [];
+const allItems: ContentItem[] = [];
 
 for (const item of items) {
   const itemPath = join(slugsDir, item);
@@ -18,132 +19,8 @@ for (const item of items) {
     // Skip non-directories
     if (!itemStat.isDirectory()) continue;
 
-    const slug = item;
-    const files = await readdir(itemPath);
-
-    // Check for album
-    if (files.includes('album.txt')) {
-      try {
-        const content = await readFile(join(itemPath, 'album.txt'), 'utf-8');
-        const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
-        if (!frontmatterMatch) continue;
-
-        const frontmatter = frontmatterMatch[1];
-        const title = frontmatter.match(/title:\s*(.+)/)?.[1] || 'Untitled';
-        const date = frontmatter.match(/date:\s*(.+)/)?.[1] || '';
-        const priceCents = parseInt(frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || '0');
-        const published = frontmatter.match(/published:\s*(true|false)/)?.[1] === 'true';
-
-        if (!published) continue;
-
-        // Look for artwork
-        const artwork = files.find((f) => /^artwork\.(jpg|jpeg|png|svg|webp)$/i.test(f));
-        const artworkFile = artwork ? `/slugs/${slug}/${artwork}` : null;
-
-        allItems.push({
-          type: 'album',
-          slug,
-          title,
-          date,
-          priceCents,
-          image: artworkFile,
-          url: `/${slug}`
-        });
-      } catch {}
-    }
-
-    // Check for writing
-    if (files.includes('writing.txt')) {
-      try {
-        const content = await readFile(join(itemPath, 'writing.txt'), 'utf-8');
-        const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
-        if (!frontmatterMatch) continue;
-
-        const frontmatter = frontmatterMatch[1];
-        const title = frontmatter.match(/title:\s*(.+)/)?.[1] || 'Untitled';
-        const date = frontmatter.match(/date:\s*(.+)/)?.[1] || '';
-        const priceCents = parseInt(frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || '0');
-        const published = frontmatter.match(/published:\s*(true|false)/)?.[1] === 'true';
-
-        if (!published) continue;
-
-        // Look for artwork
-        const artwork = files.find((f) => /^artwork\.(jpg|jpeg|png|svg|webp)$/i.test(f));
-        const artworkFile = artwork ? `/slugs/${slug}/${artwork}` : null;
-
-        allItems.push({
-          type: 'writing',
-          slug,
-          title,
-          date,
-          priceCents,
-          image: artworkFile,
-          url: `/${slug}`
-        });
-      } catch {}
-    }
-
-    // Check for artwork
-    if (files.includes('item.txt')) {
-      try {
-        const content = await readFile(join(itemPath, 'item.txt'), 'utf-8');
-        const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
-        if (!frontmatterMatch) continue;
-
-        const frontmatter = frontmatterMatch[1];
-        const title = frontmatter.match(/title:\s*(.+)/)?.[1] || 'Untitled';
-        const date = frontmatter.match(/date:\s*(.+)/)?.[1] || '';
-        const priceCents = parseInt(frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || '0');
-        const published = frontmatter.match(/published:\s*(true|false)/)?.[1] === 'true';
-
-        if (!published) continue;
-
-        // Look for preview image
-        const preview = files.find((f) => /^preview\.(jpg|jpeg|png|svg|webp)$/i.test(f));
-        const previewFile = preview ? `/slugs/${slug}/${preview}` : null;
-
-        allItems.push({
-          type: 'artwork',
-          slug,
-          title,
-          date,
-          priceCents,
-          image: previewFile,
-          url: `/${slug}`
-        });
-      } catch {}
-    }
-
-    // Check for education
-    if (files.includes('course.txt')) {
-      try {
-        const content = await readFile(join(itemPath, 'course.txt'), 'utf-8');
-        const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
-        if (!frontmatterMatch) continue;
-
-        const frontmatter = frontmatterMatch[1];
-        const title = frontmatter.match(/title:\s*(.+)/)?.[1] || 'Untitled';
-        const date = frontmatter.match(/date:\s*(.+)/)?.[1] || '';
-        const priceCents = parseInt(frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || '0');
-        const published = frontmatter.match(/published:\s*(true|false)/)?.[1] === 'true';
-
-        if (!published) continue;
-
-        // Look for preview image
-        const preview = files.find((f) => /^preview\.(jpg|jpeg|png|svg|webp)$/i.test(f));
-        const previewFile = preview ? `/slugs/${slug}/${preview}` : null;
-
-        allItems.push({
-          type: 'education',
-          slug,
-          title,
-          date,
-          priceCents,
-          image: previewFile,
-          url: `/${slug}`
-        });
-      } catch {}
-    }
+    const parsedItems = await parseSlugContent(slugsDir, item);
+    allItems.push(...parsedItems);
   } catch {
     // Skip items we can't process
   }
@@ -194,11 +71,6 @@ allItems.sort((a, b) => {
         </a>
       ))}
     </div>
-
-    <!-- Empty state -->
-    <div class="empty-state" style="display: none;">
-      <p>No items in this category yet.</p>
-    </div>
   </main>
 </Layout>
 
@@ -206,9 +78,7 @@ allItems.sort((a, b) => {
   // Filter functionality
   document.addEventListener('DOMContentLoaded', () => {
     const tabs = document.querySelectorAll('.filter-tab');
-    const items = document.querySelectorAll('.shop-item:not(.featured-video)');
-    const emptyState = document.querySelector('.empty-state');
-    const shopGrid = document.querySelector('.shop-grid');
+    const items = document.querySelectorAll('.shop-item');
 
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
@@ -218,25 +88,14 @@ allItems.sort((a, b) => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
 
-        // Filter items and count visible
-        let visibleCount = 0;
+        // Filter items
         items.forEach(item => {
           if (filter === 'all' || item.dataset.type === filter) {
             item.style.display = 'block';
-            visibleCount++;
           } else {
             item.style.display = 'none';
           }
         });
-
-        // Show empty state if no items visible
-        if (visibleCount === 0) {
-          shopGrid.style.display = 'none';
-          emptyState.style.display = 'block';
-        } else {
-          shopGrid.style.display = 'grid';
-          emptyState.style.display = 'none';
-        }
       });
     });
   });
@@ -286,17 +145,17 @@ allItems.sort((a, b) => {
     margin: 0 auto;
   }
 
-  /* Tablet: 3 columns */
-  @media (max-width: 1024px) {
+  /* Tablet: 2 columns */
+  @media (max-width: 900px) {
     .shop-grid {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  /* Mobile: 2 columns */
-  @media (max-width: 768px) {
+  /* Mobile: 1 column */
+  @media (max-width: 480px) {
     .shop-grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr;
       gap: var(--space-sm);
     }
   }
@@ -386,15 +245,4 @@ allItems.sort((a, b) => {
     }
   }
 
-  /* ===== EMPTY STATE ===== */
-  .empty-state {
-    text-align: center;
-    padding: var(--space-2xl);
-    color: var(--starlight);
-    font-size: 1.1rem;
-    background: var(--space-black);
-    border: 2px solid var(--surface-border);
-    max-width: 600px;
-    margin: 0 auto;
-  }
 </style>

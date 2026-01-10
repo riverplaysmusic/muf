@@ -97,15 +97,6 @@ import Layout from "@/components/Layout.astro";
     background: var(--space-gray);
     color: var(--starlight);
   }
-  .empty {
-    display: none;
-    border: none;
-    background: transparent;
-    pointer-events: none;
-  }
-  .empty:hover {
-    transform: none;
-  }
 
   .gradient-text-grid {
     display: flex;
@@ -118,13 +109,6 @@ import Layout from "@/components/Layout.astro";
     line-height: 1.1;
     margin: 0;
     width: fit-content;
-  }
-
-  /* Show empty swatch on desktop (multi-column layout) */
-  @media (min-width: var(--breakpoint-md)) {
-    .empty {
-      display: flex;
-    }
   }
 
   /* TYPOGRAPHY DEMO */
@@ -315,7 +299,6 @@ import Layout from "@/components/Layout.astro";
             <span class="swatch-label">Space Gray</span>
             <span class="swatch-hex">oklch(26.85% 0 0)</span>
           </div>
-          <div class="swatch empty"></div>
         </div>
 
         <div class="palette-grid accents stagger-in">

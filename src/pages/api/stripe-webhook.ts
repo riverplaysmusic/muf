@@ -28,9 +28,10 @@ export const POST: APIRoute = async ({ request }) => {
       signature,
       STRIPE_WEBHOOK_SECRET
     )
-  } catch (err: any) {
-    console.error('Webhook signature verification failed:', err.message)
-    return new Response(`Webhook Error: ${err.message}`, { status: 400 })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Unknown error'
+    console.error('Webhook signature verification failed:', message)
+    return new Response(`Webhook Error: ${message}`, { status: 400 })
   }
 
   // Handle checkout.session.completed event
@@ -39,9 +40,10 @@ export const POST: APIRoute = async ({ request }) => {
 
     try {
       await fulfillOrder(session)
-    } catch (err: any) {
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unknown error'
       console.error('Order fulfillment failed:', err)
-      return new Response(`Fulfillment Error: ${err.message}`, { status: 500 })
+      return new Response(`Fulfillment Error: ${message}`, { status: 500 })
     }
   }
 

@@ -1,0 +1,141 @@
+---
+import Layout from "@/components/Layout.astro";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+
+// Read the markdown file
+const markdownPath = join(process.cwd(), "public", "interview.md");
+const markdown = await readFile(markdownPath, "utf-8");
+
+// Parse YAML frontmatter
+let date = "";
+let contentWithoutFrontmatter = markdown;
+
+const frontmatterMatch = markdown.match(/^---\n([\s\S]*?)\n---\n/);
+if (frontmatterMatch) {
+  const frontmatter = frontmatterMatch[1];
+  const dateMatch = frontmatter.match(/date:\s*(.+)/);
+  if (dateMatch) {
+    date = dateMatch[1].trim();
+  }
+  contentWithoutFrontmatter = markdown.replace(/^---\n[\s\S]*?\n---\n/, "");
+}
+
+// Parse markdown into Q&A pairs
+const lines = contentWithoutFrontmatter.split("\n");
+const qaItems: { question: string; answer: string }[] = [];
+
+let currentQuestion = "";
+let currentAnswer = "";
+
+for (const line of lines) {
+  if (line.startsWith("# ")) {
+    // Save previous Q&A if exists
+    if (currentQuestion && currentAnswer) {
+      qaItems.push({
+        question: currentQuestion,
+        answer: currentAnswer.trim(),
+      });
+    }
+    // Start new question
+    currentQuestion = line.replace("# ", "").trim();
+    currentAnswer = "";
+  } else if (line.trim()) {
+    // Add to current answer
+    currentAnswer += line + " ";
+  }
+}
+
+// Add the last Q&A
+if (currentQuestion && currentAnswer) {
+  qaItems.push({
+    question: currentQuestion,
+    answer: currentAnswer.trim(),
+  });
+}
+---
+
+<Layout>
+  <main class="brochure">
+    <section class="hero">
+      <div class="content">
+        <h1>Interview</h1>
+        {date && <p class="interview-date">{date}</p>}
+      </div>
+    </section>
+
+    <section class="hero">
+      <div class="content interview-content">
+        {qaItems.map((item) => (
+          <div class="qa-item">
+            <h2 class="question">{item.question}</h2>
+            <p class="answer">{item.answer}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .content {
+    width: 100%;
+  }
+
+  .interview-date {
+    font-size: 1.25rem;
+    color: var(--primary-cyan);
+    margin: var(--space-sm) 0 0 0;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  .interview-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    text-align: left;
+  }
+
+  .qa-item {
+    border-left: 3px solid var(--primary-cyan);
+    padding-left: var(--space-md);
+  }
+
+  .question {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-yellow);
+    margin: 0 0 var(--space-sm) 0;
+    line-height: 1.4;
+  }
+
+  .answer {
+    font-size: 1rem;
+    color: var(--starlight);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .interview-date {
+      font-size: 1rem;
+    }
+
+    .interview-content {
+      gap: var(--space-lg);
+    }
+
+    .qa-item {
+      padding-left: var(--space-sm);
+    }
+
+    .question {
+      font-size: 1.1rem;
+    }
+
+    .answer {
+      font-size: 0.95rem;
+    }
+  }
+</style>
