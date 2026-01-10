@@ -3,6 +3,7 @@ title: Moon Goddess
 artist: Musical Universe Factory
 date: 2026-01-02
 price_cents: 500
+published: true
 tracks:
   - name: 01. Moon Goddess (10:33)
     credits:

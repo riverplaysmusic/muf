@@ -1,0 +1,790 @@
+---
+import Layout from "@/components/Layout.astro";
+import { readdir, readFile, stat } from "node:fs/promises";
+import { join } from "node:path";
+
+export async function getStaticPaths() {
+  const slugsDir = join(process.cwd(), "public", "slugs");
+  const items = await readdir(slugsDir);
+
+  const paths = [];
+
+  for (const item of items) {
+    const itemPath = join(slugsDir, item);
+    try {
+      const itemStat = await stat(itemPath);
+
+      // Skip non-directories
+      if (!itemStat.isDirectory()) continue;
+
+      // Check if this directory has any content files
+      const files = await readdir(itemPath);
+      const hasContent = files.some(f =>
+        f === 'album.txt' || f === 'writing.txt' || f === 'item.txt' || f === 'course.txt'
+      );
+
+      if (hasContent) {
+        paths.push({ params: { slug: item } });
+      }
+    } catch {
+      // Skip directories we can't read
+    }
+  }
+
+  return paths;
+}
+
+const { slug } = Astro.params;
+
+// Read the slug directory
+const slugDir = join(process.cwd(), "public", "slugs", slug);
+const files = await readdir(slugDir);
+
+// Check what content types exist
+const hasAlbum = files.includes('album.txt');
+const hasWriting = files.includes('writing.txt');
+const hasArtwork = files.includes('item.txt');
+const hasEducation = files.includes('course.txt');
+
+// Parse album if exists
+let album: any = null;
+if (hasAlbum) {
+  const content = await readFile(join(slugDir, 'album.txt'), 'utf-8');
+  const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+  if (frontmatterMatch) {
+    const frontmatter = frontmatterMatch[1];
+    album = {
+      title: frontmatter.match(/title:\s*(.+)/)?.[1] || 'Untitled',
+      date: frontmatter.match(/date:\s*(.+)/)?.[1] || '',
+      priceCents: parseInt(frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || '0'),
+      length: frontmatter.match(/length:\s*(.+)/)?.[1] || '',
+      recordingStudio: frontmatter.match(/recording_studio:\s*(.+)/)?.[1] || '',
+      label: frontmatter.match(/label:\s*(.+)/)?.[1] || '',
+      website: frontmatter.match(/website:\s*(.+)/)?.[1] || '',
+      copyright: frontmatter.match(/copyright:\s*(.+)/)?.[1] || '',
+      body: content.replace(/^---\n[\s\S]*?\n---\n/, '').trim(),
+    };
+
+    // Parse tracks
+    const tracksMatch = frontmatter.match(/tracks:\s*\n([\s\S]*?)(?=\n\w+:|$)/);
+    const tracks: any[] = [];
+    if (tracksMatch) {
+      const trackLines = tracksMatch[1].split('\n');
+      let currentTrack: any = null;
+
+      for (const line of trackLines) {
+        const nameMatch = line.match(/^\s*-\s*name:\s*(.+)/);
+        const creditMatch = line.match(/^\s*-\s*(.+)/);
+
+        if (nameMatch) {
+          if (currentTrack) tracks.push(currentTrack);
+          currentTrack = { name: nameMatch[1].trim() };
+        } else if (creditMatch && currentTrack && line.includes('    -')) {
+          if (!currentTrack.credits) currentTrack.credits = [];
+          currentTrack.credits.push(creditMatch[1].trim());
+        }
+      }
+      if (currentTrack) tracks.push(currentTrack);
+    }
+    album.tracks = tracks;
+
+    // Parse album-wide credits
+    const albumCreditsMatch = frontmatter.match(/^credits:\s*\n([\s\S]*?)(?=\n\w+:|$)/m);
+    let albumCredits: string[] = [];
+    if (albumCreditsMatch) {
+      albumCredits = albumCreditsMatch[1]
+        .split('\n')
+        .map((line) => line.replace(/^\s*-\s*/, '').trim())
+        .filter((line) => line.length > 0);
+    }
+    album.credits = albumCredits;
+
+    // Look for artwork
+    const artwork = files.find((f) => /^artwork\.(jpg|jpeg|png|svg|webp)$/i.test(f));
+    album.artwork = artwork ? `/slugs/${slug}/${artwork}` : null;
+  }
+}
+
+// Parse writing if exists
+let writing: any = null;
+if (hasWriting) {
+  const content = await readFile(join(slugDir, 'writing.txt'), 'utf-8');
+  const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+  if (frontmatterMatch) {
+    const frontmatter = frontmatterMatch[1];
+    writing = {
+      title: frontmatter.match(/title:\s*(.+)/)?.[1] || 'Untitled',
+      author: frontmatter.match(/author:\s*(.+)/)?.[1] || 'Musical Universe Factory',
+      date: frontmatter.match(/date:\s*(.+)/)?.[1] || '',
+      priceCents: parseInt(frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || '0'),
+      body: content.replace(/^---\n[\s\S]*?\n---\n/, '').trim(),
+    };
+
+    // Look for artwork
+    const artwork = files.find((f) => /^artwork\.(jpg|jpeg|png|svg|webp)$/i.test(f));
+    writing.artwork = artwork ? `/slugs/${slug}/${artwork}` : null;
+  }
+}
+
+// Parse artwork if exists
+let artwork: any = null;
+if (hasArtwork) {
+  const content = await readFile(join(slugDir, 'item.txt'), 'utf-8');
+  const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+  if (frontmatterMatch) {
+    const frontmatter = frontmatterMatch[1];
+    artwork = {
+      title: frontmatter.match(/title:\s*(.+)/)?.[1] || 'Untitled',
+      date: frontmatter.match(/date:\s*(.+)/)?.[1] || '',
+      priceCents: parseInt(frontmatter.match(/price_cents:\s*(\d+)/)?.[1] || '0'),
+      format: frontmatter.match(/format:\s*(.+)/)?.[1] || '',
+      fileSize: frontmatter.match(/file_size:\s*(.+)/)?.[1] || '',
+      contents: frontmatter.match(/contents:\s*(.+)/)?.[1] || '',
+      dimensions: frontmatter.match(/dimensions:\s*(.+)/)?.[1] || '',
+      copyright: frontmatter.match(/copyright:\s*(.+)/)?.[1] || '',
+      body: content.replace(/^---\n[\s\S]*?\n---\n/, '').trim(),
+    };
+
+    // Look for preview image
+    const preview = files.find((f) => /^preview\.(jpg|jpeg|png|svg|webp)$/i.test(f));
+    artwork.preview = preview ? `/slugs/${slug}/${preview}` : null;
+  }
+}
+
+// Determine primary title (prefer album > writing > artwork)
+const title = album?.title || writing?.title || artwork?.title || slug;
+const date = album?.date || writing?.date || artwork?.date;
+---
+
+<Layout>
+  <script>
+    import { supabase } from "@/lib/supabase";
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.get('success') === 'true') {
+      alert('Payment successful! Your content is now available for download.\n\nIf the download button doesn\'t appear, please refresh the page.');
+      window.history.replaceState({}, '', window.location.pathname);
+      location.reload();
+    }
+
+    if (urlParams.get('canceled') === 'true') {
+      alert('Purchase canceled. You can complete your purchase anytime.');
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  </script>
+
+  <main class="brochure">
+    <!-- HERO -->
+    <section class="hero no-padding-image">
+      {(album?.artwork || writing?.artwork) && (
+        <div class="hero-artwork">
+          <img src={album?.artwork || writing?.artwork} alt={title} />
+        </div>
+      )}
+      <header class="content">
+        <a href="/shop" class="back-link">← Back to Shop</a>
+        <h1 class="gradient-cyan-pink">{title}</h1>
+        {date && (
+          <time class="subtitle">{new Date(date).toLocaleDateString()}</time>
+        )}
+      </header>
+    </section>
+
+    <!-- ALBUM SECTION -->
+    {album && (
+      <div class="content-grid">
+        <div class="left-column">
+          <!-- ALBUM INFO -->
+          <section class="card album-info-card">
+            <div class="info-grid">
+              {album.date && (
+                <div class="info-item">
+                  <span class="info-label">Released</span>
+                  <span class="info-value">{new Date(album.date).getFullYear()}</span>
+                </div>
+              )}
+              {album.tracks.length > 0 && (
+                <div class="info-item">
+                  <span class="info-label">Tracks</span>
+                  <span class="info-value">{album.tracks.length}</span>
+                </div>
+              )}
+              {album.length && (
+                <div class="info-item">
+                  <span class="info-label">Length</span>
+                  <span class="info-value">{album.length}</span>
+                </div>
+              )}
+              <div class="info-item">
+                <span class="info-label">Format</span>
+                <span class="info-value">FLAC</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- TRACKS -->
+          {album.tracks.length > 0 && (
+            <section class="card tracks-card">
+              <h2 class="card-title">Track Listing</h2>
+              <ol class="track-list">
+                {album.tracks.map((track: any, index: number) => (
+                  <li class="track-item">
+                    <span class="track-number">{String(index + 1).padStart(2, '0')}</span>
+                    <span class="track-name">{track.name}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+
+          <!-- CREDITS -->
+          {(album.tracks.some((t: any) => t.credits?.length) || album.credits.length > 0 || album.label || album.recordingStudio || album.website || album.copyright) && (
+            <section class="card credits-card">
+              <h2 class="card-title">Credits</h2>
+
+              {album.tracks.map((track: any) => (
+                track.credits && track.credits.length > 0 && (
+                  <div class="track-credits">
+                    <h3 class="track-credits-title">{track.name}</h3>
+                    <ul class="credit-items">
+                      {track.credits.map((credit: string) => (
+                        <li class="credit-item">{credit}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )
+              ))}
+
+              {album.credits.length > 0 && (
+                <div class="album-credits">
+                  <ul class="credit-items">
+                    {album.credits.map((credit: string) => (
+                      <li class="credit-item">{credit}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {(album.label || album.recordingStudio || album.website || album.copyright) && (
+                <div class="album-meta">
+                  {album.label && <p class="meta-item"><span class="meta-label">Label:</span> {album.label}</p>}
+                  {album.recordingStudio && <p class="meta-item"><span class="meta-label">Recording Studio:</span> {album.recordingStudio}</p>}
+                  {album.website && (
+                    <p class="meta-item">
+                      <span class="meta-label">Website:</span>{' '}
+                      <a href={album.website} target="_blank" rel="noopener noreferrer" class="meta-link">
+                        {album.website.replace(/^https?:\/\//, '')}
+                      </a>
+                    </p>
+                  )}
+                  {album.copyright && <p class="meta-item copyright">{album.copyright}</p>}
+                </div>
+              )}
+            </section>
+          )}
+        </div>
+
+        <div class="right-column">
+          <section class="card description-section">
+            <h2 class="card-title">About This Album</h2>
+            <div class="album-description">
+              {album.body.split('\n\n').map((paragraph: string) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          </section>
+
+          {album.priceCents > 0 && (
+            <section class="card buy-section">
+              <h3 class="card-title gradient-cyan-pink">Own This Album</h3>
+              <p class="buy-desc">Purchase for lifetime access to high-quality FLAC files.</p>
+              <p class="buy-price">${(album.priceCents / 100).toFixed(2)}</p>
+              <button class="btn retro">Purchase Now</button>
+            </section>
+          )}
+        </div>
+      </div>
+    )}
+
+    <!-- WRITING SECTION -->
+    {writing && (
+      <section class="writing-content-section">
+        <div class="content">
+          <article class="writing-body">
+            {writing.body.split('\n\n').map((paragraph: string) => (
+              <p>{paragraph}</p>
+            ))}
+          </article>
+
+          {writing.priceCents > 0 && (
+            <div class="purchase-section">
+              <div class="card">
+                <h3 class="card-title gradient-cyan-pink">Support This Work</h3>
+                <p class="purchase-desc">
+                  This writing is available for ${(writing.priceCents / 100).toFixed(2)}. Your support helps maintain our creative independence.
+                </p>
+                <button class="btn retro">Purchase Access</button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+    )}
+
+    <!-- ARTWORK SECTION -->
+    {artwork && (
+      <>
+        {artwork.preview && (
+          <section class="hero no-padding-image">
+            <div class="content">
+              <img src={artwork.preview} alt={artwork.title} class="hero-artwork" />
+            </div>
+          </section>
+        )}
+
+        <section class="hero">
+          <div class="content container-sm">
+            <div class="card">
+              <h3 class="card-title">Details</h3>
+              <div class="info-grid">
+                {artwork.format && <div class="info-item"><strong>Format:</strong> {artwork.format}</div>}
+                {artwork.fileSize && <div class="info-item"><strong>File Size:</strong> {artwork.fileSize}</div>}
+                {artwork.contents && <div class="info-item"><strong>Contents:</strong> {artwork.contents}</div>}
+                {artwork.dimensions && <div class="info-item"><strong>Dimensions:</strong> {artwork.dimensions}</div>}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="hero">
+          <div class="content container-sm">
+            <div class="card">
+              <h3 class="card-title">About</h3>
+              {artwork.body.split('\n\n').map((p: string) => <p>{p}</p>)}
+              {artwork.copyright && <p class="copyright">{artwork.copyright}</p>}
+            </div>
+          </div>
+        </section>
+
+        {artwork.priceCents > 0 && (
+          <section class="hero">
+            <div class="content container-sm center">
+              <button class="btn retro">
+                Buy for ${(artwork.priceCents / 100).toFixed(2)}
+              </button>
+            </div>
+          </section>
+        )}
+      </>
+    )}
+  </main>
+</Layout>
+
+<style>
+  /* --- HERO --- */
+  .hero.no-padding-image {
+    padding: 0;
+  }
+
+  .hero.no-padding-image .content {
+    padding: var(--space-md);
+  }
+
+  .hero-artwork {
+    width: 100%;
+  }
+
+  .hero-artwork img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: var(--space-xs);
+    opacity: 0.8;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .back-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+    letter-spacing: 0.1em;
+  }
+
+  .price-tag {
+    background: linear-gradient(135deg, #00ffff, #ff00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
+  time.subtitle {
+    opacity: 0.7;
+  }
+
+  /* --- CONTENT GRID --- */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+  }
+
+  @media (min-width: 1024px) {
+    .content-grid {
+      grid-template-columns: 380px 1fr;
+      gap: var(--space-md);
+    }
+  }
+
+  .left-column,
+  .right-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  /* --- CARD TITLES --- */
+  .card-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* --- ALBUM INFO CARD --- */
+  .album-info-card {
+    padding: var(--space-md);
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .info-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    font-weight: 600;
+  }
+
+  .info-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  /* --- TRACKS CARD --- */
+  .tracks-card {
+    padding: var(--space-md);
+  }
+
+  .track-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .track-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    background: rgba(0, 255, 255, 0.05);
+    border-left: 3px solid var(--primary-cyan);
+    transition: all 0.2s ease;
+  }
+
+  .track-item:hover {
+    background: rgba(0, 255, 255, 0.1);
+    transform: translateX(4px);
+  }
+
+  .track-number {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--primary-cyan);
+    min-width: 2.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .track-name {
+    font-size: 1rem;
+    flex: 1;
+  }
+
+  /* --- CREDITS CARD --- */
+  .credits-card {
+    padding: var(--space-md);
+  }
+
+  .track-credits {
+    margin-bottom: var(--space-md);
+  }
+
+  .track-credits:last-of-type {
+    margin-bottom: var(--space-sm);
+  }
+
+  .track-credits-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.7;
+    margin-bottom: var(--space-xs);
+  }
+
+  .credit-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .credit-item {
+    font-size: 0.95rem;
+    padding: var(--space-xs) var(--space-sm);
+    background: rgba(255, 0, 255, 0.05);
+    border-left: 2px solid var(--primary-pink);
+  }
+
+  .album-credits {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .album-meta {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .meta-item {
+    font-size: 0.95rem;
+    margin-bottom: var(--space-xs);
+  }
+
+  .meta-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .meta-label {
+    font-weight: 700;
+    opacity: 0.7;
+  }
+
+  .meta-link {
+    color: white;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .meta-link:hover {
+    text-decoration: underline;
+    letter-spacing: 0.05em;
+  }
+
+  .copyright {
+    margin-top: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.85rem;
+    opacity: 0.6;
+    text-align: center;
+  }
+
+  /* --- DESCRIPTION SECTION --- */
+  .description-section {
+    padding: var(--space-lg);
+  }
+
+  .album-description {
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .album-description p {
+    margin-bottom: var(--space-md);
+  }
+
+  .album-description p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* --- BUY SECTION --- */
+  .buy-section {
+    text-align: center;
+  }
+
+  .buy-desc {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-bottom: var(--space-md);
+  }
+
+  .buy-price {
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary-cyan), var(--primary-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 0;
+    margin-bottom: var(--space-lg);
+  }
+
+  .buy-section .btn {
+    font-size: 1.1rem;
+    padding: var(--space-sm) var(--space-lg);
+  }
+
+  /* --- WRITING SECTION --- */
+  .writing-content-section {
+    width: 100%;
+    padding: var(--space-lg) var(--space-md);
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 768px) {
+    .writing-content-section {
+      padding: var(--space-md) var(--space-md);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .writing-content-section {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+  }
+
+  .writing-body {
+    background: var(--space-black);
+    border: 1px solid var(--surface-border);
+    padding: var(--space-2xl);
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--starlight);
+  }
+
+  .writing-body p {
+    margin-bottom: var(--space-lg);
+  }
+
+  .writing-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    .writing-body {
+      padding: var(--space-xl);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+  }
+
+  /* --- PURCHASE SECTION --- */
+  .purchase-section {
+    margin-top: var(--space-lg);
+  }
+
+  .purchase-section .card {
+    padding: var(--space-xl);
+    text-align: center;
+  }
+
+  .purchase-desc {
+    font-size: 1.05rem;
+    opacity: 0.9;
+    margin-bottom: var(--space-lg);
+    line-height: 1.6;
+  }
+
+  .btn {
+    font-size: 1.1rem;
+    padding: var(--space-sm) var(--space-xl);
+  }
+
+  /* --- ARTWORK SPECIFIC --- */
+  .container-sm {
+    max-width: 700px;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  /* --- MOBILE --- */
+  @media (max-width: 768px) {
+    .hero.no-padding-image .content {
+      padding: var(--space-md);
+    }
+
+    .content-grid {
+      padding: 0 var(--space-md);
+      gap: var(--space-lg);
+    }
+
+    .album-info-card,
+    .tracks-card,
+    .credits-card,
+    .description-section {
+      padding: var(--space-lg);
+    }
+
+    .card-title {
+      font-size: 1.4rem;
+    }
+
+    .info-grid {
+      gap: var(--space-md);
+    }
+
+    .track-number {
+      font-size: 1.2rem;
+      min-width: 2.5rem;
+    }
+
+    .track-name {
+      font-size: 1rem;
+    }
+
+    .track-credits-title {
+      font-size: 0.8rem;
+    }
+
+    .credit-item {
+      font-size: 0.9rem;
+    }
+
+    .buy-price {
+      font-size: 2rem;
+    }
+  }
+</style>

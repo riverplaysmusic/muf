@@ -1,13 +1,9 @@
 ---
 title: Maps of Life
-author: Bubbles
+author: joEy
 date: 2026-01-07
-category: essay
 price_cents: 0
-tags:
-  - life advice
-  - philosophy
-excerpt: Maps of Life is a collection of life observations on maps and how they work.
+published: true
 ---
 
 People, here is what I have learned about maps:

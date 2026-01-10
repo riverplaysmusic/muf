@@ -99,8 +99,8 @@ export const POST: APIRoute = async ({ request, url }) => {
         },
       ],
       mode: 'payment',
-      success_url: `${url.origin}/albums/${product.slug}?success=true`,
-      cancel_url: `${url.origin}/albums/${product.slug}?canceled=true`,
+      success_url: `${url.origin}/${product.slug}?success=true`,
+      cancel_url: `${url.origin}/${product.slug}?canceled=true`,
       customer_email: customerEmail || undefined,
       metadata: {
         product_id: product.id,
