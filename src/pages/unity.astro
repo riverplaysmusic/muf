@@ -8,22 +8,12 @@ import Layout from "@/components/Layout.astro";
 
 <Layout>
   <main class="brochure">
-    <!-- ARTWORK -->
-    <section class="artwork-section">
-      <img
-        src="/artwork/hero-artwork.jpg"
-        alt="Musical Universe Factory artwork"
-        class="artwork-image"
-      />
-    </section>
-
     <!-- HERO -->
     <section class="hero">
       <header class="content">
         <h1 class="gradient-full-spectrum">Musical Universe Factory</h1>
         <p class="subtitle">
-          Independent creative sanctuary and eternal archive. Buy for lifetime
-          ownership.
+          Independent creative sanctuary and eternal archive.
         </p>
       </header>
     </section>
@@ -82,13 +72,22 @@ import Layout from "@/components/Layout.astro";
         <a href="/albums" class="btn retro">Explore Catalog</a>
       </div>
     </section>
+
+    <!-- ARTWORK -->
+    <section class="artwork-section">
+      <img
+        src="/artwork/hero-artwork.jpg"
+        alt="Musical Universe Factory artwork"
+        class="artwork-image"
+      />
+    </section>
   </main>
 </Layout>
 <style>
   .artwork-section {
     width: 100%;
     max-width: 800px;
-    margin: 0 auto var(--space-md);
+    margin: var(--space-md) auto 0;
   }
 
   .artwork-image {
@@ -125,7 +124,7 @@ import Layout from "@/components/Layout.astro";
 
   @media (max-width: 768px) {
     .artwork-section {
-      margin-bottom: var(--space-sm);
+      margin-top: var(--space-sm);
     }
     .video-player {
       margin-bottom: var(--space-sm);

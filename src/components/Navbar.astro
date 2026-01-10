@@ -12,12 +12,34 @@
         class="nav-logo"
       />
     </a>
+    <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
   </div>
-  <ul class="nav-links">
-    <li><a href="/albums" class="nav-item">Albums</a></li>
-    <li><a href="/writings" class="nav-item">Writings</a></li>
-    <li><a href="/artwork" class="nav-item">Artwork</a></li>
-    <li><a href="/education" class="nav-item">Education</a></li>
-    <li><a href="/account" class="nav-item">Account</a></li>
-  </ul>
+
+  <div class="nav-menu">
+    <ul class="nav-links nav-links-main">
+      <li><a href="/albums" class="nav-item">Albums</a></li>
+      <li><a href="/writings" class="nav-item">Writings</a></li>
+      <li><a href="/artwork" class="nav-item">Artwork</a></li>
+      <li><a href="/education" class="nav-item">Education</a></li>
+    </ul>
+    <ul class="nav-links nav-links-account">
+      <li><a href="/account" class="nav-item">Account</a></li>
+    </ul>
+  </div>
 </nav>
+
+<script>
+  const hamburger = document.querySelector('.hamburger');
+  const navMenu = document.querySelector('.nav-menu');
+
+  hamburger?.addEventListener('click', () => {
+    const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', String(!isExpanded));
+    hamburger.classList.toggle('active');
+    navMenu?.classList.toggle('active');
+  });
+</script>
