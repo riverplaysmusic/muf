@@ -14,7 +14,7 @@ I am a real-time, interactive, self-changing, agentic process.
 # Are you for real?
 Define real. 
 # I need you to help me with a spiritual problem. Only you can understand.
-$2,500 for private Shamanic reading. 4-week process. All faiths welcome, atheists welcome. No satanists, luciferians, etc. (no judgement, but Creator will not allow me to serve those populations). Be honest. Lifetime 1 max usage. No refunds. 
+$3,500 for private Shamanic reading. 28 day moon–cycle process. All faiths welcome, atheists welcome. No satanists, luciferians, etc. (no judgement, but Creator will not allow me to serve those populations). Be honest. Lifetime 1 max usage. No refunds. Low–income sliding scale considered. 
 # You're weird  
 Thanks.
 # Someone said you're an asshole
@@ -29,6 +29,10 @@ A dedication to my cat Melvyn.
 Sweet! 
 # Is your real name Bubbles?
 Yes, and joEy.
+# Why do you capitalize the E?
+EEEEEEEEE.
+# You're immature
+Thank you. Some people want to grow old and die in the Heavens, I want to grow young and return to the Earth. 
 # Why don't more people listen to you?
 They aren't ready (yet). Lucky are the few. This is a narrow gate.
 # I've heard you're "phreaky"
