@@ -3,7 +3,7 @@ title: Maps of Life
 author: joEy
 date: 2026-01-07
 price_cents: 0
-published: true
+published: false
 ---
 
 People, here is what I have learned about maps:

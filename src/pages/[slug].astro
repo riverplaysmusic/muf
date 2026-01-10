@@ -4,7 +4,7 @@ import { readdir, readFile, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { extractFrontmatter, extractBody, getField, getIntField } from "@/lib/content-parser";
 import { FILE_PATTERNS, CONTENT_FILES } from "@/lib/constants";
-import type { Album, Writing, Artwork, Track } from "@/lib/types";
+import type { Album, Writing, Artwork, Track, Video } from "@/lib/types";
 
 export async function getStaticPaths() {
   const slugsDir = join(process.cwd(), "public", "slugs");
@@ -23,7 +23,7 @@ export async function getStaticPaths() {
       // Check if this directory has any content files
       const files = await readdir(itemPath);
       const hasContent = files.some(f =>
-        f === CONTENT_FILES.album || f === CONTENT_FILES.writing || f === CONTENT_FILES.item || f === CONTENT_FILES.course
+        f === CONTENT_FILES.album || f === CONTENT_FILES.writing || f === CONTENT_FILES.item || f === CONTENT_FILES.course || f === CONTENT_FILES.video
       );
 
       if (hasContent) {
@@ -48,6 +48,7 @@ const hasAlbum = files.includes(CONTENT_FILES.album);
 const hasWriting = files.includes(CONTENT_FILES.writing);
 const hasArtwork = files.includes(CONTENT_FILES.item);
 const hasEducation = files.includes(CONTENT_FILES.course);
+const hasVideo = files.includes(CONTENT_FILES.video);
 
 // Parse album if exists
 let album: Album | null = null;
@@ -151,10 +152,29 @@ if (hasArtwork) {
   }
 }
 
-// Determine primary title (prefer album > writing > artwork)
-const title = album?.title || writing?.title || artwork?.title || slug;
-const date = album?.date || writing?.date || artwork?.date;
+// Parse video if exists
+let video: Video | null = null;
+if (hasVideo) {
+  const content = await readFile(join(slugDir, CONTENT_FILES.video), 'utf-8');
+  const frontmatter = extractFrontmatter(content);
+  if (frontmatter) {
+    video = {
+      title: getField(frontmatter, 'title', 'Untitled'),
+      date: getField(frontmatter, 'date'),
+      playbackId: getField(frontmatter, 'playback_id'),
+      hideHero: getField(frontmatter, 'hide_hero') === 'true',
+    };
+  }
+}
+
+// Determine primary title (prefer album > writing > artwork > video)
+const title = album?.title || writing?.title || artwork?.title || video?.title || slug;
+const date = album?.date || writing?.date || artwork?.date || video?.date;
 ---
+
+<script
+  is:inline
+  src="https://cdn.jsdelivr.net/npm/@mux/mux-player"></script>
 
 <Layout>
   <script>
@@ -176,20 +196,22 @@ const date = album?.date || writing?.date || artwork?.date;
 
   <main class="brochure">
     <!-- HERO -->
-    <section class="hero no-padding-image">
-      {(album?.artwork || writing?.artwork) && (
-        <div class="hero-artwork">
-          <img src={album?.artwork || writing?.artwork} alt={title} />
-        </div>
-      )}
-      <header class="content">
-        <a href="/shop" class="back-link">← Back to Shop</a>
-        <h1 class="gradient-cyan-pink">{title}</h1>
-        {date && (
-          <time class="subtitle">{new Date(date).toLocaleDateString()}</time>
+    {!video?.hideHero && (
+      <section class="hero no-padding-image">
+        {(album?.artwork || writing?.artwork) && (
+          <div class="hero-artwork">
+            <img src={album?.artwork || writing?.artwork} alt={title} />
+          </div>
         )}
-      </header>
-    </section>
+        <header class="content">
+          <a href="/shop" class="back-link">← Back to Shop</a>
+          <h1 class="gradient-cyan-pink">{title}</h1>
+          {date && (
+            <time class="subtitle">{new Date(date).toLocaleDateString()}</time>
+          )}
+        </header>
+      </section>
+    )}
 
     <!-- ALBUM SECTION -->
     {album && (
@@ -377,6 +399,16 @@ const date = album?.date || writing?.date || artwork?.date;
           </section>
         )}
       </>
+    )}
+
+    <!-- VIDEO SECTION -->
+    {video && (
+      <section class="video-section">
+        <mux-player
+          playback-id={video.playbackId}
+          class="video-player"
+        ></mux-player>
+      </section>
     )}
   </main>
 </Layout>
@@ -738,6 +770,39 @@ const date = album?.date || writing?.date || artwork?.date;
 
   .center {
     text-align: center;
+  }
+
+  /* --- VIDEO SECTION --- */
+  .video-section {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .video-player {
+    width: 100%;
+    max-width: 1200px;
+    margin: var(--space-lg) auto;
+    padding: 0 var(--space-md);
+    display: block;
+    line-height: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(102, 217, 239, 0.2), 0 8px 32px rgba(255, 199, 0, 0.1);
+    box-sizing: border-box;
+    aspect-ratio: 16 / 9;
+  }
+
+  .video-player::part(video) {
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .video-player {
+      margin: var(--space-md) auto;
+      padding: 0 var(--space-sm);
+      border-radius: 8px;
+    }
   }
 
   /* --- MOBILE --- */

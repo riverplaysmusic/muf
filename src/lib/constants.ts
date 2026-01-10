@@ -12,6 +12,7 @@ export const CONTENT_FILES = {
   writing: 'writing.txt',
   item: 'item.txt',
   course: 'course.txt',
+  video: 'video.txt',
 } as const;
 
 export interface ContentTypeConfig {

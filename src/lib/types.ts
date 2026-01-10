@@ -51,3 +51,10 @@ export interface Education {
   body: string;
   preview: string | null;
 }
+
+export interface Video {
+  title: string;
+  date: string;
+  playbackId: string;
+  hideHero?: boolean;
+}

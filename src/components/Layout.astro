@@ -1,5 +1,6 @@
 ---
 import Navbar from "@/components/Navbar.astro";
+import AlertBanner from "@/components/AlertBanner.astro";
 import Footer from "@/components/Footer.astro";
 import "@fontsource-variable/geist";
 
@@ -11,6 +12,7 @@ import "@/styles/base/animations.css";
 
 /* COMPONENTS */
 import "@/styles/components/navbar.css";
+import "@/styles/components/alert-banner.css";
 import "@/styles/components/brochure.css";
 import "@/styles/components/cards.css";
 import "@/styles/components/buttons.css";
@@ -74,6 +76,7 @@ import "@/styles/utilities/text-gradients.css";
 	</head>
 	<body>
 		<Navbar />
+		<AlertBanner />
 		<slot />
 		<Footer />
 	</body>

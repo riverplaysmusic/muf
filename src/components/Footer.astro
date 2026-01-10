@@ -1,14 +1,14 @@
 <footer class="global-footer">
   <div class="footer-content">
     <div class="footer-section">
-      <span class="footer-copyright">© 2026 Musical Universe Factory</span>
+      <span class="footer-copyright">© 2026 Musical Universe Factory. All rights reserved.</span>
     </div>
     <div class="footer-section">
       <nav class="footer-links">
         <a href="/contact" class="footer-link">Contact</a>
-        <span class="footer-dot">·</span>
+        <span class="footer-dot">🎵</span>
         <a href="/privacy" class="footer-link">Privacy</a>
-        <span class="footer-dot">·</span>
+        <span class="footer-dot">🎵</span>
         <a href="/terms" class="footer-link">Terms</a>
       </nav>
     </div>
@@ -48,27 +48,30 @@
 
   .footer-links {
     display: flex;
-    gap: var(--space-xs);
+    gap: var(--space-sm);
     align-items: center;
   }
 
   .footer-dot {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.2);
+    font-size: 1rem;
     user-select: none;
+    filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(10deg) saturate(5);
   }
 
   .footer-link {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 1rem;
+    color: var(--starlight);
     text-decoration: none;
-    font-weight: 400;
-    transition: color 0.2s ease;
-    letter-spacing: 0.02em;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: all var(--transition-duration) var(--ease-smooth);
+    letter-spacing: 0.05em;
   }
 
   .footer-link:hover {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--primary-yellow);
+    letter-spacing: 0.15em;
+    text-decoration: underline;
   }
 
   @media (max-width: 768px) {

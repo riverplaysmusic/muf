@@ -1,0 +1,6 @@
+---
+title: The Architect's Gears
+date: 2026-01-10
+playback_id: PLY019I55aumhPRlZZHf00nLhQdnpCf01LjAimmZDuocIw
+hide_hero: true
+---

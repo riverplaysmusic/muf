@@ -1,0 +1,64 @@
+/* ===== ALERT BANNER ===== */
+.alert-banner {
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-yellow) 100%);
+  padding: 0;
+  box-sizing: border-box;
+  border-bottom: 2px solid var(--primary-yellow);
+}
+
+.alert-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  text-decoration: none;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.alert-link:hover {
+  background: rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.1em;
+}
+
+.alert-icon {
+  font-size: 1.2rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.alert-text {
+  flex: 1;
+  text-align: center;
+}
+
+.alert-arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.alert-link:hover .alert-arrow {
+  transform: translateX(4px);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Desktop: Larger text */
+@media (min-width: var(--breakpoint-md)) {
+  .alert-link {
+    font-size: 1.1rem;
+    padding: var(--space-md);
+  }
+}
