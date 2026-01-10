@@ -404,10 +404,12 @@ const date = album?.date || writing?.date || artwork?.date || video?.date;
     <!-- VIDEO SECTION -->
     {video && (
       <section class="video-section">
-        <mux-player
-          playback-id={video.playbackId}
-          class="video-player"
-        ></mux-player>
+        <div class="video-wrapper">
+          <mux-player
+            playback-id={video.playbackId}
+            class="video-player"
+          ></mux-player>
+        </div>
       </section>
     )}
   </main>
@@ -780,15 +782,21 @@ const date = album?.date || writing?.date || artwork?.date || video?.date;
     box-sizing: border-box;
   }
 
-  .video-player {
+  .video-wrapper {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    display: block;
-    line-height: 0;
+    aspect-ratio: 16 / 9;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 8px 32px rgba(102, 217, 239, 0.2), 0 8px 32px rgba(255, 199, 0, 0.1);
+  }
+
+  .video-player {
+    width: 100%;
+    height: 100%;
+    display: block;
+    line-height: 0;
   }
 
   .video-player::part(video) {
@@ -800,7 +808,7 @@ const date = album?.date || writing?.date || artwork?.date || video?.date;
       padding: var(--space-md) var(--space-sm);
     }
 
-    .video-player {
+    .video-wrapper {
       border-radius: 8px;
     }
   }
