@@ -1,6 +1,12 @@
 <footer class="global-footer">
-  <p>&copy; 2026 MUSICAL UNIVERSE FACTORY. ALL RIGHTS RESERVED.</p>
-  <a href="/contact" class="contact-link">CONTACT</a>
+  <div class="footer-content">
+    <p class="footer-copyright">&copy; 2026 MUSICAL UNIVERSE FACTORY. ALL RIGHTS RESERVED.</p>
+    <nav class="footer-links">
+      <a href="/contact" class="footer-link">CONTACT</a>
+      <a href="/privacy" class="footer-link">PRIVACY</a>
+      <a href="/terms" class="footer-link">TERMS</a>
+    </nav>
+  </div>
 </footer>
 
 <style>
@@ -9,11 +15,19 @@
     margin-top: 0;
     margin-bottom: 0;
     padding: var(--space-2xl) var(--space-md);
-    text-align: center;
     background: oklch(62.3% 0.214 259.815);
   }
 
-  .global-footer p {
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: var(--space-md);
+  }
+
+  .footer-copyright {
     font-size: 0.9rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -21,9 +35,13 @@
     margin: 0;
   }
 
-  .contact-link {
-    display: block;
-    margin-top: var(--space-xs);
+  .footer-links {
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+  }
+
+  .footer-link {
     font-size: 0.9rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -32,18 +50,34 @@
     transition: color var(--transition-duration) var(--ease-smooth);
   }
 
-  .contact-link:hover {
+  .footer-link:hover {
     color: var(--primary-yellow);
+  }
+
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      text-align: center;
+      gap: var(--space-sm);
+    }
+
+    .footer-copyright {
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+    }
+
+    .footer-links {
+      gap: var(--space-sm);
+    }
+
+    .footer-link {
+      font-size: 0.8rem;
+    }
   }
 
   @media (max-width: 640px) {
     .global-footer {
       padding: var(--space-md) var(--space-sm);
-    }
-
-    .global-footer p {
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
     }
   }
 </style>
